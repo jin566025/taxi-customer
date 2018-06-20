@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common-a96583650f.css" />
+		<link rel="stylesheet" href="../../css2/iosSelect-6e182791d9.css" /> 
+		<link rel="stylesheet" href="../../css2/order-detail-1b91c6ee62.css" />
+		<link rel="stylesheet" href="../../css2/map-10ec3d7dc5.css" />
+		<link rel="stylesheet" href="../../css2/type2-order-d6d2d7946d.css" />
+		<style>
+			.price{color: rgba(255, 152, 0, 1);}
+			#award{margin-right: 1rem;}
+			.iosselect-header .sure{width: auto;}
+			.ios-select-widget-box header.iosselect-header{background-color: #FF9800;}
+			.ios-select-widget-box header.iosselect-header a{color: #FFFFFF;}
+			.ios-select-widget-box #iosSelectTitle{color: #FFFFFF;}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="panel" style="display: none;"></div>
+
+		<!--进行中--><!--进行中--><!--进行中-->
+		<div  class="main4 main-content main-content1" >
+			<div id="main-top">
+				
+				
+				<div class="main-top-container clearfix">
+					<a class="main-top main-top1 fl">已选择物品类型</a>
+					<img class="main-top main-top3 fr" src="../../img2/toRight.png" />
+					<a class="main-top main-top2 fr" id="goodsType"></a>
+				</div>
+				<div class="main-top-container main-top-container11 clearfix" onclick="changeAward()">
+					<a class="main-top main-top1 fl">红包</a>
+					<p class="main-top main-top2 fr">
+						<a>￥</a>
+						<a id="award"></a>
+					</p>
+				</div>
+				<div class="main-top-content">
+					<p class="main-top-container3-p1">
+						<a>建议价：</a>
+						<a class="main-top-container3-p2">￥</a>
+						<a class="main-top-container3-p3"></a>
+					</p>
+					<div onclick="changeReward()">
+						<p class="main-top-content-p1">总金额：</p>
+						<p class="main-top-content-p2">
+							<a>￥</a>
+							<a id="reward"></a>
+							<img src="../../img2/edit.png" class="edit" style="position: absolute;" />
+						</p>
+					
+					</div>
+					<p class="main-top-content-p3" >
+						<a>取件时间：</a>
+						<a id="startTime"></a>
+					</p>
+				</div>
+			</div>
+			<div id="main-mid" class="flex-box">
+				<div class="message-left">备注：</div>
+				<input  onclick="changeMessage()" readonly="readonly" class="message-right" id="message" style="font-size: 1.4rem;border: none;" />
+			</div>
+			<div id="cancle-btn" class="cancle-order cancle-orders">取消订单</div>
+		</div>
+		
+		
+		<div id="shadow"></div>
+		<div class="dialog3 cancle-dialog dialogs absolute-center">
+			<p class="dialog-p dialog-p3">是否取消订单</p>
+			<div class="dialog-btn2 clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl" id="dialog-cancle">取消</div>
+				<div class="dialog-btns dialog-btns2 dialog-sure2 fl" id="dialog-sure">确认</div>
+			</div>
+		</div>
+		<div class="dialog5 dialogs absolute-center">
+			<p class="dialog-p dialog-p2">跑腿赏金</p>
+			<input id="updateRewardInput" class="dialog-input2" type="text" placeholder="请输入金额" />
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 dialog5-btns1 box-sizing fl">取消</div>
+				<div id="updateReward" class="dialog-btns dialog-btns2 dialog5-btns2 dialog-sure2 fl">确认</div>
+			</div>
+		</div>
+		<div class="dialog4 dialogs absolute-center">
+			<p class="dialog-p2">红包</p>
+			<input class="dialog-input2" id="updateAwardInput" type="text" placeholder="请输入红包金额" />
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 dialog4-btns1 box-sizing fl">取消</div>
+				<div id="updateAward" class="dialog-btns dialog-btns2 dialog4-btns2 fl dialog4-sure">确认</div>
+			</div>
+		</div>
+		<div class="dialog6 dialogs absolute-center">
+			<p class="dialog-p dialog-p2">备注信息</p>
+			<input id="updateMessageInput" class="dialog-input2" type="text" placeholder="请输入备注信息" />
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 dialog6-btns1 box-sizing fl">取消</div>
+				<div id="updateMessage" class="dialog-btns dialog-btns2 dialog5-btns2 dialog-sure2 fl">确认</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js2/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck-3ad767f817.js" ></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
+		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
+		<script type="text/javascript" src="../../js2/swiper-1d74106378.jquery.min.js" ></script>
+		<script type="text/javascript" src="../../js2/order-detail-43ccbaacc4.js" ></script>
+		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
+		<script type="text/javascript" src="../../js2/areaData_v2-47ecfecae1.js" ></script>
+		<script type="text/javascript" src="../../js2/iosSelect-83b571a916.js" ></script>
+		<script type="text/javascript" src="../../js2/index-select2-6403a66004.js" ></script>
+		<script>
+			
+			$(function(){
+				
+				var id = window.location.href.split("listid=")[1];
+				
+				
+				//加载数据
+				loadOrderDetail(id)
+			    function loadOrderDetail(id){
+			    	$.ajax({
+			    		type:"post",
+				    	url:url_path+"/mission/info.json",
+				    	data:{
+				    		"id":id
+				    	},
+				    	dataType:"json",
+				    	success:function(data){
+				    		console.log(data)
+				    		if(data.msg=="成功"){
+				    			if(data.state!==1 && data.state!==0){
+				    				alert("订单状态已改变");
+				    				history.go(-1)
+				    			}
+								var userId = localStorage.getItem("userId");
+								var beifen = {};
+								beifen.id = data.id;
+								beifen.typeId = data.typeId;
+								beifen.money = data.finish;
+								beifen.userId = parseInt(userId);
+								beifen.award = data.award;
+								beifen.reward = data.reward;
+								beifen.matmoney = data.matmoney;
+								beifen.finish = data.finish;
+								beifen = JSON.stringify(beifen);
+								sessionStorage.setItem("beifen",beifen);
+								
+				    			$("#award").html(data.award);
+				    			$("#reward").html(data.finish);
+				    			var pickupTime = timeFormatter(data.pickupTime);
+				    			$("#startTime").html(pickupTime);
+				    			$("#message").val(data.message);
+				    			
+				    			var deliveryAddressLatitude = data.deliveryAddressLatitude;
+				    			var deliveryAddressLongitude = data.deliveryAddressLongitude;
+				    			
+				    			$("#goodsType").html(data.goodsType)
+				    			var award = data.award;
+				    			var finish = data.finish;
+				    			var taskAddressLatitude = data.taskAddressLatitude;
+				    			var taskAddressLongitude = data.taskAddressLongitude;
+				    			
+				    			driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
+				    			
+				    			setTimeout(function(){
+
+								    var lnglats = [  
+							            [deliveryAddressLongitude,deliveryAddressLatitude],  
+							            [taskAddressLongitude,taskAddressLatitude]
+							        ];  
+							          
+							        var student = [data.deliveryAddress,data.taskAddress]; 
+							        var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)}); 
+							        for (var i = 0, marker; i < lnglats.length; i++) {  
+							            var marker = new AMap.Marker({  
+							                position: lnglats[i],  
+							                map: map  
+							            }); 
+							            var typeStr;
+							            if(i==0){
+							            	typeStr="起点："
+							            }else if(i==1){
+							            	typeStr="终点："
+							            }
+							            marker.content ="<p class=marker"+i+">"+typeStr+student[i]+"</p>"; 
+							            marker.on('click', markerClick);  
+							            marker.emit('click', {target: marker});  
+							        } 
+							        function markerClick(e) {  
+							            infoWindow.setContent(e.target.content);  
+							            infoWindow.open(map, e.target.getPosition());
+							        }  
+//							        $("#container").on("click",".amap-info-outer",function(){
+//							        	var listid = window.location.href.split("listid=")[1];
+//							        	if($(this).children().hasClass("marker1")){
+//							        		window.location.href="../../set-address.html?listid="+listid+"orderType="+1
+//							        	}else{
+//							        		window.location.href="../../set-address.html?listid="+listid+"orderType="+2
+//							        	}
+//							        	
+//							        })
+							        map.setFitView();
+				
+				    			},500)
+				    		}
+				    	}
+			    	});
+			    }
+			})
+		</script>
+	</body>
+</html>

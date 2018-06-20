@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css2/common-a96583650f.css" />
+		<link rel="stylesheet" href="css2/address-manage-ce3078000c.css" />
+	</head>
+	<body>
+		<header>
+			<img src="img2/return.png" class="return-icon" onclick="history.go(-1)" />
+			<p class="header-title">完善地址信息</p>
+		
+		</header>
+		<div class="main clearfix">
+			<div class="main-left fl">详细地址</div>
+			<input class="main-right fl" id="pickerInput" type="text" placeholder="请输入详细地址" />
+			<input id="pickerInput2" type="text" placeholder="请输入详细地址" />
+		</div>
+		<div class="main clearfix">
+			<div class="main-left fl">备注地址</div>
+			<input class="main-right fl" id="address-input" type="text" placeholder="请输入备注地址" />
+		</div>
+		<div class="main clearfix">
+			<div class="main-left fl">姓名</div>
+			<input class="main-right fl" id="name-input" type="text" placeholder="请输入收货人姓名" />
+		</div>
+		<div class="main clearfix">
+			<div class="main-left fl">手机号</div>
+			<input class="main-right fl" id="mobile-input" type="number" placeholder="请输入收货人手机号" />
+		</div>
+		<div class="main2" id="address-submit">确定</div>
+		
+		
+		<div id="history-address">
+			<div class="history-address-top">
+				<div class="history-address-container"></div>
+			</div>
+			<div class="history-address-bottom">取消</div>
+		</div>
+		<div id="shadow"></div>
+		<p id="lng" style="display: none;"></p>
+		<p id="lat" style="display: none;"></p>
+		<link rel="stylesheet" href="css2/test-56a4b00542.css" />
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.CitySearch"></script>
+		<script type="text/javascript" src="js2/map-ui-8752767455.js" ></script>
+		<script type="text/javascript" src="js2/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="js2/firstCheck-edfeec679f.js" ></script>
+		<script type="text/javascript" src="js2/url-04f2d3931f.js" ></script>
+		<script type="text/javascript">
+			$(function(){
+				var map = new AMap.Map('container', {
+			        zoom: 10
+			    });
+			    AMapUI.loadUI(['misc/PoiPicker'], function(PoiPicker) {
+			        var poiPicker = new PoiPicker({
+			            input: 'pickerInput'
+			        });
+			        //初始化poiPicker
+			        poiPickerReady(poiPicker);
+			    });
+			    function poiPickerReady(poiPicker) {
+			        window.poiPicker = poiPicker;
+			        var marker = new AMap.Marker();
+			        var infoWindow = new AMap.InfoWindow({
+			            offset: new AMap.Pixel(0, -20)
+			        });
+			        //选取了某个POI
+			        poiPicker.on('poiPicked', function(poiResult) {
+			        	
+			        	var name = poiResult.item.name;
+			        	var lat = poiResult.item.location.lat;
+			        	var lng = poiResult.item.location.lng;
+						$("#pickerInput2").val(name).css("z-index","2");
+						$("#lat").html(lat);
+						$("#lng").html(lng);
+						$('#pickerInput').val("")
+			        });
+			
+			        poiPicker.onCityReady(function() {
+			            //poiPicker.suggest('美食');
+			        });
+			    }
+				function isPhoneNo(phone) {  
+				    var pattern = /^1[34578]\d{9}$/;  
+				    return pattern.test(phone);  
+				}
+				
+				$("#address-submit").click(function(){
+					var pickerInput2 = $("#pickerInput2").val();
+					var addressInput = $("#address-input").val();
+					var addressName = pickerInput2+" "+addressInput;
+					var nameInput = $("#name-input").val();
+					var mobileInput = $("#mobile-input").val();
+					var lng = $("#lng").text();
+					var lat = $("#lat").text();
+					
+					
+					var dataArray = {};
+					var id;
+					if(id){
+						dataArray.id = id;
+					}
+					if(nameInput){
+						dataArray.realname = nameInput;
+					}else{
+						alert("请输入收货人姓名");
+						return false;
+					}
+					if(addressName){
+						dataArray.addressName = addressName;
+					}else{
+						alert("请输入收货地址");
+						return false;
+					}
+					if(isPhoneNo(mobileInput)){
+						dataArray.tel = mobileInput;
+					}else{
+						alert("请输入正确的收货人手机号");
+						return false;
+					}
+					if(lng){
+						dataArray.longitude = lng;
+					}
+					if(lat){
+						dataArray.latitude = lat;
+					}
+					dataArray.userId = userId
+					
+					var href = window.location.href.split("label=")[1];
+					var label = href.split("?addressId=")[0];
+					var addressId = href.split("?addressId=")[1];
+					
+					if(label==0){
+						dataArray.label = "家庭地址";
+					}else{
+						dataArray.label = "公司地址";
+					}
+					if(addressId){
+						dataArray.id = addressId
+					}
+					console.log(dataArray)
+					$.ajax({
+						type:"post",
+						url:url_path+"/address/save.json",
+						data:dataArray,
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+								history.go(-1);
+							}
+						},
+						error:function(){}
+					});
+					
+				})
+	
+			})
+	    
+
+	    </script>
+	</body>
+</html>

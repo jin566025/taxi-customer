@@ -1,0 +1,16 @@
+header{width: 100%;height: 42px;position: fixed;border-bottom: 1px solid gainsboro;background-color: #FFFFFF;top: 0;z-index: 3;}
+.header-nav{width:25%;text-align: center;height: 39px;line-height: 39px;color: rgba(150, 150, 150, 1);font-family: Arial;font-size: 1.4rem;}
+.header-nav-active{border-bottom: 3px solid #FF9800;color: #FF9800;}
+.header-zanwei{height: 42px;width: 100%;}
+.order-list-time{color: rgba(200, 200, 200, 1);font-size: 1.2rem;text-align: left;font-family: Arial;height: 2.4rem;line-height: 2.4rem;}
+.list-main-container{border: 1px solid gainsboro;padding: 10px 5px;border-radius: 5px;}
+.lists-content{margin-top: 0;align-items: center;}
+.status{width: 100%;font-family: Arial;height: 2rem;line-height: 2rem;margin-bottom: 1rem;}
+.status-left{width: 40%;text-align: left;color: rgba(50, 50, 50, 1);font-size: 1.6rem;font-weight: bold;}
+.status-right{width: 50%;text-align: right;color: rgba(200, 200, 200, 1);font-size: 1.2rem;padding-right: 2rem;background: url(../img2/toRight.png) no-repeat right/1rem;}
+.alarm-img{width: 12px;height: 12px;margin-right: 1rem;}
+.alarm-img-container{width: 6%;}
+.alarm{flex: 1;color: rgba(100, 100, 100, 1);font-size: 1.2rem;font-family: Arial;}
+
+.list{display: none;}
+.list1{display: block;}

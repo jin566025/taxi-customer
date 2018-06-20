@@ -1,0 +1,123 @@
+.main{width: 96%;left: 2%;position: fixed;bottom: 1rem;}
+.maintop2{padding:0.6rem 2%;background-color: #FFFFFF;border: 1px solid gainsboro;border-radius: 5px;}
+.main-top{display: inline-block;height: 2rem;line-height: 2rem;color: rgba(50, 50, 50, 1);font-size: 1.3rem;font-family: Arial;vertical-align: middle;}
+.main-top3{height: 1.2rem;margin-top: 0.4rem;}
+.main-top-container{padding-top: 1rem}
+.main-top-container11{padding-bottom: 1rem;}
+.main-top-content{text-align: center;font-family: Arial;padding: 1rem 0;border-top: 1px solid gainsboro;}
+.main-top-content-p1{height: 2rem;line-height: 2rem;color: rgba(100, 100, 100, 1);font-size: 1.3rem;}
+.main-top-content-p2{height: 4rem;line-height:4rem;color: rgba(255, 152, 0, 1);font-size:2.8rem;font-weight: bold;position: relative;}
+.main-top-content-p3 img{height: 1.2rem;vertical-align: middle;}
+.main-top-content-p3 a{vertical-align: middle;font-size: 1.2rem;color: #323232;}
+.main-mid2{margin-top: 0.5rem;text-align: left;background-color: #FFFFFF;height:3.6rem;line-height: 3.6rem;border-radius: 5px;color: rgba(136, 136, 136, 1);font-size: 1.3rem;font-family: Microsoft Yahei;border: 1px solid rgba(220, 220, 220, 1);padding-left: 1rem;padding-right: 1rem;}
+.main-bottom2{margin-top: 0.5rem;height: 3.6rem;line-height: 3.6rem;border-radius: 5px;background-color: rgba(255, 69, 80, 1);color: rgba(255, 255, 255, 1);font-size: 1.3rem;text-align: center;font-family: Arial;}
+.message-left{padding-right: 0.5rem;color: #888888;font-size: 1.2rem;}
+.message-right{flex: 1;color: #888888;}
+.main2{background-color: #FFFFFF;bottom: 5rem;}
+.main4{position: fixed;bottom:1rem;width: 96%;left: 2%;z-index: 5;}
+.head-img{width:5rem;height: 5rem;border-radius: 50%;margin-right: 1rem;}
+.head-detail{flex: 1;}
+.order2-head{background-color: #FFFFFF;align-items: center;padding: 2rem 2%;}
+
+.head-detail-sec-part{vertical-align: middle;color: rgba(100, 100, 100, 1);font-size: 1.4rem;text-align: left;font-family: Arial;margin-right: 1rem;}
+.head-detail-sec-img{height:1.6rem;margin-right: 0.5rem;}
+.head-detail-sec{padding:0.8rem 0;}
+.head-detail-sec-part2{color: rgba(50, 50, 50, 1);font-size: 1.6rem;font-family: Arial;}
+.main2{border: 1px solid gainsboro;border-radius: 5px;}
+.head-detail-sec-part3{border-radius: 4px;background-color: rgba(43, 152, 252, 1);color: rgba(255, 255, 255, 1);font-size: 1.4rem;text-align: center;font-family: Microsoft Yahei;padding: 3px 5px;}
+
+.main-top-content-p3{margin-top: 1rem;}
+.order2-mid-nav{border-top: 1px solid gainsboro;border-bottom: 1px solid gainsboro;background-color: #FFFFFF;}
+.order2-mid-navs{float: left;width: 33.3%;text-align: center;padding:  1rem 0;color: rgba(100, 100, 100, 1);font-size: 1.4rem;font-family: Arial;position: relative;}
+.order2-mid-navs2{border-right: 1px solid gainsboro;}
+
+
+.section2{position: fixed;bottom: -20rem;width: 92%;padding: 1rem 2%;background-color: #FFFFFF;left: 2%;border: 1px solid gainsboro;}
+.main2-section-p{height: 2.4rem;color: rgba(50, 50, 50, 1);font-size: 1.3rem;text-align: left;font-family: Arial;}
+.main2-section-p-price{color: #FF9800;}
+.main-top-content2{border-top: none;}
+.order-btn{width: 96%;left: 2%;position: fixed;bottom: 0.5rem;height: 3.8rem;line-height:3.8rem;border-radius: 4px;background-color: rgba(255, 152, 0, 1);color: rgba(255, 255, 255, 1);font-size: 1.4rem;text-align: center;font-family: Microsoft Yahei;}
+
+
+.complaining{width: 92%;left: 2%;position: fixed;top: 1rem;padding: 1rem 2%;background-color: #FFFFFF;z-index: 5;border: 1px solid gainsboro;border-radius: 5px;}
+.complaining p{height:2.4rem;line-height:2.4rem;color: rgba(50, 50, 50, 1);font-size: 1.4rem;text-align: left;font-family: Arial;}
+.complaining-type{color: #FF9800;}
+.complain-img{width:8rem;height: 8rem;background-color: gainsboro;margin-top: 1rem;}
+
+
+.cancle-reason{position: fixed;top: 1rem;width: 96%;left: 2%;background-color: #FFFFFF;padding: 10px 2%;border-radius: 5px;border: 1px solid gainsboro;}
+.cancle-reason p{height: 2rem;line-height: 2rem;vertical-align: middle;}
+.cancle-reason p:first-child{color: rgba(100, 100, 100, 1);font-size: 1.4rem;font-family: Arial;height: 3rem;line-height: 3rem;}
+.cancle-reason p:last-child{color: rgba(100, 100, 100, 1);font-family: Arial;font-size: 1.2rem;}
+.star-assess{height: 1.4rem;margin-left: 1rem;}
+.cancle-reason a{vertical-align: middle;}
+
+.dianfu-price{color: rgba(255, 152, 0, 1);font-size:3rem;font-family: Arial;}
+.main-top-container2{margin: 0;align-items: center;height: 4rem;line-height: 4rem;}
+
+.dzzj{color: rgba(255, 152, 0, 1);font-size:2.2rem;font-family: Arial;}
+.main2-section-p2{height: 3rem;line-height: 3rem;}
+
+.order2-mid-nav2{width: 50%;}
+
+.main3{bottom: 1rem;}
+.main-content{z-index:200;}
+.daigou-text{border: none;;border-bottom: 1px solid rgba(220, 220, 220, 1);margin-bottom: 0;width: 98%;resize: none;height: 6rem;padding: 0.5rem 1%;line-height: 1.6rem;border-radius: 5px;background-color: rgba(230, 230, 230, 1);color: rgba(150, 150, 150, 1);font-size: 1.2rem;text-align: left;font-family: Microsoft Yahei;}
+.main-content7{z-index: 3;position: fixed;width: 100%;bottom: 1rem;width: 96%;left: 2%;}
+.main-content7-section{width: 50%;text-align: center;}
+.main-content7-section p{height: 2.2rem;line-height: 2.2rem;}
+.main-content7-section1{color: rgba(100, 100, 100, 1);font-size: 1.2rem;font-family: Arial;}
+.main-content7-section-img{height: 1rem;vertical-align: middle;}
+.main-content7-section2{color: rgba(255, 152, 0, 1);font-size:2.2rem;text-align: left;font-family: Arial;}
+.main-content7-container{padding-bottom: 1.5rem;}
+.main-content7-btn{margin-top:0.5rem;height:4rem;line-height:4rem;border-radius: 5px;background-color: rgba(255, 152, 0, 1);color: rgba(255, 255, 255, 1);font-size: 1.4rem;text-align: center;font-family: Arial;}
+.main7{background-color: #FFFFFF;border: 1px solid rgba(220, 220, 220, 1)}
+
+.advice-price{text-align: right;padding-bottom: 2.2rem;padding-top: 0.5rem;padding-right: 1rem;}
+.advice-price a:nth-child(2){color: #FFCF96;}
+.advice-price a:nth-child(3){color: #FFCF96;}
+
+#shadow{width: 100%;height: 100%;position: fixed;top: 0;background-color: rgba(0,0,0,0.4);z-index:201;display: none;}
+.dialog2,.dialog3,.dialog4,.dialog5,.dialog6{width:70%;position: fixed;z-index: 202;background-color: #FFFFFF;text-align: center;border-radius: 5px;display: none;}
+
+.dialog-p{height: 3rem;line-height:3rem;font-size: 1.2rem;font-family: Arial;color: #323232;}
+.dialog-btn{border-top: 1px solid gainsboro;margin-top: 1rem;}
+.dialog-btn2{border-top: 1px solid gainsboro;}
+.dialog-btns{width: 50%;height: 4rem;line-height:4rem;font-size: 1.6rem;}
+.dialog-btns1{border-right: 1px solid gainsboro;color: #FF0000;}
+.dialog-btns2{color: #2B98FC;}
+.dialog-p3{font-size: 1.6rem;padding: 1.5rem 0;border-bottom: 1px solid gainsboro;}
+.dialog-input2{border: 1px solid lightgray;height: 2.4rem;line-height: 2.4rem;color: rgba(150, 150, 150, 1);font-size: 1.4rem;font-family: Arial;width: 80%;margin: 1.4rem auto 1rem auto;text-align: center;}
+.dialog-input::-webkit-input-placeholder { /* WebKit browsers */
+    color: #FFCF96;
+}
+.dialog-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #FFCF96;
+}
+.dialog-input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:#FFCF96;
+}
+.dialog-input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #FFCF96;
+}
+
+.dialog2{display: none;}
+
+.driverTel{width: 100%;height: 100%;position: absolute;z-index: 5;top: 0;left: 0;}
+.main-top-container3{width: 100%;font-size: 1.3rem;align-items: center;height: 4rem;line-height: 4rem;}
+.main-top-container2-left{}
+.main-top-container2-mid{flex: 1;color: #FF9800;}
+.main-top-container2-right{height: 1rem;}
+.main-top-container2-input{padding-left: 5px;margin-bottom: 10px;height: 2rem;line-height: 2rem;border-radius: 5px;background-color: rgba(230, 230, 230, 1);color: rgba(150, 150, 150, 1);font-size: 1.3rem;font-family: Microsoft Yahei;border: 1px solid rgba(220, 220, 220, 1);}
+.main-top-container2-price{font-size: 2.2rem;}
+.main-top-container2-mid a{vertical-align: middle;}
+.hide{display: none;}
+.main-top-container3-p1{text-align: right;display: none;font-size: 1.2rem;}
+.main-top-container3-p2,.main-top-container3-p3{color: #FFCF96;}
+
+
+.edit{position: absolute;top: -1rem;height: 1.6rem;display: none;}
+.dialog-p2{line-height: 4rem;height: 4rem;text-align: center;font-family: arial;color: #323232;font-size: 1.6rem;}
+
+
+.addresstips{position: absolute;z-index: 999999999;left: 30px;color: #333333;font-size: 1.4rem;padding: 10px;background-color: #FFFFFF;width: max-content; }

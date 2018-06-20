@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common-a96583650f.css" />
+		<link rel="stylesheet" href="../../css2/order-detail-1b91c6ee62.css" />
+		<link rel="stylesheet" href="../../css2/map-10ec3d7dc5.css" />
+		<link rel="stylesheet" href="../../css2/type2-order-d6d2d7946d.css" />
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="panel" style="display: none;"></div>
+
+		<!--未接单--><!--未接单--><!--未接单-->
+		<div  class="main4 main-content main-content1" >
+			<div id="main-top" style="margin-bottom: 1rem;">
+				<div class="main-top-container3 flex-box" onclick="changeMatmoney()">
+					<div class="main-top-container2-left">垫资资金：</div>
+					<div class="main-top-container2-mid">
+						<a id="matmoney2">￥</a>
+						<a class="main-top-container2-price" id="matmoney"></a>
+					</div>
+					<img class="main-top-container2-right" src="../../img2/toRight.png" />
+				</div>
+				<input id="message" class="main-top-container2-input" type="text" disabled="disabled" value="帮我去买一包烟" />
+				
+				<div class="main-top-content" onclick="changeReward()">
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">
+						<a>￥</a>
+						<a id="reward"></a>
+						<img src="../../img2/edit.png" class="edit" style="position: absolute;" />
+					</p>
+				
+				</div>
+			</div>
+		
+			<div  id="cancle-btn" class="cancle-order cancle-orders">已取消</div>
+		</div>
+		
+		
+		
+		<script type="text/javascript" src="../../js2/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck-3ad767f817.js" ></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
+		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
+		<script type="text/javascript" src="../../js2/swiper-1d74106378.jquery.min.js" ></script>
+		<script type="text/javascript" src="../../js2/order-detail-43ccbaacc4.js" ></script>
+		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
+		<script>
+			function changeReward(){
+				$("#shadow,.dialog4").fadeIn();
+			}
+			function changeMatmoney(){
+				$("#shadow,.dialog5").fadeIn();
+			}
+			$(function(){
+				
+				var id = window.location.href.split("listid=")[1];
+				
+				$(".dialog4-btns1").click(function(){
+					$("#shadow,.dialog4").fadeOut();
+				})
+				$(".dialog5-btns1").click(function(){
+					$("#shadow,.dialog5").fadeOut();
+				})
+				function timeFormatter(value) {
+				    var da = new Date(parseInt(value));
+				    var month = da.getMonth()+1;
+				    if(month<10){
+				    	month = "0"+month
+				    }
+				    
+				    var dates = da.getDate();
+				    if(dates<10){
+				    	dates = "0"+dates
+				    }
+				    
+				    var hour = da.getHours();
+				    if(hour<10){
+				    	hour = "0"+hour
+				    }
+				    
+				    var minute = da.getMinutes();
+				    if(minute<10){
+				    	minute = "0"+minute
+				    }
+				    
+				    var second = da.getSeconds();
+				    if(second<10){
+				    	second = "0"+second
+				    }
+				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
+				}
+				//加载数据
+				loadOrderDetail(id)
+			    function loadOrderDetail(id){
+			    	$.ajax({
+			    		type:"post",
+				    	url:url_path+"/mission/info.json",
+				    	data:{
+				    		"id":id
+				    	},
+				    	dataType:"json",
+				    	success:function(data){
+				    		console.log(data)
+				    		if(data.msg=="成功"){
+				    			if(data.state==7){
+				    				$("#order2-submit,#cancle-btn").attr("disabled",true).css("pointer-events","none")
+				    			}
+
+				    			$("#award").html(data.award);
+				    			$("#reward").html(data.reward);
+				    			if(data.matmoney){
+				    				$("#matmoney").html(data.matmoney);
+				    			}else{
+				    				$("#matmoney2").html("垫资与实际商品金额发生误差，请当面结清")
+				    			}
+				    			
+				    			$("#message").val(data.message);
+				    			
+				    			var deliveryAddressLatitude = data.deliveryAddressLatitude;
+				    			var deliveryAddressLongitude = data.deliveryAddressLongitude;
+				    			
+				    			var goodsType = data.goodsType;
+				    			var award = data.award;
+				    			var finish = data.finish;
+				    			var taskAddressLatitude = data.taskAddressLatitude;
+				    			var taskAddressLongitude = data.taskAddressLongitude;
+				    			
+				    			driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
+				    		}
+				    	}
+			    	});
+			    }
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css2/common.css" />
+		<link rel="stylesheet" href="css2/select-address.css" />
+		<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
+	    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+	    <style>
+	    	.amap-markers,.amap-logo,.amap-copyright{display: none;visibility: hidden;}
+	    	.setaddress{height: 3.4rem;line-height: 3.4rem;border-radius: 5px;background-color: rgba(255, 152, 0, 1);color: rgba(255, 255, 255, 1);font-size:1.4rem;text-align: center;width: 96%;font-family: Arial;z-index: 5;left: 2%;position: fixed;bottom: 1rem;}
+	  		.amap-sug-result{padding-top: 0;}
+	    </style>
+	</head>
+	<body>
+		<div class="header-input flex-box">
+			<input id="tipinput" type="text" placeholder="输入关键字选取地点" />
+			<div id="cancle">取消</div>
+		</div>
+		<div class="setaddress">确认设置</div>
+		<div id="container" class="map" tabindex="0"></div>
+		<div id="address" style="display: none;"></div>
+		<div id="addLng" style="display: none;"></div>
+		<div id="addLat" style="display: none;"></div>
+		<script type="text/javascript" src="js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="js2/firstCheck.js" ></script>
+		<script type="text/javascript" src="js2/url.js" ></script>
+		<script type="text/javascript">
+			var datas = window.location.href.split("listid=")[1];
+		    var id = datas.split("orderType=")[0];
+		    var orderType = datas.split("orderType=")[1]
+		    var state = 1;
+		    
+		    //地图加载
+		    var map = new AMap.Map("container", {
+		        resizeEnable: true,
+		        zoom:13
+		    });
+		    //输入提示
+		    var autoOptions = {
+		        input: "tipinput"
+		    };
+		    var auto = new AMap.Autocomplete(autoOptions);
+		    var placeSearch = new AMap.PlaceSearch({
+		        map: map
+		    });  //构造地点查询类
+		    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+		    function select(e) {
+		        placeSearch.setCity(e.poi.adcode);
+		        placeSearch.search(e.poi.name);  //关键字查询查询
+		        console.log(e.poi)
+		        $("#address").html(e.poi.name);
+		        $("#addLng").html(e.poi.location.lng);
+		        $("#addLat").html(e.poi.location.lat);
+		    }
+		    
+		    setTimeout(function(){
+		    	$(".amap-markers,.amap-logo,.amap-copyright").hide();
+		    	$(".amap-copyright").css("visibility","hidden")
+		    },500)
+		    
+		    $(".setaddress").click(function(){
+		    	var addressname = $("#address").text();
+		    	var addLng = $("#addLng").text();
+		    	var addLat = $("#addLat").text();
+		    	if(orderType==1){
+		    		$.ajax({
+			    		type:"post",
+			    		url:url_path+"/mission/update.json",
+			    		data:{
+			    			"state":state,
+			    			"id":id,
+			    			"userId":userId,
+			    			"taskAddress":addressname,
+			    			"taskAddressLongitude":addLng,
+			    			"taskAddressLatitude":addLat
+			    		},
+			    		dataType:"json",
+			    		success:function(data){
+			    			if(data.msg=="成功"){
+			    				history.go(-1)
+			    			}
+			    		}
+				    });
+		    	}else if(orderType==2){
+		    		$.ajax({
+			    		type:"post",
+			    		url:url_path+"/mission/update.json",
+			    		data:{
+			    			"state":state,
+			    			"id":id,
+			    			"userId":userId,
+			    			"deliveryAddress":addressname,
+			    			"deliveryAddressLongitude":addLng,
+			    			"deliveryAddressLatitude":addLat
+			    		},
+			    		dataType:"json",
+			    		success:function(data){
+			    			if(data.msg=="成功"){
+			    				history.go(-1)
+			    			}
+			    		}
+			    	});
+		    	}
+		    	
+		    	
+		    })
+		    
+		    
+		</script>
+	</body>
+</html>

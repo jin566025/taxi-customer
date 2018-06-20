@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common.css" />
+		<link rel="stylesheet" href="../../css2/list.css" />
+		<link rel="stylesheet" href="../../css2/personal.css" />
+	</head>
+	<body>
+		<header style="border-bottom: 1px solid gainsboro;">
+			<img onclick="history.go(-1)" src="../../img2/return.png" class="return-icon" />
+			<p>余额充值</p>
+		</header>
+		
+		<div class="recharge-content">
+			<p id="username2">
+				<a>充值用户：</a>
+				<a id="username"></a>
+			</p>
+			<p>
+				<a>账户余额：</a>
+				<a id="money"></a>
+			</p>
+			<p>
+				<a>充值金额：</a>
+				<a><input id="business" type="number" placeholder="请输入充值金额" /></a>
+			</p>
+			<!--<p>选择支付方式</p>-->
+			<p class="select-recharge clearfix">
+				<a>支付方式：</a>
+				<a><input disabled="disabled" type="text" placeholder="微信充值" /></a>
+				<!--<img class="select-recharge-img" src="../../img2/toRight2.png" />-->
+			</p>
+		</div>
+		
+		<div class="shadow"></div>
+		<div class="dialog absolute-center">
+			<p class="dialog-title">提现金额</p>
+			<input class="dialog-input" type="number" placeholder="请输入金额"/>
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 fl box-sizing">取消</div>
+				<div class="dialog-btns dialog-btns2 fl">确认</div>
+			</div>
+		</div>
+		<div class="footer-zanwei"></div>
+		<div class="footer" id="chongzhi">立即充值</div>
+		<img src="../../img2/loading.gif" id="loading" class="absolute-center" style="height: 4rem;display: none;" />
+		<script type="text/javascript" src="../../js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck.js" ></script>
+		<script type="text/javascript" src="../../js2/url.js" ></script>
+<!--		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
+		<script>
+			$(function(){
+				var usernickname = localStorage.getItem("usernickname");
+				$("#username").html(usernickname);
+				var balance = sessionStorage.getItem("balance");
+				$("#money").html(balance);
+				$("#chongzhi").click(function(){
+					
+					var userId = localStorage.getItem("userId");
+					var money = parseFloat($("#business").val());
+					userId = parseInt(userId);
+					var dataArray = {};
+					dataArray.paywaterUserId = userId;
+					dataArray.paywaterUserType = 0;
+					dataArray.paywaterUserName = "nickname";
+					dataArray.paywaterMoney = money;
+					$(this).css("pointer-events","none");
+					$(".shadow,#loading").fadeIn();
+					
+					//生成充值流水id
+					$.ajax({
+						type:"post",
+						url:url_path+"/Paywater/sava.json",
+						data:dataArray,
+						dataType:"json",
+						async:false,
+						success:function(data){
+							if(data.msg=="成功"){
+								console.log(data)
+								var tradeType = "JSAPI";
+								var goods_body = "taxi跑腿-充值";
+								var businessType = 2;
+								var openidT = localStorage.getItem("openid");
+								var paywaterId = data.paywaterId;
+								var dataArray2 = {};
+								dataArray2.tradeType = tradeType;
+								dataArray2.goods_body = goods_body;
+								dataArray2.businessType = businessType;
+								dataArray2.openidT = openidT;
+								dataArray2.id = paywaterId;
+								dataArray2.userId = userId;
+								//生成预支付Id
+								$.ajax({
+									type:"post",
+									url:url_path+"/pay/weixinprepaid.json",
+									data:dataArray2,
+									async:false,
+									dataType:"json",
+									success:function(data){
+										if(data.msg=="成功"){
+											$(".shadow,#loading").fadeOut();
+											//调用微信支付控件完成支付
+											var param = data.resInfo;
+											var timeStamp = param.timeStamp.toString();
+											var package = param.package;
+											var noncestr = param.nonceStr;
+											var sign = param.paySign;
+											var signType = param.signType;
+											var appid = param.appId;
+											WeixinJSBridge.invoke(
+										       'getBrandWCPayRequest', {
+										           "appId":appid,               //公众号名称，由商户传入     
+										           "timeStamp":timeStamp,       //时间戳，自1970年以来的秒数     
+										           "nonceStr":noncestr,         //随机串     
+										           "package":package,     
+										           "signType":signType,         //微信签名方式：     
+										           "paySign":sign               //微信签名 
+										       },
+										       function(res){
+													console.log(res);
+										            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+										            	$.ajax({
+															type:"post",
+															url:url_path+"/user/saveAccountstream.json",
+															async:false,
+															data:{
+																"userId":userId,
+																"money":money,
+																"useraccountOperationType":0,
+																"useraccountMode":0
+															},
+															dataType:"json",
+															success:function(data){
+																if(data.msg=="成功"){
+																	window.location.href="http://taxicustomer.nbzhidun.com/pages2/personal/balance.html"
+																}
+															}
+														});
+										           		
+										            }else{
+										           		$("#chongzhi").css("pointer-events","visible")
+										            }
+										       }
+										    );  
+										}     
+									},
+									error:function(xml){
+										console.log(xml)
+									}
+								});
+								
+							}else{alert(data.msg)}
+							
+							
+						},
+						error:function(xml){
+							console.log(xml)
+						}
+						
+					});
+					
+				})
+			})
+		</script>
+
+	</body>
+</html>

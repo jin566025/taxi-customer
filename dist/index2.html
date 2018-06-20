@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css2/common-a96583650f.css" />
+		<link rel="stylesheet" href="css2/swiper-a18c58cf55.min.css" />
+		<link rel="stylesheet" href="css2/iosSelect-6e182791d9.css" />
+		<link rel="stylesheet" href="css2/index-1be345e9a4.css" />
+		<link rel="stylesheet" href="css2/map-10ec3d7dc5.css" />
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.CitySearch,AMap.Autocomplete,AMap.Driving"></script>
+		<script type="text/javascript" src="js2/map-ui-8752767455.js" ></script>
+		<script type="text/javascript" src="js2/map-c35636d2be.js" ></script>
+	</head>
+	<body>
+		<div class="header">
+			<div class="header-content clearfix">
+				<img class="fl header-content-img" src="img2/address.png" />
+				<a class="fl header-content-address" id="tip"></a>
+				<div class="fr header-content-btn" id="toSelectArea">手动选择地区</div>
+			</div>
+			
+		</div>
+		
+		<div class="swiper-container">
+	        <div class="swiper-wrapper">
+	            
+	        </div>
+	        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	    </div>
+
+		<div class="type-nav clearfix">
+			<div class="type-navs type-navs-active">送取件</div>
+			<div class="type-navs">代购</div>
+			<div class="type-navs">打车</div>
+			<div class="type-navs">代驾</div>
+		</div>
+		
+		
+		
+		
+		<div class="main main1">
+			
+			<div class="content">
+				<div class="start-address flex-box toaddress toaddress1"  onclick="window.location.href='address-manage.html'">
+					<div class="circle"></div>
+					<div class="content-address">物品从哪里出发</div>
+					<div class="content-address content-address2" id="section1">
+						<p class="content-address-p1" id="type-address1"></p>
+						<p class="content-address-p2">
+							<a id="type-name1"></a>
+							<a id="type-mobile1"></a>
+						</p>
+					</div>
+					
+					<img class="content-toRight" src="img2/toRight2.png" />
+				</div>
+				<div class="start-address flex-box toaddress toaddress2" onclick="window.location.href='address-manage.html'">
+					<div class="circle circle2"></div>
+					<div class="content-address">物品目的地</div>
+					<div class="content-address content-address2" id="section2">
+						<p class="content-address-p1" id="type-address2"></p>
+						<p class="content-address-p2">
+							<a id="type-name2"></a>
+							<a id="type-mobile2"></a>
+						</p>
+					</div>
+					<img class="content-toRight" src="img2/toRight2.png" />
+				</div>
+				
+				<div class="start-address2 clearfix">
+					<div class="start-address2-left fl flex-box box-sizing" id="showGeneral">
+						<div class="start-address2-type" >
+							<input readonly="readonly"  name="su_id" id="suId" value="选择取件时间">
+						</div>
+						<img src="img2/toRight2.png" class="content-toRight" />
+					</div>
+					<div class="start-address2-right fl flex-box" id="showBank">
+						<div class="start-address2-type">
+							<input readonly="readonly" name="bank_id" id="bankId" value="选择物品类型">                     
+						</div>
+						<img src="img2/toRight2.png" class="content-toRight" />
+					</div>
+				</div>
+				<div class="start-address2 clearfix flex-box">
+					<div class="remark">红包</div>
+					<input id="award" class="remark2" type="number" placeholder="请输入红包" />
+				</div>
+				<div class="start-address2 clearfix flex-box">
+					<div class="remark">备注</div>
+					<input id="message" class="remark2" type="text" placeholder="请输入备注信息" />
+				</div>
+				<div class="protocol flex-box">
+					<div class="protocol-label checked"></div>
+					<div class="protocol-content">
+						<a>同意并接受</a>
+						<a class="toProtocol" href="protocol.html">《取送件服务协议》</a>
+					</div>
+				</div>
+				
+				
+			</div>
+			
+			<div class="footer">
+				<div class="footer-hide">
+					<div class="footer-hide-title">
+						<p class="price-detail">费用明细</p>
+						<p class="price-rule" onclick="window.location.href='protocol.html'">价格规则</p>
+					</div>
+					<div class="footer-hide-section clearfix">
+						<div class="footer-hide-section-left fl">跑腿赏金</div>
+						<div class="footer-hide-section-right fr">￥<a id="finish-price2">0.00</a></div>
+					</div>
+					<div class="footer-hide-section clearfix">
+						<div class="footer-hide-section-left fl">红包</div>
+						<div class="footer-hide-section-right fr">
+							<div id="award3">0.00</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer-content">
+					<div class="footer-content-top clearfix">
+						<div class="fl footer-content-distance">
+							<p class="footer-content-distance2">
+								<a id="distance">0</a>
+								<a>公里</a>
+							</p>
+
+						</div>
+						
+						<img id="footer-content-toTop" class="fr footer-content-toTop" src="img2/toTop.png" />
+						<div class="fr footer-content-price" >￥<a id="finish-price">0.00</a></div>
+					</div>
+					
+					<div class="footer-content-btn mission-save" id="type1-submit">提交订单</div>
+				</div>
+			</div>
+			<div class="zanwei2"></div>
+		</div>
+		
+		
+		<div class="main main2">
+			<textarea class="main2-textarea" placeholder="我想买......"></textarea>
+			<div class="main2-content flex-box toaddress">
+				<div class="main2-content-left">购买</div>
+				<input id="pickerInput" class="main2-content-mid " type="text" placeholder="如不填写，由司机决定" />
+				<img class="main2-content-right" src="img2/toRight2.png" />
+			</div>
+			<div class="main2-content flex-box toaddress toaddress3"  onclick="window.location.href='address-manage.html'">
+				<div class="main2-content-left">收货</div>
+				<div class="content-address content-address3">填写收货信息</div>
+				<div class="content-address content-address2"  id="section3">
+					<p class="content-address-p1" id="type-address3"></p>
+					<p class="content-address-p2">
+						<a id="type-name3"></a>
+						<a id="type-mobile3"></a>
+					</p>
+				</div>
+				<img class="main2-content-right" src="img2/toRight2.png" />
+			</div>
+			<div class="main2-btn mission-save">提交订单</div>
+			<div class="zanwei3"></div>
+		</div>
+		
+		<div class="main main3">
+			<div class="main3-content flex-box">
+				<div class="main3-content-left"></div>
+				<input id="section4" onclick="window.location.href='select-address.html'" readonly="readonly" class="main3-content-mid toaddress toaddress4" type="text" placeholder="起始地" />
+				<img class="main3-content-right" src="img2/toRight2.png" />
+			</div>
+			<div class="main3-content flex-box">
+				<div class="main3-content-left main3-content-left2"></div>
+				<input id="section5" onclick="window.location.href='select-address.html'" readonly="readonly" class="main3-content-mid toaddress toaddress5" type="text" placeholder="目的地" />
+				<img class="main3-content-right" src="img2/toRight2.png" />
+			</div>
+			<div class="main3-btn mission-save">立即打车</div>
+			<div class="main3-distance" style="display: none;"></div>
+		</div>
+		<!--
+        	作者：13575546447@163.com
+        	时间：2018-05-15
+        	描述：代驾
+        -->
+		<div class="main main4">
+				<div class="dj-type clearfix">
+					<div class="dj-type2 dj-type-active" id="rcdj">日常代驾</div>
+					<div class="dj-type2" id="bsdj">包时代驾</div>
+				</div>
+				<div class="main4-section1 main4-section">
+					<div class="main3-content flex-box" style="margin-top: 0;">
+						<div class="main3-content-left"></div>
+						<input id="section6" onclick="window.location.href='select-address.html'" readonly="readonly" class="main3-content-mid toaddress toaddress6" type="text" placeholder="起始地" />
+						<img class="main3-content-right" src="img2/toRight2.png" />
+					</div>
+					<div class="main3-content flex-box">
+						<div class="main3-content-left main3-content-left2"></div>
+						<input id="section7" onclick="window.location.href='select-address.html'" readonly="readonly" class="main3-content-mid toaddress toaddress7" type="text" placeholder="目的地" />
+						<img class="main3-content-right" src="img2/toRight2.png" />
+					</div>
+					<div class="start-address2 clearfix flex-box" style="width: 100%;">
+						<div class="remark">红包</div>
+						<input id="award4" class="remark2" type="number" placeholder="请输入红包" />
+					</div>
+					<div class="protocol flex-box">
+						<div class="protocol-label checked"></div>
+						<div class="protocol-content">
+							<a>同意并接受</a>
+							<a class="toProtocol" href="protocol.html">《取送件服务协议》</a>
+						</div>
+					</div>
+					
+					<div class="main4-zanwei"></div>
+					<div class="main4-footer">
+						<div class="main4-header-child">
+							<div class="footer-hide-title">
+								<p class="price-detail">费用明细</p>
+								<p class="price-rule" onclick="window.location.href='protocol.html'">价格规则</p>
+							</div>
+							<div class="footer-hide-section clearfix">
+								<div class="footer-hide-section-left fl">代驾赏金</div>
+								<div class="footer-hide-section-right fr">￥<a id="main4-reward">0.00</a></div>
+							</div>
+							<div class="footer-hide-section clearfix">
+								<div class="footer-hide-section-left fl">红包</div>
+								<div class="footer-hide-section-right fr">
+									￥<a id="main4-award">0.00</a>
+								</div>
+							</div>
+						</div>
+						<div class="main4-footer-child clearfix">
+							<div class="main4-footer-child-left fl">
+								<a class="main4-footer-child-distance1" id="main4-distance">0</a>
+								<a class="main4-footer-child-distance1">公里</a>
+							</div>
+							<div class="main4-footer-child-left fr">
+								<a class="main4-footer-child-distance1">￥</a>
+								<a class="main4-footer-child-distance1" id="main4-finish">0.00</a>
+								<img id="main4-footer-child-distance4" class="main4-footer-child-distance4" src="img2/toTop.png" />
+							</div>
+						</div>
+						<div class="main4-footer-submit">确认代驾</div>
+					</div>
+				</div>
+				<div class="main4-section2 main4-section">
+					<div class="dj2-content">
+						
+						
+						
+					</div>
+					<div class="section4-guize">
+						<img class="wenhao" src="img2/wenhao.png" />
+						<a>计费规则</a>
+					</div>
+					<div class="main4-section2-zanwei"></div>
+				</div>
+			</div>
+		<footer class="clearfix">
+			<div class="footer-nav fl"  onclick="window.location.href='index.html'">
+				<img class="footer-nav-icon" src="img2/index-active.png" />
+				<p class="footer-nav-name footer-nav-name-active">首页</p>
+			</div>
+			<div class="footer-nav fl"  onclick="window.location.href='my-order-list.html'">
+				<img class="footer-nav-icon" src="img2/list.png" />
+				<p class="footer-nav-name">任务中心</p>
+			</div>
+			<div class="footer-nav fl"  onclick="window.location.href='personal.html'">
+				<img class="footer-nav-icon" src="img2/personal.png" />
+				<p class="footer-nav-name">个人中心</p>
+			</div>
+		</footer>
+		
+		
+		
+		
+
+		
+		<div id="shadow"></div>
+		<div id="shadow3"></div>
+		<div id="shadow2"></div>
+		<div id="type1-dialog" class="absolute-center">
+			<p id="type1-title">是否提交订单</p>
+			<div class="type1-price-container">
+				<div class="type1-price type1-price1">跑腿金额：￥<a id="finish-price3"></a></div>
+				<div class="type1-price">红包：￥<a id="award2"></a></div>
+			</div>
+			
+			<div class="type1-btn flex-box">
+				<div class="type1-btn-left">取消</div>
+				<div class="type1-btn-right" id="typeID1">确认</div>
+			</div>
+		</div>
+		
+		<div id="getAddress" class="absolute-center" style="display: none;">
+			<img src="img2/loading.gif" class="loading" />
+			<p>计算距离中</p>
+		</div>
+		<img src="img2/loading.gif" id="loadingimg" class="absolute-center" style="height: 3rem;z-index: 999;display: none;" />
+		<div id="container" style="display: none;"></div>
+		<div id="tip" style="display: none;"></div>
+		<div id="panel" style="display: none;" ></div>
+		<script type="text/javascript" src="js2/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="js2/firstCheck-edfeec679f.js" ></script>
+		<script type="text/javascript" src="js2/swiper-1d74106378.jquery.min.js" ></script>
+		<script type="text/javascript" src="js2/iosSelect-83b571a916.js" ></script>
+		<script type="text/javascript" src="js2/index-010b575d18.js" ></script>
+		<script type="text/javascript" src="js2/index-map-04e63f596d.js" ></script>
+		<script type="text/javascript" src="js2/areaData_v2-47ecfecae1.js" ></script>
+		<script type="text/javascript" src="js2/index-select-03dc863ba3.js" ></script>
+		<script type="text/javascript" src="js2/url-04f2d3931f.js" ></script>
+		<script type="text/javascript" src="js2/index-ajax-319c03104b.js" ></script>
+		
+	</body>
+</html>

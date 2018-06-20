@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common.css" />
+		<link rel="stylesheet" href="../../css2/order-detail.css" />
+		<link rel="stylesheet" href="../../css2/map.css" />
+		<link rel="stylesheet" href="../../css2/type2-order.css" />
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="panel" style="display: none;"></div>
+
+		<!--代购--><!--代购--><!--代购-->
+		<div class="main-content main-content7" style="display: block;">
+			<div class="main7">
+				<textarea class="daigou-text" maxlength="100"></textarea>
+				<div class="main-content7-container clearfix">
+					<p class="advice-price" style="font-size: 1.2rem;">
+						<a>建议价：</a>
+						<a>￥</a>
+						<a id="advice-price">待定</a>
+					</p>
+					<div class="main-content7-section fl" id="main7-edit1">
+						<p>
+							<a class="main-content7-section1">垫资资金：</a>
+							<img class="main-content7-section-img" src="../../img2/edit.png" />
+						</p>
+						<p>
+							<a class="main-content7-section2">￥</a>
+							<a class="main-content7-section2 main-content7-section2-price1">0</a>
+						</p>
+					</div>
+					<div class="main-content7-section fl" id="main7-edit2">
+						<p>
+							<a class="main-content7-section1">跑腿赏金：</a>
+							<img class="main-content7-section-img" src="../../img2/edit.png" />
+						</p>
+						<p>
+							<a class="main-content7-section2">￥</a>
+							<a class="main-content7-section2 main-content7-section2-price2">0</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="main-content7-btn">马上帮我送</div>
+		</div>
+		
+		
+		<div id="shadow"></div>
+		
+		<div class="dialog2 absolute-center">
+			<p class="dialog-p">垫资与实际商品金额发生误差，请当面结清</p>
+			<input class="dialog-input2" type="text" placeholder="请输入垫资资金" />
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
+				<div class="dialog-btns dialog-btns2 dialog-sure1 fl">确认</div>
+			</div>
+		</div>
+		<div class="dialog3 absolute-center">
+			<p class="dialog-p dialog-p2">跑腿赏金</p>
+			<input class="dialog-input2" type="text" placeholder="请输入金额" />
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
+				<div class="dialog-btns dialog-btns2 dialog-sure2 fl">确认</div>
+			</div>
+		</div>
+		
+		<div id="distance" style="display: none;"></div>
+		<script type="text/javascript" src="../../js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck.js" ></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
+		<script type="text/javascript" src="../../js2/map.js" ></script>
+		<script type="text/javascript" src="../../js2/url.js" ></script>
+		<script type="text/javascript" src="../../js2/swiper.jquery.min.js" ></script>
+		<script>
+			var map = new AMap.Map("container", {
+		        resizeEnable: true,
+		        zoom: 13 //地图显示的缩放级别
+		    });
+		    //构造路线导航类
+		    
+			var mySwiper = new Swiper('.section3,.section2',{
+				 onTouchMove: function(e){
+			            var dist=e.touches.currentY-e.touches.startY;
+			            if(dist<20){
+							ContentUp();
+			            }else if(dist>20){
+							ContentDown()
+			            }
+				 }
+		   	})
+			drivingMap();
+			function drivingMap(){
+				var driving = new AMap.Driving({
+			        map: map,
+			        panel: "panel"
+			    }); 
+				var toaddress4 = JSON.parse(sessionStorage.getItem("toaddress4"));
+				var deliveryAddressName;
+				if(toaddress4){
+					var deliveryAddressLongitude = toaddress4.lng;
+					var deliveryAddressLatitude = toaddress4.lat;
+					deliveryAddressName = toaddress4.name;
+					
+				}
+				var toaddress3 = JSON.parse(sessionStorage.getItem("toaddress3"));
+				if(toaddress3){
+					var taskAddressLongitude = toaddress3.lng;
+					var taskAddressLatitude = toaddress3.lat;
+				}
+				if(toaddress3 && toaddress4){
+					driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
+					setTimeout(function(){
+						var distance = $(".planTitle p").text();
+						var pattern =new RegExp("\\((.| )+?\\)","igm");
+						distance = distance.match(pattern)[0];
+						var reg = /[^\d\.]/g;
+						distance = distance.replace( reg, '' );
+						
+						if(deliveryAddressName){
+							var Regulation2 = sessionStorage.getItem("Regulation1");
+							Regulation2 = JSON.parse(Regulation2);
+							var initialMileage = Regulation2.initialMileage;
+							var initialMoney = Regulation2.initialMoney;
+							var valuation = Regulation2.valuation;
+							var distance2 = parseFloat(distance)
+							console.log(distance2>initialMileage)
+							if(distance2>initialMileage){
+								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
+								$("#advice-price").html(price3)
+							}else{
+								$("#advice-price").html(initialMoney)
+							}
+							
+						}
+						$("#distance").html(distance);
+					},500)
+				}
+				
+			}
+			function ContentUp(){
+				$(".section3").css("bottom","22rem");
+				$(".section2").css("bottom","4rem")
+			}
+			function ContentDown(){
+				$(".section3").css("bottom","4rem");
+				$(".section2").css("bottom","-20rem")
+			}
+			
+			setTimeout(function(){
+		    	$(".amap-logo,.amap-controls").hide();
+		    	$(".amap-copyright,.amap-controls").css("visibility","hidden")
+		    },500)
+			$(function(){
+				var daigoumsg = sessionStorage.getItem("daigoumsg",daigoumsg);
+				$(".daigou-text").html(daigoumsg)
+				$("#main7-edit1").click(function(){
+					$("#shadow").show();
+					$(".dialog2").show();
+				})
+				$("#main7-edit2").click(function(){
+					$("#shadow").show();
+					$(".dialog3").show();
+				})
+				$(".dialog-sure1").click(function(){
+					var dialog_price1 = $(this).parent().siblings(".dialog-input2").val();
+					$(".main-content7-section2-price1").html(dialog_price1);
+					$(this).parent().parent().hide();
+					$("#shadow").hide();
+				})
+				$(".dialog-btns1").click(function(){
+					$("#shadow").hide();
+					$(".dialog2,.dialog3").hide()
+				})
+				$(".dialog-sure2").click(function(){
+					var dialog_price2 = $(this).parent().siblings(".dialog-input2").val();
+					$(".main-content7-section2-price2").html(dialog_price2);
+					$(this).parent().parent().hide();
+					$("#shadow").hide();
+				})
+				
+				$(".main-content7-btn").click(function(){
+					daigou();
+					$(this).css("pointer-events","none")
+				})
+				function daigou(){
+					var typeId = window.location.href.split("=")[1];
+					//发货信息
+					var toaddress4 = JSON.parse(sessionStorage.getItem("toaddress4"));
+					var deliveryAddress,deliveryAddressLongitude,deliveryAddressLatitude;
+					if(toaddress4){
+						deliveryAddress = toaddress4.name;
+						deliveryAddressLongitude = toaddress4.lng;
+						deliveryAddressLatitude = toaddress4.lat;
+					}else{
+						deliveryAddress = "";
+						deliveryAddressLongitude = "";
+						deliveryAddressLatitude = "";
+					}
+					//收货信息
+					var toaddress3 = JSON.parse(sessionStorage.getItem("toaddress3"));
+					if(toaddress3){
+						var taskAddress = toaddress3.pickerInput2+toaddress3.addressInput;
+						var taskAddressLongitude = toaddress3.lng;
+						var taskAddressLatitude = toaddress3.lat;
+						var taskRealname = toaddress3.nameInput;
+						var taskTel = toaddress3.mobileInput;
+					}
+					
+					
+					//备注信息（我想买）
+					var message = $(".daigou-text").val();
+					if(message){
+						
+					}else{
+						alert("请输入代购信息");
+						return false;
+					}
+					var reward = parseFloat($(".main-content7-section2-price2").text());
+					if(reward){
+						
+					}else{
+						alert("请输入跑腿赏金");
+						return false;
+					}
+					var matmoney = parseFloat($(".main-content7-section2-price1").text());
+					
+					var finish = reward+matmoney;
+					var distance = parseFloat($("#distance").text());
+					if(distance){
+						
+					}else{
+						distance = 0;
+					}
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/save.json",
+						async:false,
+						data:{
+							"typeId":typeId,
+							"deliveryAddress":deliveryAddress,
+							"deliveryAddressLongitude":deliveryAddressLongitude,
+							"deliveryAddressLatitude":deliveryAddressLatitude,
+							"taskAddress":taskAddress,
+							"taskAddressLongitude":taskAddressLongitude,
+							"taskAddressLatitude":taskAddressLatitude,
+							"taskRealname":taskRealname,
+							"taskTel":taskTel,
+							"message":message,
+							"reward":reward,
+							"matmoney":matmoney,
+							"finish":finish,
+							"userId":userId,
+							"distance":distance
+						},
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+								var money = data.finish;
+								var id = data.id;
+								payWallt(id,userId,money,typeId)
+							}
+						},
+						error:function(){}
+					});
+				};
+				function payWallt(id,userId,money,typeId){
+					userId = parseInt(userId);
+					money=  parseFloat(money)
+					$.ajax({
+						type:"post",
+						url:url_path+"/pay/wallet.json",
+						data:{
+							"id":id,
+							"userId":userId,
+							"businessType":1,
+							"money":money
+						},
+						async:false,
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.msg=="成功"){
+								window.location.href="my-order-list.html?typeId="+typeId
+							}else if(data.stateCode==300){
+								alert("余额不足，使用微信支付");
+								$("#type1-dialog").fadeOut();
+								$("#loadingimg,#shadow2").fadeIn();
+								var openid = localStorage.getItem("openid");
+								var dataArray = {};
+								dataArray.id = id;
+								dataArray.userId = userId;
+								dataArray.tradeType = "JSAPI";
+								dataArray.goods_body = "wxpay";
+								dataArray.businessType = 1;
+								dataArray.openidT = openid;
+								$.ajax({
+									url:url_path+"/pay/weixinprepaid.json",
+									type:"post",
+									data:dataArray,
+									dataType:"json",
+									async:false,
+									success:function(data){
+										if(data.msg=="成功"){
+											$("#loadingimg,#shadow2").fadeOut();
+											var param = data.resInfo;
+											var timeStamp = param.timeStamp.toString();
+											var package = param.package;
+											var noncestr = param.nonceStr;
+											var sign = param.paySign;
+											var signType = param.signType;
+											var appid = param.appId;
+											WeixinJSBridge.invoke(
+										       'getBrandWCPayRequest', {
+										           "appId":appid,               //公众号名称，由商户传入     
+										           "timeStamp":timeStamp,       //时间戳，自1970年以来的秒数     
+										           "nonceStr":noncestr,         //随机串     
+										           "package":package,     
+										           "signType":signType,         //微信签名方式：     
+										           "paySign":sign               //微信签名 
+										       },
+										       function(res){
+												
+										            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+										            	$.ajax({
+															type:"post",
+															url:url_path+"/user/saveAccountstream.json",
+															async:false,
+															data:{
+																"userId":userId,
+																"money":money,
+																"useraccountOperationType":0,
+																"useraccountMode":0
+															},
+															dataType:"json",
+															success:function(data){
+																if(data.msg=="成功"){
+																	window.location.href="../../my-order-list.html"
+																}
+															}
+														});
+										           		
+										            }
+										       }
+										    );   
+										}
+									},
+									error:function(xml){
+										console.log(dataArray)
+										console.log(xml)
+									}
+								})
+							}
+						}
+					});
+				}
+			})
+			
+			
+			
+		</script>
+	</body>
+</html>

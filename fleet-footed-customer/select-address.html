@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css2/common.css" />
+		<link rel="stylesheet" href="css2/select-address.css" />
+		<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+	    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
+	    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+	</head>
+	<body>
+		
+		<div class="home">
+			<div class="section section2">
+				<p class="realname">家</p>
+				<p class="addressName">请先设置家庭地址</p>
+				<p class="lng hide"></p>
+				<p class="lat hide"></p>
+				<img src="img2/edit.png" class="edit" />
+			</div>
+			<div class="section section3">
+				<p class="realname">公司</p>
+				<p class="addressName">请先设置公司地址</p>
+				<p class="lng hide"></p>
+				<p class="lat hide"></p>
+				<img src="img2/edit.png" class="edit" />
+			</div>
+			
+		</div>
+		<div class="header-input flex-box">
+			<input id="tipinput" type="text" placeholder="输入关键字选取地点" />
+			<div id="cancle">取消</div>
+		</div>
+
+		<div id="container" class="map" tabindex="0"></div>
+		
+		<script type="text/javascript" src="js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="js2/firstCheck.js" ></script>
+		<script type="text/javascript" src="js2/url.js" ></script>
+		<script type="text/javascript">
+		    //地图加载
+		    var map = new AMap.Map("container", {
+		        resizeEnable: true,
+		        zoom:13
+		    });
+		    //输入提示
+		    var autoOptions = {
+		        input: "tipinput"
+		    };
+		    var auto = new AMap.Autocomplete(autoOptions);
+		    var placeSearch = new AMap.PlaceSearch({
+		        map: map
+		    });  //构造地点查询类
+		    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+		    function select(e) {
+		        placeSearch.setCity(e.poi.adcode);
+		        placeSearch.search(e.poi.name);  //关键字查询查询
+
+		        var addressName = e.poi.name;
+		        var addressLng = e.poi.location.lng;
+		        var addressLat = e.poi.location.lat;
+		        var addressType = sessionStorage.getItem("addressType");
+
+		        var num = parseInt(addressType)+1;
+		        for(var i=0;i<num;i++){
+		        	if(i==addressType){
+		        		var dataArray = {};
+		        		var datas;
+		        		dataArray.addressName = addressName;
+		        		dataArray.addressLng = addressLng;
+		        		dataArray.addressLat = addressLat;
+		        		datas = JSON.stringify(dataArray);
+		        		sessionStorage.setItem("toaddress"+num+"",datas)
+		        	}
+		        }
+		        setTimeout(function(){
+		        	history.go(-1)
+		        },500)
+		        
+		    }
+		    
+		    $(function(){
+		    	setTimeout(function(){
+			    	$(".amap-markers,.amap-logo,.amap-copyright").hide();
+			    	$(".amap-copyright").css("visibility","hidden");
+		
+			    },500)
+		    	
+		    	$(".edit").click(function(){
+		    		var addressId= $(this).parent().attr("data-addressid");
+		    		var label = $(this).index(".edit");
+		    		if(addressId){
+		    			window.location.href="address-manage2.html?label="+label+"?addressId="+addressId
+		    		}else{
+		    			window.location.href="address-manage2.html?label="+label
+		    		}
+		    		
+		    	})
+		    	$(".home").on("click",".section",function(){
+		    		var addressid = $(this).attr("data-addressid");
+		    		var addressName = $(this).find(".addressName").text();
+		    		var addressType = sessionStorage.getItem("addressType");
+		    		var addressLng = $(this).find(".lng").text();
+		    		var addressLat = $(this).find(".lat").text();
+		    		var num = parseInt(addressType)+1;
+		    		console.log(addressid)
+		    		if(addressid){
+		    			for(var i=0;i<num;i++){
+				        	if(i==addressType){
+				        		var dataArray = {};
+				        		var datas;
+				        		dataArray.addressName = addressName;
+				        		dataArray.addressLng = addressLng;
+				        		dataArray.addressLat = addressLat;
+				        		datas = JSON.stringify(dataArray);
+				        		sessionStorage.setItem("toaddress"+num+"",datas)
+				        	}
+				        }
+				        setTimeout(function(){
+				        	history.go(-1)
+				        },500)
+		    		}
+			        
+		    		
+		    	})
+		    	function getUserList(userId){
+		    		$.ajax({
+		    			type:"post",
+		    			url:url_path+"/address/byUserList.json",
+		    			data:{
+		    				"userId":userId,
+		    				"label":"普通地址"
+		    			},
+		    			dataType:"json",
+		    			success:function(data){
+		    				console.log(data)
+		    				if(data.stateCode==0){
+		    					var list = data.listDTO;
+		    					for(var i=0;i<list.length;i++){
+		    						var html = '<div class="section section4" data-addressid='+list[i].id+'>'+
+													'<p class="realname">'+list[i].realname+'</p>'+
+													'<p class="addressName">'+list[i].addressName+'</p>'+
+													'<p class="lng hide">'+list[i].longitude+'</p>'+
+													'<p class="lat hide">'+list[i].latitude+'</p>'+
+												'</div>';
+									$(".home").append(html)
+		    					}
+		    				}
+		    			}
+		    		});
+		    		
+		    		
+		    		setAddress("公司地址",userId,url_path,".section3");
+		    		setAddress("家庭地址",userId,url_path,".section2");
+		    		function setAddress(label,userId,url_path,target){
+		    			$.ajax({
+			    			type:"post",
+			    			url:url_path+"/address/byUserList.json",
+			    			data:{
+			    				"userId":userId,
+			    				"label":label
+			    			},
+			    			dataType:"json",
+			    			success:function(data){
+			    				console.log(data)
+			    				if(data.listDTO.length>0){
+			    					var list = data.listDTO[0];
+			    					$(target).attr("data-addressid",list.id);
+			    					$(target).find(".realname").html(list.realname);
+			    					$(target).find(".addressName").html(list.addressName)
+			    					$(target).find(".lng").html(list.longitude)
+			    					$(target).find(".lat").html(list.latitude)
+			    				}
+			    			}
+			    		});
+		    		}
+		    	}
+		    	getUserList(userId)
+		    })
+		    
+		</script>
+	</body>
+</html>

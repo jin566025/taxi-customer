@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="finish" style="font-size: 30px;">测试用的</div>
+		<script type="text/javascript" src="js2/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+
+		<script>
+//			var appId = "wx3169069333bfc3a1";
+//			var secret = "2a53cd3f6e932557bd04a21f0bc818b2";
+//			var flag = sessionStorage.getItem("flag")
+//			if(!flag){
+//				window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri=http://taxicustomer.nbzhidun.com/test.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+//			}
+//			
+//			var codeStr = window.location.href.split("=")[1];
+//			if(codeStr){
+//				var code = codeStr.split("&")[0];
+//			}
+//			sessionStorage.setItem("flag",1);
+//			if(code){
+//				$.ajax({
+//					type:"post",
+//					url:"http://localhost:3000/getToken",
+//					data:{
+//						"code":code
+//					},
+//					dataType:"json",
+//					success:function(data){
+//						console.log(data)
+//					},
+//					error:function(xml){
+//						console.log(xml)
+//					}
+//				});
+//			}
+	
+			$("#finish").click(function(){
+				console.log(returnCitySN["cip"]);
+				$.ajax({
+					type:"post",
+					url:"http://localhost:3000/wxPay",
+					data:{
+						"ip":returnCitySN["cip"]
+					},
+					dataType:"json",
+					success:function(data){
+						console.log(data)
+					},
+					error:function(xml){
+						console.log(xml)
+					}
+				});
+			})
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common.css" />
+		<link rel="stylesheet" href="../../css2/order-detail.css" />
+		<link rel="stylesheet" href="../../css2/map.css" />
+		<link rel="stylesheet" href="../../css2/type2-order.css" />
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="panel" style="display: none;"></div>
+
+		<!--未接单--><!--未接单--><!--未接单-->
+		<div  class="main4 main-content main-content1" >
+			
+		
+			<div  id="cancle-btn" class="cancle-order cancle-orders">已取消</div>
+		</div>
+	
+		<script type="text/javascript" src="../../js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck.js" ></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
+		<script type="text/javascript" src="../../js2/map.js" ></script>
+		<script type="text/javascript" src="../../js2/swiper.jquery.min.js" ></script>
+		<script type="text/javascript" src="../../js2/order-detail.js" ></script>
+		<script type="text/javascript" src="../../js2/url.js" ></script>
+		<script>
+			function changeReward(){
+				$("#shadow,.dialog4").fadeIn();
+			}
+			function changeMatmoney(){
+				$("#shadow,.dialog5").fadeIn();
+			}
+			$(function(){
+				
+				var id = window.location.href.split("listid=")[1];
+				
+				$(".dialog4-btns1").click(function(){
+					$("#shadow,.dialog4").fadeOut();
+				})
+				$(".dialog5-btns1").click(function(){
+					$("#shadow,.dialog5").fadeOut();
+				})
+				function timeFormatter(value) {
+				    var da = new Date(parseInt(value));
+				    var month = da.getMonth()+1;
+				    if(month<10){
+				    	month = "0"+month
+				    }
+				    
+				    var dates = da.getDate();
+				    if(dates<10){
+				    	dates = "0"+dates
+				    }
+				    
+				    var hour = da.getHours();
+				    if(hour<10){
+				    	hour = "0"+hour
+				    }
+				    
+				    var minute = da.getMinutes();
+				    if(minute<10){
+				    	minute = "0"+minute
+				    }
+				    
+				    var second = da.getSeconds();
+				    if(second<10){
+				    	second = "0"+second
+				    }
+				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
+				}
+				//加载数据
+				loadOrderDetail(id)
+			    function loadOrderDetail(id){
+			    	$.ajax({
+			    		type:"post",
+				    	url:url_path+"/mission/info.json",
+				    	data:{
+				    		"id":id
+				    	},
+				    	dataType:"json",
+				    	success:function(data){
+				    		console.log(data)
+				    		if(data.msg=="成功"){
+				    			if(data.state==7){
+				    				$("#order2-submit,#cancle-btn").attr("disabled",true).css("pointer-events","none")
+				    			}
+
+				    			$("#award").html(data.award);
+				    			$("#reward").html(data.reward);
+				    			if(data.matmoney){
+				    				$("#matmoney").html(data.matmoney);
+				    			}else{
+				    				$("#matmoney2").html("垫资与实际商品金额发生误差，请当面结清")
+				    			}
+				    			
+				    			$("#message").val(data.message);
+				    			
+				    			var deliveryAddressLatitude = data.deliveryAddressLatitude;
+				    			var deliveryAddressLongitude = data.deliveryAddressLongitude;
+				    			
+				    			var goodsType = data.goodsType;
+				    			var award = data.award;
+				    			var finish = data.finish;
+				    			var taskAddressLatitude = data.taskAddressLatitude;
+				    			var taskAddressLongitude = data.taskAddressLongitude;
+				    			
+				    			driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
+				    		}
+				    	}
+			    	});
+			    }
+			})
+		</script>
+	</body>
+</html>

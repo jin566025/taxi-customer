@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common.css" />
+		<link rel="stylesheet" href="../../css2/order-detail.css" />
+		<link rel="stylesheet" href="../../css2/map.css" />
+		<link rel="stylesheet" href="../../css2/type2-order.css" />
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="panel" style="display: none;"></div>
+
+		<!--进行中--><!--进行中--><!--进行中-->
+		<div class="main-content main-content2">
+			<div class="main main2 section3">
+				<div class="order2-head flex-box">
+					<img id="driverImgUrl" class="head-img" src="../../img2/test.jpg" />
+					<div class="head-detail">
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part2" id="driverNickname"></a>
+							<img class="head-detail-sec-part head-detail-sec-img" src="../../img2/star.png" />
+							<a class="head-detail-sec-part" id="driverGrade"></a>
+						</div>
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part3">车牌</a>
+							<a class="head-detail-sec-part"  id="driverCarNum">浙B</a>
+
+						</div>
+					</div>
+				</div>
+				<div class="order2-mid-nav clearfix">
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">联系司机
+						<a class="driverTel" id="driverTel"></a>
+					</div>
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing  tocomplain" id="complain">我要投诉</div>
+					<div class="order2-mid-navs cancle-orders" id="access">我要评价</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div id="shadow"></div>
+		<div class="dialog3 cancle-dialog dialogs absolute-center">
+			<p class="dialog-p dialog-p3">是否取消订单</p>
+			<div class="dialog-btn2 clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl" id="dialog-cancle">取消</div>
+				<div class="dialog-btns dialog-btns2 dialog-sure2 fl" id="dialog-sure">确认</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck.js" ></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
+		<script type="text/javascript" src="../../js2/map.js" ></script>
+		<script type="text/javascript" src="../../js2/swiper.jquery.min.js" ></script>
+		<script type="text/javascript" src="../../js2/order-detail.js" ></script>
+		<script type="text/javascript" src="../../js2/url.js" ></script>
+		<script>
+			
+			$(function(){
+				$("#order2-submit").css("pointer-events","none").html("结算中")
+				$(".section3").css("bottom","1rem")
+				
+				function timeFormatter(value) {
+				    var da = new Date(parseInt(value));
+				    var month = da.getMonth()+1;
+				    if(month<10){
+				    	month = "0"+month
+				    }
+				    
+				    var dates = da.getDate();
+				    if(dates<10){
+				    	dates = "0"+dates
+				    }
+				    
+				    var hour = da.getHours();
+				    if(hour<10){
+				    	hour = "0"+hour
+				    }
+				    
+				    var minute = da.getMinutes();
+				    if(minute<10){
+				    	minute = "0"+minute
+				    }
+				    
+				    var second = da.getSeconds();
+				    if(second<10){
+				    	second = "0"+second
+				    }
+				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
+				}
+				//加载数据
+				loadOrderDetail(id)
+			    function loadOrderDetail(id){
+			    	$.ajax({
+			    		type:"post",
+				    	url:url_path+"/mission/info.json",
+				    	data:{
+				    		"id":id
+				    	},
+				    	dataType:"json",
+				    	success:function(data){
+				    		console.log(data)
+				    		if(data.msg=="成功"){
+								$("#driverImgUrl").attr("src",data.driverImgUrl);
+								$("#driverNickname").html(data.driverNickname);
+								$("#driverGrade").html(data.driverGrade)
+				    			$("#award").html(data.award);
+				    			$("#driverCarNum").html(data.driverCarNum);
+				    			$("#goodsType").html(data.goodsType);
+				    			var pickupTime = timeFormatter(data.pickupTime);
+				    			$("#pickupTime").html(pickupTime);
+				    			$("#message").html(data.message);
+				    			$("#matmoney").html(data.matmoney).css("font-size","2.5rem");
+				    			$("#finish").html(data.finish);
+				    			$("#driverTel").attr("href","tel:"+data.driverTel+"");
+				    			var deliveryAddressLatitude = data.deliveryAddressLatitude;
+				    			var deliveryAddressLongitude = data.deliveryAddressLongitude;
+				    			
+	
+				    			var taskAddressLatitude = data.taskAddressLatitude;
+				    			var taskAddressLongitude = data.taskAddressLongitude;
+				    			
+				    			driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
+				    		}
+				    	}
+			    	});
+			    }
+			})
+		</script>
+	</body>
+</html>

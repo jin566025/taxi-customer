@@ -1,0 +1,1 @@
+var userId=sessionStorage.getItem("userId");function testLogin(){sessionStorage.getItem("userId")||(window.location.href="login.html")}setTimeout(function(){testLogin()},500);

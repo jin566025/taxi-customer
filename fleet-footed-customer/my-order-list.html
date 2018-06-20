@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css2/common.css" />
+		<link rel="stylesheet" href="css2/list.css" />
+		<link rel="stylesheet" href="css2/myorder.css" />
+		<style>
+			.hide{display: none;}
+		</style>
+	</head>
+	<body>
+		<header class="clearfix">
+			<div class="header-nav header-nav-active fl">
+				取送件
+			</div>
+			<div class="header-nav fl">
+				代购
+			</div>
+			<div class="header-nav fl">
+				打车
+			</div>
+			<div class="header-nav fl">
+				代驾
+			</div>
+		</header>
+		<div class="header-zanwei"></div>
+		<div class="list-container">
+			<div class="list list1"></div>
+			<div class="list list2"></div>
+			<div class="list list3"></div>
+			<div class="list list4"></div>
+		</div>
+
+		<p class="addmore hasmore">加载中...</p>
+		<div class="footer-zanwei"></div>
+		<footer class="clearfix">
+			<div class="footer-nav fl" onclick="window.location.href='index.html'">
+				<img class="footer-nav-icon" src="img2/index.png" />
+				<p class="footer-nav-name">首页</p>
+			</div>
+			<div class="footer-nav fl" onclick="window.location.href='my-order-list.html'">
+				<img class="footer-nav-icon" src="img2/list-active.png" />
+				<p class="footer-nav-name footer-nav-name-active">我的订单</p>
+			</div>
+			<div class="footer-nav fl" onclick="window.location.href='personal.html'">
+				<img class="footer-nav-icon" src="img2/personal.png" />
+				<p class="footer-nav-name">个人中心</p>
+			</div>
+		</footer>
+		
+		<script type="text/javascript" src="js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="js2/firstCheck.js" ></script>
+		<script type="text/javascript" src="js2/url.js" ></script>
+		<script type="text/javascript" src="js2/list.js" ></script>
+		<script>
+			$(function(){
+				$(".header-nav").click(function(){
+					tabNav(this)
+					$(this).addClass("header-nav-active").siblings().removeClass("header-nav-active")
+				})
+				var pageNo = 1;
+				var pageSize = 99999999;
+				
+				listLoad(userId,pageNo,pageSize);
+//				$(".addmore").click(function(){
+//					if($(this).hasClass("hasmore")){
+//						pageNo = pageNo+1;
+//						showList(userId,pageNo,pageSize);
+//					}
+//				});
+				function compare(){
+					var mylist2 = sessionStorage.getItem("mylist");
+					var mylist = JSON.parse(mylist2);
+					var pageNo = 1;
+					var pageSize = 99999999;
+					var userId = localStorage.getItem("userId");
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/byUserList.json",
+						data:{
+							"userId":userId,
+							"pageNo":pageNo,
+							"pageSize":pageSize
+						},
+						dataType:"json",
+						success:function(data){
+							if(data.msg=="成功"){
+								var list = data.listDTO;
+								for(var i=0;i< list.length;i++ ){
+									
+									if(list[i].state!==mylist[i].state){
+										var orderDetail = $("#order"+list[i].id+"");
+										if(list[i].state==2){
+											orderDetail.find(".status-left").html("已接单");
+											orderDetail.find(".status-right").html("司机正在赶来路上，请耐心等待");
+										}else if(list[i].state==3){
+											orderDetail.find(".status-left").html("已完成");
+											orderDetail.find(".status-right").html("未评价，请前去评价");
+										}else if(list[i].state==7){
+											orderDetail.find(".status-left").html("已取消");
+											orderDetail.find(".status-right").html("已取消订单");
+										}
+										
+									}
+								}
+							}
+						}
+					})
+				}
+				
+				setInterval(function(){
+					compare()
+				},5000)
+				$(".list-container").on("click",".list-main",function(){
+					var listid = $(this).data("listid");	
+					var strs = $(this).find(".status-left").text();
+					if($(this).hasClass("typeId4")){
+						if(strs=="未接单" || strs=="修改订单"){
+							window.location.href="pages2/my-order-list/order-detail-4-1.html?listid="+listid
+						}else if(strs=="已接单"){
+							window.location.href="pages2/my-order-list/order-detail-4-2.html?listid="+listid
+						}else if(strs=="已完成"){
+							window.location.href="pages2/my-order-list/order-detail-4-3.html?listid="+listid
+						}else if(strs=="结算中"){
+							window.location.href="pages2/my-order-list/order-detail-4-5.html?listid="+listid
+						}else if(strs=="已取消"){
+							window.location.href="pages2/my-order-list/order-detail-4-7.html?listid="+listid
+						}
+					}else if($(this).hasClass("typeId1")){
+						if(strs=="未接单" || strs=="修改订单"){
+							window.location.href="pages2/my-order-list/order-detail-1-1.html?listid="+listid
+						}else if(strs=="已接单"){
+							window.location.href="pages2/my-order-list/order-detail-1-2.html?listid="+listid
+						}else if(strs=="已完成"){
+							window.location.href="pages2/my-order-list/order-detail-1-3.html?listid="+listid
+						}else if(strs=="结算中"){
+							window.location.href="pages2/my-order-list/order-detail-1-5.html?listid="+listid
+						}else if(strs=="已取消"){
+							window.location.href="pages2/my-order-list/order-detail-1-7.html?listid="+listid
+						}
+					}else if($(this).hasClass("typeId2")){
+						if(strs=="未接单" || strs=="修改订单"){
+							window.location.href="pages2/my-order-list/order-detail-2-1.html?listid="+listid
+						}else if(strs=="已接单"){
+							window.location.href="pages2/my-order-list/order-detail-2-2.html?listid="+listid
+						}else if(strs=="已完成"){
+							window.location.href="pages2/my-order-list/order-detail-2-3.html?listid="+listid
+						}else if(strs=="结算中"){
+							window.location.href="pages2/my-order-list/order-detail-2-5.html?listid="+listid
+						}else if(strs=="已取消"){
+							window.location.href="pages2/my-order-list/order-detail-2-7.html?listid="+listid
+						}
+					}else if($(this).hasClass("typeId3")){
+						if(strs=="未接单" || strs=="修改订单"){
+							window.location.href="pages2/my-order-list/order-detail-3-1.html?listid="+listid
+						}else if(strs=="已接单"){
+							window.location.href="pages2/my-order-list/order-detail-3-2.html?listid="+listid
+						}else if(strs=="已完成"){
+							window.location.href="pages2/my-order-list/order-detail-3-3.html?listid="+listid
+						}else if(strs=="结算中"){
+							window.location.href="pages2/my-order-list/order-detail-3-5.html?listid="+listid
+						}else if(strs=="已取消"){
+							window.location.href="pages2/my-order-list/order-detail-3-7.html?listid="+listid
+						}
+					}else if($(this).hasClass("typeId5")){
+						if(strs=="未接单" || strs=="修改订单"){
+							window.location.href="pages2/my-order-list/order-detail-5-1.html?listid="+listid
+						}else if(strs=="已接单"){
+							window.location.href="pages2/my-order-list/order-detail-5-2.html?listid="+listid
+						}else if(strs=="已完成"){
+							window.location.href="pages2/my-order-list/order-detail-5-3.html?listid="+listid
+						}else if(strs=="结算中"){
+							window.location.href="pages2/my-order-list/order-detail-5-5.html?listid="+listid
+						}else if(strs=="已取消"){
+							window.location.href="pages2/my-order-list/order-detail-5-7.html?listid="+listid
+						}
+					}else{
+						window.location.href="pages2/my-order-list/type1-order1.html?listid="+listid
+					}
+					
+				})
+				$(window).scroll(function(){
+					if($(window).scrollTop() + $(window).height() >= $(document).height() ){
+						if($(".addmore").hasClass("hasmore")){
+							pageNo = pageNo+1;
+							showList(pageNo,pageSize);
+						}
+					}
+				})
+				
+				
+				function listLoad(){
+					var typeId = parseInt(window.location.href.split("=")[1])-1;
+					var t = $(".header-nav")[typeId];
+					tabNav(t);
+					$(t).addClass("header-nav-active").siblings().removeClass("header-nav-active");
+					showList(userId,pageNo,pageSize);
+				}
+				function tabNav(t){
+					var index = $(t).index()+1;
+					$(".list"+index+"").show().siblings().hide();
+				}
+			})
+
+		</script>
+	</body>
+</html>

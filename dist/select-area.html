@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css2/common-a96583650f.css" />
+		<link rel="stylesheet" href="css2/index-1be345e9a4.css" />
+		<style>
+			#shadow{width: 100%;height: 100%;position: fixed;top: 0;left: 0;z-index: 10;background-color: rgba(0,0,0,0.3);display: block;}
+			#loading{height: 6rem;width: 100%;text-align: center;z-index: 12;}
+			#loading-img{height: 3rem;}
+			#loading-text{height: 3rem;line-height: 3rem;color: #FFFFFF;font-size: 1.4rem;}
+		</style>
+	</head>
+	<body style="overflow-x: hidden;">
+		<header>
+			<p>选择地址</p>
+			<img src="img2/return.png" class="return-icon" onclick="window.location.href='index2.html'" />
+		</header>
+		<div class="protocol-content">
+			<p class="area">
+				<a>当前定位：</a>
+				<a id="area"></a>
+			</p>
+			<div id="area-content"></div>
+		</div>
+		
+		<div class="slider">
+			<header>
+				<p id="city">选择地址</p>
+				<img src="img2/return.png" class="return-icon return-icon2" />
+			</header>
+			<div id="area-content2" class="protocol-content"></div>
+		</div>
+		<div class="zhezhao"></div>
+		<div class="slider2">
+			
+			<header>
+				<p id="city2">选择地址</p>
+				<img src="img2/return.png" class="return-icon return-icon3" />
+			</header>
+			<div id="area-content3" class="protocol-content"></div>
+		</div>
+		<div id="shadow"></div>
+		<div id="loading" class="absolute-center">
+			<img id="loading-img" src="img2/loading.gif" />
+			<p id="loading-text">加载中</p>
+		</div>
+		<script type="text/javascript" src="js2/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="js2/firstCheck-edfeec679f.js" ></script>
+		<script type="text/javascript" src="js2/url-04f2d3931f.js" ></script>
+		<script>
+			$(function(){
+				var area = sessionStorage.getItem("area");
+				$("#area").html(area);
+				$(".return-icon2").click(function(){
+					$(".slider").animate({"left":"100%"},500)
+				})
+				$(".return-icon3").click(function(){
+					$(".slider2").animate({"left":"100%"},500);
+					$(".zhezhao").hide();
+				})
+				//获取市
+				$("#area-content").on("click",".areas",function(){
+					var cityid = $(this).data("cityid");
+					$(".slider").animate({"left":"0px"},500);
+					$("#city").html($(this).text());
+					getCity(cityid);
+				})
+				function getCity(cityid){
+					$.ajax({
+						type:"post",
+						url:url_path+"/queryArea.json",
+						data:{
+							"areaId":cityid,
+							"deep":2
+						},
+						dataArray:"json",
+						success:function(data){
+							console.log(data)
+							if(data.stateCode==0){
+								var list = data.arealist;
+
+								$("#area-content2").html("");
+								for(var i=0;i<list.length;i++){
+									var html = '<p class="area2" data-areaid='+list[i].id+'>'+list[i].name+'</p>';
+									$("#area-content2").append(html);
+								}
+							}
+						}
+					});
+				}
+				//获取县区
+				$("#area-content2").on("click",".area2",function(){
+					var areaid = $(this).data("areaid");
+					$(".slider2").animate({"left":"0px"},500);
+					sessionStorage.setItem("cityId",areaid);
+					sessionStorage.setItem("area",$(this).text())
+					getDistrict(areaid);
+				})
+				function getDistrict(areaid){
+					$.ajax({
+						type:"post",
+						url:url_path+"/queryArea.json",
+						data:{
+							"areaId":areaid,
+							"deep":3
+						},
+						dataArray:"json",
+						success:function(data){
+							console.log(data)
+							if(data.stateCode==0){
+								var list2 = data.arealist;
+								$("#area-content3").html("");
+								$(".zhezhao").show();
+								for(var i=0;i<list2.length;i++){
+									var html = '<p class="area2" data-districtid='+list2[i].id+'>'+list2[i].name+'</p>';
+									$("#area-content3").append(html);
+								}
+							}
+						}
+					});
+				}
+				
+				$("#area-content3").on("click",".area2",function(){
+					var districtid = $(this).data("districtid");
+					sessionStorage.setItem("districtId",districtid);
+					var district = $(this).text();
+					var city = sessionStorage.getItem("area")
+					var areas = district+" "+city;
+					sessionStorage.removeItem("area")
+					sessionStorage.setItem("area",areas);
+					$("#area").html(areas);
+					window.location.href="index2.html"
+				})
+				
+				loadProvince();
+				function loadProvince(){
+					$.ajax({
+						type:"post",
+						url:url_path+"/queryArea.json",
+						data:{
+							"deep":1
+						},
+						dataType:"json",
+						success:function(data){
+							
+							console.log(data)
+							if(data.stateCode==0){
+								$("#shadow,#loading").fadeOut();
+								var list = data.arealist;
+								for(var i=0;i<list.length;i++){
+									var html = '<div class="areas flex-box" data-cityid='+list[i].id+'>'+
+													'<div class="areas-left">'+list[i].name+'</div>'+
+													'<img src="img2/toRight2.png" class="areas-right" />'+
+												'</div>';
+									$("#area-content").append(html)
+								}
+								
+							}
+						}
+					});
+				}
+				
+			})
+		</script>
+	</body>
+</html>

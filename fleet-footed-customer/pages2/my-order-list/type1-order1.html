@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common.css" />
+		<link rel="stylesheet" href="../../css2/order-detail.css" />
+		<link rel="stylesheet" href="../../css2/map.css" />
+		<link rel="stylesheet" href="../../css2/type2-order.css" />
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="panel" style="display: none;"></div>
+		
+		
+		<!--未接单--><!--未接单--><!--未接单-->
+		<div  class="main4 main-content main-content1" >
+			<div id="main-top">
+				<div class="main-top-container3 flex-box hide">
+					<div class="main-top-container2-left">垫资资金：</div>
+					<div class="main-top-container2-mid">
+						<a>￥</a>
+						<a class="main-top-container2-price">45</a>
+					</div>
+					<img class="main-top-container2-right" src="../../img2/toRight.png" />
+				</div>
+				<input class="main-top-container2-input" type="text" disabled="disabled" value="帮我去买一包烟" />
+				<div class="main-top-container clearfix">
+					<a class="main-top main-top1 fl">已选择物品类型</a>
+					<img class="main-top main-top3 fr" src="../../img2/toRight.png" />
+					<a class="main-top main-top2 fr" id="goodsType">办公用品</a>
+				</div>
+				<div class="main-top-container main-top-container11 clearfix">
+					<a class="main-top main-top1 fl">红包</a>
+					<p class="main-top main-top2 fr">
+						<a>￥</a>
+						<a id="reward"></a>
+					</p>
+				</div>
+				<div class="main-top-content">
+					<p class="main-top-container3-p1">
+						<a>建议价：</a>
+						<a class="main-top-container3-p2">￥</a>
+						<a class="main-top-container3-p3"></a>
+					</p>
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">
+						<a>￥</a>
+						<a id="matmoney"></a>
+						<img src="../../img2/edit.png" class="edit" style="position: absolute;" />
+					</p>
+					<p class="main-top-content-p3">
+						<a>立即取件</a>
+						<img src="../../img2/toRight.png" />
+					</p>
+				</div>
+			</div>
+			<div id="main-mid" class="flex-box">
+				<div class="message-left">备注：</div>
+				<div class="message-right" id="message">备注信息</div>
+			</div>
+			<div id="main-bottom" class="cancle-order cancle-orders">取消订单</div>
+		</div>
+		
+		
+		<!--进行中--><!--进行中--><!--进行中-->
+		<div class="main-content main-content2">
+			<div class="main main2 section3">
+				<div class="order2-head flex-box">
+					<img id="main-content2-head" class="head-img" src="../../img2/test.jpg" />
+					<div class="head-detail">
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part2" id="main-content2-name"></a>
+							<img class="head-detail-sec-part head-detail-sec-img" src="../../img2/star.png" />
+							<a class="head-detail-sec-part" id="main-content2-driverGrade"></a>
+						</div>
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part3">车牌</a>
+							<a class="head-detail-sec-part"  id="main-content2-driverCarNum">浙B</a>
+
+						</div>
+					</div>
+				</div>
+				<div class="order2-mid-nav clearfix">
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">联系司机
+						<a class="driverTel"></a>
+					</div>
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing  tocomplain">我要投诉</div>
+					<div class="order2-mid-navs cancle-orders">取消订单</div>
+				</div>
+			</div>
+			<div class="section2">
+				<div class="types types1">
+					<p class="main2-section-p">
+						<a>已选择物品类型</a>：
+						<a id="main-content2-type"></a>
+					</p>
+					<p class="main2-section-p">
+						<a>红包：</a>
+						<a class="main2-section-p-price">￥</a>
+						<a class="main2-section-p-price" id="main-content2-finish"></a>
+					</p>
+					<p class="main2-section-p">
+						<a>备注：</a>
+						<a  id="main-content2-message"></a>
+					</p>
+				</div>
+				<div class="types types2">
+					<p class="main2-section-p main2-section-p2">
+						<a>垫资资金：</a>
+						<a class="main2-section-p-price">￥</a>
+						<a class="main2-section-p-price dzzj">45</a>
+					</p>
+					<p class="main2-section-p main2-section-p2">
+						<a id="type2-msg">帮我买一包烟</a>
+					</p>
+				</div>
+				
+				<div class="main-top-content main-top-content2">
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">
+						<a>￥</a>
+						<a id="main-content2-award"></a>
+					</p>
+					
+					<p class="main-top-content-p3">
+						<a id="main-content2-pickupTime"></a>
+						<a>取件</a>
+					</p>
+				</div>
+			</div>
+			<div class="order-btn" id="main-content2-submit">完成订单</div>
+		</div>
+		
+		
+		<!--申诉中--><!--申诉中--><!--申诉中-->
+		<div class="main-content main-content4">
+			<div class="main main2 section3">
+				<div class="order2-head flex-box">
+					<img class="head-img" src="../../img2/test.jpg" />
+					<div class="head-detail">
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part2">老王</a>
+							<img class="head-detail-sec-part head-detail-sec-img" src="../../img2/star.png" />
+							<a class="head-detail-sec-part">4.6</a>
+						</div>
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part3">车牌</a>
+							<a class="head-detail-sec-part">浙B</a>
+							<a class="head-detail-sec-part">05451S</a>
+						</div>
+					</div>
+				</div>
+				<div class="order2-mid-nav clearfix">
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">联系司机
+						<a class="driverTel"></a>
+					</div>
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">取消申诉</div>
+					<div class="order2-mid-navs cancle-orders">取消订单</div>
+				</div>
+			</div>
+			<div class="section2">
+				<p class="main2-section-p">
+					<a>已选择物品类型</a>：
+					<a>办公物品</a>
+				</p>
+				<p class="main2-section-p">
+					<a>红包：</a>
+					<a class="main2-section-p-price">￥0.00</a>
+				</p>
+				<p class="main2-section-p">
+					<a>备注：</a>
+					<a>帮我轻拿轻放</a>
+				</p>
+				<div class="main-top-content main-top-content2">
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">￥42.82</p>
+					<p class="main-top-content-p3">
+						<a>明天</a>
+						<a>12点</a>
+						<a>取件</a>
+					</p>
+				</div>
+			</div>
+			<div class="order-btn" id="order2-submit2">完成订单</div>
+			
+			<div class="complaining">
+				<p>
+					<a>申诉类型：</a>
+					<a class="complaining-type">申诉车主</a>
+				</p>
+				<p>辱骂驾驶司机，且态度恶劣</p>
+				
+				<div class="complain-img-container clearfix">
+					<div class="complain-img fl"></div>
+
+				</div>
+			</div>
+		</div>
+		<!--未评价--><!--未评价--><!--未评价-->
+		<div class="main-content main-content3">
+			<div  class="main main2 section3">
+				<div class="order2-head flex-box">
+					<img id="main-content3-head" class="head-img" src="../../img2/test.jpg" />
+					<div class="head-detail">
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part2" id="main-content3-name"></a>
+							<img class="head-detail-sec-part head-detail-sec-img" src="../../img2/star.png" />
+							<a id="main-content3-grade" class="head-detail-sec-part"></a>
+						</div>
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part3">车牌</a>
+							<a id="main-content3-carnum" class="head-detail-sec-part"></a>
+						</div>
+					</div>
+				</div>
+				<div class="order2-mid-nav clearfix">
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">联系司机
+						<a class="driverTel"></a>
+					</div>
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing tocomplain">我要投诉</div>
+					<div class="order2-mid-navs  toaccesss">去评价</div>
+				</div>
+			</div>
+			<div class="section2">
+				<div class="main2-section-p-container1">
+					<p class="main2-section-p">
+						<a>垫资资金：</a>
+						<a>￥</a>
+						<a class="main2-section-p-container1-price"></a>
+					</p>
+					<p class="main2-section-p">
+						<a class="main2-section-p-container1-message">帮我买一包眼：</a>
+					</p>
+				</div>
+				<div class="main2-section-p-container2">
+					<p class="main2-section-p">
+						<a>已选择物品类型</a>：
+						<a id="main-content3-type"></a>
+					</p>
+					<p class="main2-section-p">
+						<a>红包：</a>
+						<a class="main2-section-p-price">￥</a>
+						<a id="main-content3-award" class="main2-section-p-price"></a>
+					</p>
+					<p class="main2-section-p">
+						<a>备注：</a>
+						<a id="main-content3-message"></a>
+					</p>
+				</div>
+				
+				<div class="main-top-content main-top-content2">
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">
+						<a>￥</a>
+						<a id="main-content3-finish"></a>
+					</p>
+					<p class="main-top-content-p3">
+						<a id="main-content3-time"></a>
+						<a>取件</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<!--已评价--><!--已评价--><!--已评价-->
+		<div class="main-content main-content5">
+			<div  class="main main2 section3">
+				<div class="order2-head flex-box">
+					<img class="head-img" src="../../img2/test.jpg" />
+					<div class="head-detail">
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part2">老王</a>
+							<img class="head-detail-sec-part head-detail-sec-img" src="../../img2/star.png" />
+							<a class="head-detail-sec-part">4.6</a>
+						</div>
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part3">车牌</a>
+							<a class="head-detail-sec-part">浙B</a>
+							<a class="head-detail-sec-part">05451S</a>
+						</div>
+					</div>
+				</div>
+				<div class="order2-mid-nav clearfix">
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">联系司机
+						<a class="driverTel"></a>
+					</div>
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">我要投诉</div>
+					<div class="order2-mid-navs">已评价</div>
+				</div>
+			</div>
+			<div class="section2">
+				<p class="main2-section-p">
+					<a>已选择物品类型</a>：
+					<a>办公物品</a>
+				</p>
+				<p class="main2-section-p">
+					<a>红包：</a>
+					<a class="main2-section-p-price">￥0.00</a>
+				</p>
+				<p class="main2-section-p">
+					<a>备注：</a>
+					<a>帮我轻拿轻放</a>
+				</p>
+				<div class="main-top-content main-top-content2">
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">￥42.82</p>
+					<p class="main-top-content-p3">
+						<a>明天</a>
+						<a>12点</a>
+						<a>取件</a>
+					</p>
+				</div>
+			</div>
+			<div id="order2-submit4">完成订单</div>
+			
+			<div class="cancle-reason box-sizing">
+				<p>
+					<a>评价星级</a>
+					<a class="reason-type">
+						<img class="star-assess" src="../../img2/star-assess.png" />
+						<img class="star-assess" src="../../img2/star-assess.png" />
+						<img class="star-assess" src="../../img2/star-assess.png" />
+						<img class="star-assess" src="../../img2/star-assess.png" />
+						<img class="star-assess star-assess2" src="../../img2/star-assess2.png" />
+					</a>
+				</p>
+				<p>老司机带飞真的很舒服啊</p>
+	
+			</div>
+		</div>
+		
+		<!--已申诉--><!--已申诉--><!--已申诉-->
+		<div class="main-content main-content6">
+			<div class="main main2 section3">
+				<div class="order2-head flex-box">
+					<img class="head-img" src="../../img2/test.jpg" />
+					<div class="head-detail">
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part2">老王</a>
+							<img class="head-detail-sec-part head-detail-sec-img" src="../../img2/star.png" />
+							<a class="head-detail-sec-part">4.6</a>
+						</div>
+						<div class="head-detail-sec">
+							<a class="head-detail-sec-part head-detail-sec-part3">车牌</a>
+							<a class="head-detail-sec-part">浙B</a>
+							<a class="head-detail-sec-part">05451S</a>
+						</div>
+					</div>
+				</div>
+				<div class="order2-mid-nav clearfix">
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">联系司机
+						<a class="driverTel"></a>
+					</div>
+					<div class="order2-mid-navs order2-mid-navs2 box-sizing">已投诉</div>
+					<div class="order2-mid-navs">我要评价</div>
+				</div>
+			</div>
+			<div class="section2">
+				<p class="main2-section-p">
+					<a>已选择物品类型</a>：
+					<a>办公物品</a>
+				</p>
+				<p class="main2-section-p">
+					<a>红包：</a>
+					<a class="main2-section-p-price">￥0.00</a>
+				</p>
+				<p class="main2-section-p">
+					<a>备注：</a>
+					<a>帮我轻拿轻放</a>
+				</p>
+				<div class="main-top-content main-top-content2">
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">￥42.82</p>
+					<p class="main-top-content-p3">
+						<a>明天</a>
+						<a>12点</a>
+						<a>取件</a>
+					</p>
+				</div>
+			</div>
+			<div class="order-btn" id="order2-submit2">完成订单</div>
+			
+			<div class="complaining">
+				<p>
+					<a>申诉类型：</a>
+					<a class="complaining-type">申诉车主</a>
+				</p>
+				<p>辱骂驾驶司机，且态度恶劣</p>
+				
+				<div class="complain-img-container clearfix">
+					<div class="complain-img fl"></div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="shadow"></div>
+		<div class="dialog2 dialogs absolute-center">
+			<p class="dialog-p dialog-p3">是否完成订单</p>
+			<div class="dialog-btn2 clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
+				<div class="dialog-btns dialog-btns2 dialog-sure1 fl">确认</div>
+			</div>
+		</div>
+		<div class="dialog3 dialogs absolute-center">
+			<p class="dialog-p dialog-p3">是否取消订单</p>
+			<div class="dialog-btn2 clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
+				<div class="dialog-btns dialog-btns2 dialog-sure2 fl">确认</div>
+			</div>
+		</div>
+		<div class="dialog4 dialogs absolute-center">
+			<p class="dialog-p2">垫资资金</p>
+			<input class="dialog-input2" id="dialog4-input" type="text" placeholder="请输入垫资资金" />
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
+				<div class="dialog-btns dialog-btns2 fl dialog4-sure">确认</div>
+			</div>
+		</div>
+		<div class="dialog5 dialogs absolute-center">
+			<p class="dialog-p dialog-p2">跑腿赏金</p>
+			<input class="dialog-input2" type="text" placeholder="请输入金额" />
+			<div class="dialog-btn clearfix">
+				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
+				<div class="dialog-btns dialog-btns2 dialog-sure2 fl">确认</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck.js" ></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
+		<script type="text/javascript" src="../../js2/map.js" ></script>
+		<script type="text/javascript" src="../../js2/url.js" ></script>
+		<script type="text/javascript" src="../../js2/order.js" ></script>
+		<script type="text/javascript" src="../../js2/swiper.jquery.min.js" ></script>
+		<script>
+			var map = new AMap.Map("container", {
+		        resizeEnable: true,
+		        zoom: 13 //地图显示的缩放级别
+		    });
+		    //构造路线导航类
+		    var driving = new AMap.Driving({
+		        map: map,
+		        panel: "panel"
+		    }); 
+			var mySwiper = new Swiper('.section3,.section2',{
+				 onTouchMove: function(e){
+			            var dist=e.touches.currentY-e.touches.startY;
+			            if(dist<20){
+							ContentUp();
+			            }else if(dist>20){
+							ContentDown()
+			            }
+				 }
+		    })
+			
+			
+			function ContentUp(){
+				$(".section3").css("bottom","24.5rem");
+				$(".section2").css("bottom","5rem")
+			}
+			function ContentDown(){
+				$(".section3").css("bottom","5rem");
+				$(".section2").css("bottom","-20rem")
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css2/common-a96583650f.css" />
+		<link rel="stylesheet" href="css2/recharge-ac30715592.css" />
+	</head>
+	<body>
+		<header style="position: fixed;background-color: #FFFFFF;">
+			<p>充值话费</p>
+			<img src="img2/return.png" class="return-icon" onclick="history.go(-1)" />
+		</header>
+		<div style="width: 100%;height: 4rem;"></div>
+		<div class="protocol-content">
+			<p class="title-p1">充话费</p>
+			<p class="title-p2">100元</p>
+			<p class="title-p3">充值话费活动可获得等额返到我的余额里面</p>
+			<input class="recharge-input" type="number" placeholder="请输入手机号" />
+			<p class="title-p4">支付方式</p>
+			<div class="flex-box cz cz1">
+				<div class="icons icons1">
+					<img src="img2/cz.png" />
+				</div>
+				<div class="cz-type cz-type1">余额充值</div>
+				<div class="circle">
+					<img class="gou" src="img2/gou.png" />
+				</div>
+			</div>
+			<div class="flex-box cz cz2">
+				<div class="icons icons2">
+					<img src="img2/wx.png" />
+				</div>
+				<div class="cz-type cz-type2">微信充值</div>
+				<div class="circle circle-active">
+					<img class="gou" src="img2/gou.png" />
+				</div>
+			</div>
+		</div>
+		<div class="finish-zanwei"></div>
+		<div class="finish">确认充值</div>
+		<script type="text/javascript" src="js2/jquery-3-b36670e5ea.0.0.js" ></script>
+		<script type="text/javascript" src="js2/url-04f2d3931f.js" ></script>
+		<script>
+			$(function(){
+				$(".circle").click(function(){
+					var color = $(this).parent().find(".icons").css("background-color");
+					$(".circle").css("background-color","#C8C8C8").removeClass("circle-active");
+					$(this).css("background-color",color);
+					$(this).addClass("circle-active");
+				})
+				$(".finish").click(function(){
+					var mobile = $(".recharge-input").val();
+					var active = $(".circle-active");
+					
+					if(active.parent().hasClass("cz1")){
+						$.ajax({
+							type:"post",
+							url:url_path+"/pay/wallet.json",
+							data:{
+								
+							}
+						});
+					}else{
+						var usernickname = localStorage.getItem("usernickname");
+						var openid = sessionStorage.getItem("openid")
+						$.ajax({
+							type:"post",
+							url:url_path+"/Paywater/sava.json",
+							data:{
+								"paywaterUserId":userId,
+								"paywaterUserType":0,
+								"paywaterUserName":usernickname
+							},
+							dataType:"json",
+							async:false,
+							success:function(data){
+								console.log(data)
+								if(data.msg=="成功"){
+									$.ajax({
+										type:"post",
+										url:url_path+"/user/saveAccountstream.json",
+										async:false,
+										data:{
+											"userId":userId,
+											"money":money,
+											"useraccountOperationType":0,
+											"useraccountMode":0
+										},
+										dataType:"json",
+										success:function(data){
+										}
+									});
+									$.ajax({
+										type:"post",
+										url:url_path+"/pay/weixinprepaid.json",
+										async:false,
+										data:{
+											"id":data.paywaterId,
+											"userId":userId,
+											"tradeType":"JSAPI",
+											"goods_body":"活动充值",
+											"businessType":1,
+											"openidT":openid
+										},
+										dataType:"json",
+										success:function(data){
+											console.log(data)
+											if(data.msg=="成功"){
+												//调用微信支付控件完成支付
+												console.log(data)
+												var param = data.resInfo;
+												
+												var timeStamp = param.timestamp.toString();
+												var prepayid = "prepay_id="+param.prepayid;
+		//										var prepayid = param.prepayid;
+												var noncestr = param.noncestr;
+												var sign = param.sign;
+												var signType = "MD5";
+												var appid = param.appid;
+												
+												WeixinJSBridge.invoke(
+											       'getBrandWCPayRequest', {
+											           "appId":appid,               //公众号名称，由商户传入     
+											           "timeStamp":timeStamp,       //时间戳，自1970年以来的秒数     
+											           "nonceStr":noncestr,         //随机串     
+											           "package":prepayid,     
+											           "signType":signType,         //微信签名方式：     
+											           "paySign":sign               //微信签名 
+											       },
+											       function(res){     
+											            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+											           		window.location.href="http://taxicustomer.nbzhidun.com/index.html"
+											            }else{
+											           		
+											            }
+											       }
+											    );
+											}
+										}
+									})
+								}
+							}
+						});
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

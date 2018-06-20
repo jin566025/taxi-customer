@@ -1,0 +1,38 @@
+header{height: 4rem;line-height: 4rem;position: relative;border-bottom: 1px solid gainsboro;}
+.header-title{color: rgba(50, 50, 50, 1);font-size:1.6rem;text-align: center;font-family: Arial;}
+.return-icon{height: 1.4rem;left: 1rem;position: absolute;top: 1.3rem;}
+.history-address{color: rgba(50, 50, 50, 1);font-size:1.2rem;right: 1rem;font-family: Arial;position: absolute;height: 2rem;top: 1rem;line-height: 2rem;}
+.main{width: 96%;margin: 0 auto;position: relative;}
+.main-left{width: 30%;height: 5rem;line-height:5rem;color: rgba(50, 50, 50, 1);font-size: 1.4rem;font-family: Microsoft Yahei;}
+.main-right{width: 70%;border: none;line-height: 5rem;color: rgba(100, 100, 100, 1);font-size: 1.4rem;font-family: Arial;}
+.main2{height: 4rem;line-height:4rem;border-radius: 5px;background-color: rgba(255, 152, 0, 1);color: rgba(255, 255, 255, 1);font-size: 1.4rem;font-family: Arial;text-align: center;width: 96%;margin: 0 auto;margin-top: 1rem;}
+
+#pickerInput2{width: 70%;border: none;height: 5rem;line-height:5rem;color: rgba(100, 100, 100, 1);font-size: 1.4rem;font-family: Arial;position: absolute;right: 0;top: 0;z-index: -1;}
+
+#shadow{width: 100%;height: 100%;position: fixed;top: 0;z-index: 2;background-color: rgba(0,0,0,0.3);display: none;}
+#history-address{position: fixed;bottom: 0;z-index: 3;width: 96%;left: 2%;display: none;}
+
+.history-address-top,.history-address-bottom{background-color: #FFFFFF;border-radius: 5px;}
+
+.address-section{height:4rem;align-items: center;width: 90%;margin: 0 auto;padding: 1rem 0;}
+.address-section-left{height: 2.4rem;}
+.address-section-right{width: 1.2rem;height: 1.2rem;border-radius: 50%;background-color:#78CEFF;background-image: url(../img2/gou.png);background-repeat: no-repeat;background-position: center;background-size: contain;}
+.address-section-mid{flex: 1;padding-left: 1rem;}
+.address-p1{color: rgba(50, 50, 50, 1);font-size: 1.4rem;font-family: Arial;height: 2rem;line-height: 2rem;overflow: hidden;}
+.address-p2{height: 2rem;line-height: 2rem;color: rgba(150, 150, 150, 1);font-size:1.2rem;font-family: Arial;}
+.checked{background-color: #2B98FC;}
+
+.history-address-bottom{margin: 0.5rem 0;height: 3.4rem;line-height: 3.4rem;background-color: rgba(255, 255, 255, 1);color: rgba(255, 69, 80, 1);font-size: 1.4rem;text-align: center;font-family: Arial;}
+
+
+.latitude{display: none;}
+.longitude{display: none;}
+.history-address-top{overflow: hidden;}
+.history-address-container{overflow: scroll;height: 100%;}
+.ios-select-widget-box header.iosselect-header{background-color: #FF9800;}
+.ios-select-widget-box #iosSelectTitle{color: #FFFFFF;font-size: 14px;}
+.ios-select-widget-box header.iosselect-header a{color: #FFFFFF;font-size: 12px;}
+.tips{color: #C8C8C8 ;font-size: 1.2rem;font-family: arial;width: 96%;margin: 0 auto;}
+
+
+.label,#label{display: none;}

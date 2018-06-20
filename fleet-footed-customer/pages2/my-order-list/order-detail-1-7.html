@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Taxi跑腿</title>
+		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="../../css2/common.css" />
+		<link rel="stylesheet" href="../../css2/order-detail.css" />
+		<link rel="stylesheet" href="../../css2/map.css" />
+		<link rel="stylesheet" href="../../css2/type2-order.css" />
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="panel" style="display: none;"></div>
+
+		<!--进行中--><!--进行中--><!--进行中-->
+		<div  class="main4 main-content main-content1" >
+			<div id="main-top">
+				
+				
+				<div class="main-top-container clearfix">
+					<a class="main-top main-top1 fl">已选择物品类型</a>
+					<img class="main-top main-top3 fr" src="../../img2/toRight.png" />
+					<a class="main-top main-top2 fr" id="goodsType">办公用品</a>
+				</div>
+				<div class="main-top-container main-top-container11 clearfix">
+					<a class="main-top main-top1 fl">红包</a>
+					<p class="main-top main-top2 fr">
+						<a>￥</a>
+						<a id="award"></a>
+					</p>
+				</div>
+				<div class="main-top-content">
+					<p class="main-top-container3-p1">
+						<a>建议价：</a>
+						<a class="main-top-container3-p2">￥</a>
+						<a class="main-top-container3-p3"></a>
+					</p>
+					<p class="main-top-content-p1">跑腿赏金：</p>
+					<p class="main-top-content-p2">
+						<a>￥</a>
+						<a id="reward"></a>
+						<img src="../../img2/edit.png" class="edit" style="position: absolute;" />
+					</p>
+					<p class="main-top-content-p3">
+						<a>取件时间</a>
+						<a id="picktime"></a>
+					</p>
+				</div>
+			</div>
+			<div id="main-mid" class="flex-box">
+				<div class="message-left">备注：</div>
+				<div class="message-right" id="message">备注信息</div>
+			</div>
+			<div class="cancle-order cancle-orders">已取消</div>
+		</div>
+		
+		
+		
+		<script type="text/javascript" src="../../js2/jquery-3.0.0.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck.js" ></script>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
+		<script type="text/javascript" src="../../js2/map.js" ></script>
+		<script type="text/javascript" src="../../js2/swiper.jquery.min.js" ></script>
+		<script type="text/javascript" src="../../js2/order-detail.js" ></script>
+		<script type="text/javascript" src="../../js2/url.js" ></script>
+		<script>
+			
+			$(function(){
+				
+				var id = window.location.href.split("listid=")[1];
+				
+				
+				//加载数据
+				loadOrderDetail(id)
+			    function loadOrderDetail(id){
+			    	$.ajax({
+			    		type:"post",
+				    	url:url_path+"/mission/info.json",
+				    	data:{
+				    		"id":id
+				    	},
+				    	dataType:"json",
+				    	success:function(data){
+				    		console.log(data)
+				    		if(data.msg=="成功"){
+				    			if(data.state==7){
+				    				$("#order2-submit,#cancle-btn").attr("disabled",true).css("pointer-events","none")
+				    			}
+
+				    			$("#award").html(data.award);
+				    			$("#reward").html(data.finish);
+				    			var pickupTime = timeFormatter(data.pickupTime);
+				    			$("#picktime").html(pickupTime);
+				    			$("#message").html(data.message);
+				    			
+				    			var deliveryAddressLatitude = data.deliveryAddressLatitude;
+				    			var deliveryAddressLongitude = data.deliveryAddressLongitude;
+				    			
+				    			var goodsType = data.goodsType;
+				    			var award = data.award;
+				    			var finish = data.finish;
+				    			var taskAddressLatitude = data.taskAddressLatitude;
+				    			var taskAddressLongitude = data.taskAddressLongitude;
+				    			
+				    			driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
+				    		}
+				    	}
+			    	});
+			    }
+			})
+		</script>
+	</body>
+</html>
