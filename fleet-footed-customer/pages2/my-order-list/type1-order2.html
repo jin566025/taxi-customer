@@ -187,6 +187,10 @@
 				$(".main-content7-btn").click(function(){
 					daigou();
 					$(this).css("pointer-events","none")
+					var that = this;
+					setTimeout(function(){
+						$(that).css("pointer-events","visible");
+					},2000)
 				})
 				function daigou(){
 					var typeId = window.location.href.split("=")[1];
