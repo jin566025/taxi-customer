@@ -71,7 +71,7 @@ function loadmap() {
 	var tabIndex = $(".type-navs-active").index(".type-navs");
 	var toaddress1;
 	var toaddress2;
-	var area = sessionStorage.getItem("area");
+	var area = localStorage.getItem("area");
 	if(area){
 		$("#tip").html(area);
 	}else{

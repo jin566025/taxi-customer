@@ -21,7 +21,6 @@ $(function(){
 					}
 					
 					if(code=="undefined" || code=="null"){
-						console.log("aaa")
 						window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri=http%3a%2f%2ftaxicustomer.nbzhidun.com%2findex.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
 					}	
 				}
@@ -67,7 +66,6 @@ $(function(){
 							dataType:"json",
 							success:function(data){
 								alert(data);
-								console.log("这里："+data)
 							}
 						});
 					}
@@ -108,6 +106,7 @@ $(function(){
 	}
 	
 	var hasLogin = localStorage.getItem("hasLogin");
+	var openid = localStorage.getItem("openid");
 	if(hasLogin && openid){
 		window.location.href="index2.html"
 	}

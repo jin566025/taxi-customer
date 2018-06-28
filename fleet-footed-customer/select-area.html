@@ -53,7 +53,7 @@
 		<script type="text/javascript" src="js2/url.js" ></script>
 		<script>
 			$(function(){
-				var area = sessionStorage.getItem("area");
+				var area = localStorage.getItem("area");
 				$("#area").html(area);
 				$(".return-icon2").click(function(){
 					$(".slider").animate({"left":"100%"},500)
@@ -96,8 +96,8 @@
 				$("#area-content2").on("click",".area2",function(){
 					var areaid = $(this).data("areaid");
 					$(".slider2").animate({"left":"0px"},500);
-					sessionStorage.setItem("cityId",areaid);
-					sessionStorage.setItem("area",$(this).text())
+					localStorage.setItem("cityId",areaid);
+					localStorage.setItem("area",$(this).text())
 					getDistrict(areaid);
 				})
 				function getDistrict(areaid){
@@ -126,12 +126,12 @@
 				
 				$("#area-content3").on("click",".area2",function(){
 					var districtid = $(this).data("districtid");
-					sessionStorage.setItem("districtId",districtid);
+					localStorage.setItem("districtId",districtid);
 					var district = $(this).text();
-					var city = sessionStorage.getItem("area")
+					var city = localStorage.getItem("area")
 					var areas = district+" "+city;
-					sessionStorage.removeItem("area")
-					sessionStorage.setItem("area",areas);
+					localStorage.removeItem("area")
+					localStorage.setItem("area",areas);
 					$("#area").html(areas);
 					window.location.href="index2.html"
 				})

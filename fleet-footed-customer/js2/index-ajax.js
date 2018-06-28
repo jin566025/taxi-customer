@@ -175,8 +175,8 @@ $(function(){
 		}
 		
 		
-		var districtId = sessionStorage.getItem("districtId");
-		var cityId = sessionStorage.getItem("cityId");
+		var districtId = localStorage.getItem("districtId");
+		var cityId = localStorage.getItem("cityId");
 		
 		var finish = $("#main4-finish").text();
 		var award = $("#main4-award").text();
@@ -245,8 +245,8 @@ $(function(){
 		},2000)
 	})
 	function typeId33(){
-		var districtId = sessionStorage.getItem("districtId");
-		var cityId = sessionStorage.getItem("cityId");
+		var districtId = localStorage.getItem("districtId");
+		var cityId = localStorage.getItem("cityId");
 		var distance = parseFloat($(".main3-distance").text());
         var typeId = 3;
         var finish=0;
@@ -337,8 +337,8 @@ $(function(){
 		var toaddress2 = JSON.parse(sessionStorage.getItem("toaddress2"));
 		var dataArray = {};
 		
-		var districtId = sessionStorage.getItem("districtId");
-		var cityId = sessionStorage.getItem("cityId");
+		var districtId = localStorage.getItem("districtId");
+		var cityId = localStorage.getItem("cityId");
 		//发货信息
 		if(toaddress1){
 			deliveryAddress = toaddress1.pickerInput2 +" "+ toaddress1.addressInput;
