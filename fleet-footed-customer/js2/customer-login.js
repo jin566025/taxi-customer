@@ -51,6 +51,7 @@ $(function(){
 					var openid = data.openid;
 					sessionStorage.setItem("openid",openid);
 					localStorage.setItem("openid",openid);
+					localStorage.setItem("token",data.token);
 					var userOpneid = sessionStorage.getItem("userOpneid");
 					var userType = sessionStorage.getItem("userType");
 					if(userOpneid){
