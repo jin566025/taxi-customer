@@ -68,13 +68,15 @@
 				var hrefs = window.location.href.split("openid=")[1];
 				var openid = hrefs.split("?path=")[0];
 				var path = hrefs.split("?path=")[1];
+				var token = localStorage.getItem("token");
 				$.ajax({
 					type:"post",
 					url:url_path+"/createCodeImg.json",
 					data:{
 						"userOpenid":openid,
 						"type":1,
-						"logoPicPath":path
+						"logoPicPath":path,
+						"accessToken":token
 					},
 					dataType:"json",
 					success:function(data){

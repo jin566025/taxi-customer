@@ -98,7 +98,7 @@ showBankDom.addEventListener('click', function () {
 						console.log(beifen)
 						console.log(data)
 						if(data.msg=="成功"){
-							location.reload();
+							//location.reload();
 						}
 					},
 					error:function(xml){

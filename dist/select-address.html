@@ -39,7 +39,7 @@
 		<div id="container" class="map" tabindex="0"></div>
 		
 		<script type="text/javascript" src="js2/jquery-3-b36670e5ea.0.0.js" ></script>
-		<script type="text/javascript" src="js2/firstCheck-edfeec679f.js" ></script>
+		<script type="text/javascript" src="js2/firstCheck-7087bbaa70.js" ></script>
 		<script type="text/javascript" src="js2/url-04f2d3931f.js" ></script>
 		<script type="text/javascript">
 		    //地图加载
@@ -90,6 +90,12 @@
 		
 			    },500)
 		    	
+		    	$("#cancle").click(function(){
+		    		var addressType = sessionStorage.getItem("addressType");
+		    		var num = parseInt(addressType)+1;
+		    		sessionStorage.removeItem("toaddress"+num);
+		    		window.location.href="index2.html"
+		    	})
 		    	$(".edit").click(function(){
 		    		var addressId= $(this).parent().attr("data-addressid");
 		    		var label = $(this).index(".edit");
@@ -107,7 +113,7 @@
 		    		var addressLng = $(this).find(".lng").text();
 		    		var addressLat = $(this).find(".lat").text();
 		    		var num = parseInt(addressType)+1;
-		    		console.log(addressid)
+
 		    		if(addressid){
 		    			for(var i=0;i<num;i++){
 				        	if(i==addressType){
@@ -121,7 +127,7 @@
 				        	}
 				        }
 				        setTimeout(function(){
-				        	history.go(-1)
+				        	window.location.href="index2.html"
 				        },500)
 		    		}
 			        

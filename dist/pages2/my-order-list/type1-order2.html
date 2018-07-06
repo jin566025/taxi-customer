@@ -22,7 +22,7 @@
 					<p class="advice-price" style="font-size: 1.2rem;">
 						<a>建议价：</a>
 						<a>￥</a>
-						<a id="advice-price">待定</a>
+						<a id="advice-price">未填写购买地址</a>
 					</p>
 					<div class="main-content7-section fl" id="main7-edit1">
 						<p>
@@ -72,7 +72,7 @@
 		
 		<div id="distance" style="display: none;"></div>
 		<script type="text/javascript" src="../../js2/jquery-3-b36670e5ea.0.0.js" ></script>
-		<script type="text/javascript" src="../../js2/secondCheck-3ad767f817.js" ></script>
+		<script type="text/javascript" src="../../js2/secondCheck-7087bbaa70.js" ></script>
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
 		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
 		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
@@ -100,12 +100,12 @@
 			        map: map,
 			        panel: "panel"
 			    }); 
-				var toaddress4 = JSON.parse(sessionStorage.getItem("toaddress4"));
+				var toaddress9 = JSON.parse(sessionStorage.getItem("toaddress9"));
 				var deliveryAddressName;
-				if(toaddress4){
-					var deliveryAddressLongitude = toaddress4.lng;
-					var deliveryAddressLatitude = toaddress4.lat;
-					deliveryAddressName = toaddress4.name;
+				if(toaddress9){
+					var deliveryAddressLongitude = toaddress9.addressLng;
+					var deliveryAddressLatitude = toaddress9.addressLat;
+					deliveryAddressName = toaddress9.addressName;
 					
 				}
 				var toaddress3 = JSON.parse(sessionStorage.getItem("toaddress3"));
@@ -113,9 +113,8 @@
 					var taskAddressLongitude = toaddress3.lng;
 					var taskAddressLatitude = toaddress3.lat;
 				}
-				if(toaddress3 && toaddress4){
-					driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
-					setTimeout(function(){
+				if(toaddress3 && toaddress9){
+					driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude),function(){
 						var distance = $(".planTitle p").text();
 						var pattern =new RegExp("\\((.| )+?\\)","igm");
 						distance = distance.match(pattern)[0];
@@ -129,17 +128,25 @@
 							var initialMoney = Regulation2.initialMoney;
 							var valuation = Regulation2.valuation;
 							var distance2 = parseFloat(distance)
-							console.log(distance2>initialMileage)
-							if(distance2>initialMileage){
-								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
-								$("#advice-price").html(price3)
-							}else{
-								$("#advice-price").html(initialMoney)
-							}
-							
+							var price;
+//							if(distance2>initialMileage){
+//								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
+//								$("#advice-price").html(price3)
+//							}else{
+//								$("#advice-price").html(initialMoney)
+//							}
+							if(distance2<=2){
+					    		price = 5
+					    	}else if(distance2>2 && distance2<5){
+					    		price = 5+(distance2-2)*1.5
+					    	}else if(distance2>=5){
+					    		price = 5+(distance2-2)*1.5+(distance2-5)*2.25
+					    	}
+					    	$("#advice-price").html(price.toFixed(2))
 						}
 						$("#distance").html(distance);
-					},500)
+					});
+
 				}
 				
 			}
@@ -195,12 +202,12 @@
 				function daigou(){
 					var typeId = window.location.href.split("=")[1];
 					//发货信息
-					var toaddress4 = JSON.parse(sessionStorage.getItem("toaddress4"));
+					var toaddress9 = JSON.parse(sessionStorage.getItem("toaddress9"));
 					var deliveryAddress,deliveryAddressLongitude,deliveryAddressLatitude;
-					if(toaddress4){
-						deliveryAddress = toaddress4.name;
-						deliveryAddressLongitude = toaddress4.lng;
-						deliveryAddressLatitude = toaddress4.lat;
+					if(toaddress9){
+						deliveryAddress = toaddress9.addressName;
+						deliveryAddressLongitude = toaddress9.addressLng;
+						deliveryAddressLatitude = toaddress9.addressLat;
 					}else{
 						deliveryAddress = "";
 						deliveryAddressLongitude = "";

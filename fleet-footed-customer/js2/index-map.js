@@ -87,9 +87,8 @@ function loadmap() {
 	    	var toaddress1_lat = toaddress1.lat;
 	    	var toaddress2_lng = toaddress2.lng;
 	    	var toaddress2_lat = toaddress2.lat;
-	      	driving.search(new AMap.LngLat(toaddress1_lng, toaddress1_lat), new AMap.LngLat(toaddress2_lng, toaddress2_lat));
-	    	setTimeout(function(){
-		    	var time = $(".planTitle p").text();
+	      	driving.search(new AMap.LngLat(toaddress1_lng, toaddress1_lat), new AMap.LngLat(toaddress2_lng, toaddress2_lat),function(){
+	      		var time = $(".planTitle p").text();
 		    	var distance = (time.match(/\(([^)]*)\)/))[1];
 		    	var distance2 = parseFloat(distance);
 		    	$("#distance").html(distance2);
@@ -99,17 +98,24 @@ function loadmap() {
 		    	var initialMileage = Regulation1.initialMileage;
 		    	var initialMoney = Regulation1.initialMoney;
 		    	var valuation = Regulation1.valuation;
-		    	if(distance2>initialMileage){
-		    		price = parseFloat(initialMoney+(distance2-initialMileage)*valuation)
-		    	}else{
-		    		price = parseFloat(initialMoney.toFixed(2))
+//		    	if(distance2>initialMileage){
+//		    		price = parseFloat(initialMoney+(distance2-initialMileage)*valuation)
+//		    	}else{
+//		    		price = parseFloat(initialMoney.toFixed(2))
+//		    	}
+		    	if(distance2<=2){
+		    		price = 5
+		    	}else if(distance2>2 && distance2<5){
+		    		price = 5+(distance2-2)*1.5
+		    	}else if(distance2>=5){
+		    		price = 5+(distance2-2)*1.5+(distance2-5)*2.25
 		    	}
-		    	console.log(price)
-		    	$("#finish-price2").html(price)
+		    	$("#finish-price2").html(price.toFixed(2))
 		    	var award = parseFloat($("#award3").text());
 		    	var	main = price+award
 		    	$("#finish-price").html(main.toFixed(2))
-		    },1000)
+	      	});
+
 	    }
 	}else if(tabIndex==3){
 		toaddress1 = JSON.parse(sessionStorage.getItem("toaddress7"));
@@ -119,9 +125,8 @@ function loadmap() {
 	    	var toaddress1_lat = toaddress1.addressLat;
 	    	var toaddress2_lng = toaddress2.addressLng;
 	    	var toaddress2_lat = toaddress2.addressLat;
-	      	driving.search(new AMap.LngLat(toaddress1_lng, toaddress1_lat), new AMap.LngLat(toaddress2_lng, toaddress2_lat));
-	    	setTimeout(function(){
-		    	var time = $(".planTitle p").text();
+	      	driving.search(new AMap.LngLat(toaddress1_lng, toaddress1_lat), new AMap.LngLat(toaddress2_lng, toaddress2_lat),function(){
+	      		var time = $(".planTitle p").text();
 		    	var distance = (time.match(/\(([^)]*)\)/))[1];
 		    	var distance2 = parseFloat(distance);
 		    	var price;
@@ -142,7 +147,7 @@ function loadmap() {
 		    	var award = parseFloat($("#main4-award").text());
 		    	var	main = price+award;
 		    	$("#main4-finish").html(main.toFixed(2))
-		    },1000)
+	      	});
 	    }
 	}
 	

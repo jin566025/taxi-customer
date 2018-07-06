@@ -64,6 +64,9 @@
 			function logout(){
 				localStorage.removeItem("userId");
 				localStorage.removeItem("openid");
+				localStorage.removeItem("area");
+				localStorage.removeItem("hasLogin");
+				localStorage.removeItem("token");
 				window.location.href="index.html";
 			}
 			$(function(){

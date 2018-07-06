@@ -1,1 +1,0 @@
-var userId=localStorage.getItem("userId");function testLogin(){localStorage.getItem("userId")||(window.location.href="index.html")}setTimeout(function(){testLogin()},500);

@@ -82,6 +82,11 @@ $(function(){
 	});  
 	function calAward2(){
 		var award = parseFloat($("#award4").val());
+		if(award<0){
+			alert("不能小于0");
+			$("#award").val(0)
+			return false;
+		}
 		var finish_price = parseFloat($("#main4-reward").text());
 		var main = (award+finish_price).toFixed(2);
 		if(award){
@@ -95,6 +100,11 @@ $(function(){
 	}
 	function calAward(){
 		var award = parseFloat($("#award").val());
+		if(award<0){
+			alert("不能小于0");
+			$("#award").val(0)
+			return false;
+		}
 		var finish_price = parseFloat($("#finish-price2").text());
 		var main = (award+finish_price).toFixed(2);
 		if(award){
@@ -194,6 +204,9 @@ $(function(){
 			sessionStorage.setItem("returnIndex",4);
 			sessionStorage.setItem("addressType",7)
 			sessionStorage.setItem("djType",0)
+		}else if($(t).hasClass("toaddress8")){
+			sessionStorage.setItem("returnIndex",2);
+			sessionStorage.setItem("addressType",8)
 		}
 	}
 	function webLoad(){
@@ -228,11 +241,15 @@ $(function(){
 		}
 		var toaddress5 = JSON.parse(sessionStorage.getItem("toaddress5"));
 		var toaddress6 = JSON.parse(sessionStorage.getItem("toaddress6"));
+		var toaddress9 = JSON.parse(sessionStorage.getItem("toaddress9"));
 		if(toaddress5){
 			$("#section4").val(toaddress5.addressName)
 		}
 		if(toaddress6){
 			$("#section5").val(toaddress6.addressName)
+		}
+		if(toaddress9){
+			$("#section33").val(toaddress9.addressName)
 		}
 		var toaddress7 = JSON.parse(sessionStorage.getItem("toaddress7"));
 		var toaddress8 = JSON.parse(sessionStorage.getItem("toaddress8"));
