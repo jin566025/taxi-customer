@@ -9,8 +9,8 @@ $(function(){
 				if(data.msg=="成功"){
 					var appId = data.appId;
 					var appSecret = data.appSecret;
-					sessionStorage.setItem("appSecret",appSecret);
-					sessionStorage.setItem("appId",appId);
+					//sessionStorage.setItem("appSecret",appSecret);
+					localStorage.setItem("appId",appId);
 					var code = sessionStorage.getItem("code");
 					var hrefs = window.location.href.split("userOpenid=")[1]
 					if(hrefs){

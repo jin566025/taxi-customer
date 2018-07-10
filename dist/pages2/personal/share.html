@@ -65,10 +65,15 @@
 //					wxstart(dataArray, "http://taxicustomer.nbzhidun.com/pages2/personal/share.html");
 				})
 				
-				var hrefs = window.location.href.split("openid=")[1];
-				var openid = hrefs.split("?path=")[0];
-				var path = hrefs.split("?path=")[1];
+//				var hrefs = window.location.href.split("openid=")[1];
+//				var openid = hrefs.split("?path=")[0];
+//				var path = hrefs.split("?path=")[1];
+				var openid = localStorage.getItem("openid");
+				var path = localStorage.getItem("userImg");
 				var token = localStorage.getItem("token");
+				var urls = location.href.split("#")[0];
+				urls = encodeURIComponent(urls);
+				console.log(urls);
 				$.ajax({
 					type:"post",
 					url:url_path+"/createCodeImg.json",
@@ -76,7 +81,8 @@
 						"userOpenid":openid,
 						"type":1,
 						"logoPicPath":path,
-						"accessToken":token
+						"accessToken":token,
+						"url":urls
 					},
 					dataType:"json",
 					success:function(data){
@@ -87,20 +93,74 @@
 							$("#timestamp").html(data.resInfo.timeStamp);
 							$("#nonceStr").html(data.resInfo.nonceStr);
 							$("#signature").html(data.resInfo.signature);
-							wxstart(data.resInfo, "http://taxicustomer.nbzhidun.com/index.html");
+							var dataArray = {};
+							dataArray.appid = localStorage.getItem("appId");
+							dataArray.timeStamp = data.resInfo.timestamp;
+							dataArray.nonceStr = data.resInfo.nonceStr;
+							dataArray.signature = data.resInfo.signature;
+							dataArray.url = data.resInfo.url;
+							
+							var appid2 = localStorage.getItem("appId");
+							var timestamp2 = data.resInfo.timestamp;
+							var nonceStr2 = data.resInfo.nonceStr;
+							var signature2 = data.resInfo.signature;
+							//wxstart(dataArray, "http://taxicustomer.nbzhidun.com/index.html");
+							wx.config({
+						        debug: false,
+						        appId: appid2, // 必填，公众号的唯一标识
+						        timestamp: timestamp2, // 必填，生成签名的时间戳
+						        nonceStr: nonceStr2, // 必填，生成签名的随机串
+						        signature: signature2,// 必填，签名，见附录1
+						        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+						    });
+						    wx.ready(function(){
+						        var imgurl = $("#erweima").attr("src");
+						        var title = 'taxi跑腿平台';
+						        var desc = 'taxi跑腿平台';
+						        var url2 = "http://taxicustomer.nbzhidun.com/index.html";
+						        wx.onMenuShareTimeline({
+						            title: title, // 分享标题
+						            desc: desc, // 分享描述
+						            link: url2, // 分享链接
+						            imgUrl: imgurl, // 分享图标
+						            success: function () { 
+						                alert("分享成功")
+						            },
+						            cancel: function () { 
+						                alert("分享失败")
+						            }
+						        });
+						         
+						        wx.onMenuShareAppMessage({
+						            title: title, // 分享标题
+						            desc: desc, // 分享描述
+						            link: url2, // 分享链接
+						            imgUrl: imgurl, // 分享图标
+						            type: '', // 分享类型,music、video或link，不填默认为link
+						            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+						            success: function () { 
+						                alert("分享成功")
+						            },
+						            cancel: function () { 
+						                alert("分享失败")
+						            }
+						        });
+						    });
 						}
 					}
 				});
 				
 			})
-			function wxstart(data, url){
-			    var url = url;  //分享的文章地址
+			//function wxstart(data, url)
+			function wxstart(data){
+			    var url2 = data.url;  //分享的文章地址
 			    var appId = data.appid;
 			    var timestamp = data.timeStamp;
 			    var nonceStr = data.nonceStr;
 			    var signature = data.signature;
+			   // var signature = "c340b859a0a11f7d6e91f60dab55fb8015601f0c";
 			    wx.config({
-			       
+			        debug: true,
 			        appId: appId, // 必填，公众号的唯一标识
 			        timestamp: timestamp, // 必填，生成签名的时间戳
 			        nonceStr: nonceStr, // 必填，生成签名的随机串
@@ -115,7 +175,7 @@
 			        wx.onMenuShareTimeline({
 			            title: title, // 分享标题
 			            desc: desc, // 分享描述
-			            link: url, // 分享链接
+			            link: url2, // 分享链接
 			            imgUrl: imgurl, // 分享图标
 			            success: function () { 
 			                alert("分享成功")
@@ -128,7 +188,7 @@
 			        wx.onMenuShareAppMessage({
 			            title: title, // 分享标题
 			            desc: desc, // 分享描述
-			            link: url, // 分享链接
+			            link: url2, // 分享链接
 			            imgUrl: imgurl, // 分享图标
 			            type: '', // 分享类型,music、video或link，不填默认为link
 			            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
