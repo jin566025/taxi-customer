@@ -26,11 +26,11 @@ $(function(){
 		dataType:"json",
 		success:function(data){
 			if(data.stateCode==0){
-				var Regulation1 = {};
-				Regulation1.initialMileage=data.initialMileage;
-				Regulation1.initialMoney = data.initialMoney;
-				Regulation1.valuation = data.valuation;
-				Regulation1 = JSON.stringify(Regulation1)
+				var Regulation1 = data
+//				Regulation1.initialMileage=.initialMileage;
+//				Regulation1.initialMoney = data.initialMoney;
+//				Regulation1.valuation = data.valuation;
+//				Regulation1 = JSON.stringify(Regulation1)
 				sessionStorage.setItem("Regulation1",Regulation1)
 			}
 			
@@ -46,11 +46,11 @@ $(function(){
 		success:function(data){
 			console.log(data)
 			if(data.stateCode==0){
-				var Regulation2 = {};
-				Regulation2.initialMileage=data.initialMileage;
-				Regulation2.initialMoney = data.initialMoney;
-				Regulation2.valuation = data.valuation;
-				Regulation2 = JSON.stringify(Regulation2)
+				var Regulation2 = data;
+//				Regulation2.initialMileage=data.initialMileage;
+//				Regulation2.initialMoney = data.initialMoney;
+//				Regulation2.valuation = data.valuation;
+//				Regulation2 = JSON.stringify(Regulation2)
 				sessionStorage.setItem("Regulation2",Regulation2)
 			}
 		}
@@ -109,8 +109,8 @@ $(function(){
 							day_str="";
 						}
 						
-						if(list[i].msg){
-							tc_str = list[i].msg
+						if(list[i].name){
+							tc_str = list[i].name
 						}else{
 							tc_str=""
 						}

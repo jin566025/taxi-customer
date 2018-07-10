@@ -80,7 +80,6 @@
 					formData.append("content", $('input[name="content"]').val());
 					formData.append("img", $('input[name="img"]')[0].files[0]);
 					formData.append("comlaintType", $('input[name="comlaintType"]').val());
-					console.log(formData)
 					$.ajax({
 						type:"post",
 						url:url_path+"/mission/complaint.json",

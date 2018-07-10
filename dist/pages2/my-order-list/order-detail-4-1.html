@@ -78,7 +78,7 @@
 		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
 		<script type="text/javascript" src="../../js2/swiper-1d74106378.jquery.min.js" ></script>
 		<script type="text/javascript" src="../../js2/order-detail-43ccbaacc4.js" ></script>
-		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
+		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
 		<script>
 	
 			$(function(){
@@ -132,9 +132,9 @@
 				    	success:function(data){
 				    		console.log(data)
 				    		if(data.msg=="成功"){
-				    			if(data.state!==1 && data.state!==0){
+				    			if(data.state!==1){
 				    				alert("订单状态已改变");
-				    				history.go(-1)
+				    				window.location.href="../../my-order-list.html"
 				    			}
 				    			
 								var userId = localStorage.getItem("userId");

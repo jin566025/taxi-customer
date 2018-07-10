@@ -53,7 +53,7 @@
 						</div>
 						<div class="head-detail-sec">
 							<a class="head-detail-sec-part head-detail-sec-part3">车牌</a>
-							<a class="head-detail-sec-part"  id="driverCarNum">浙B</a>
+							<a class="head-detail-sec-part"  id="driverCarNum"></a>
 
 						</div>
 					</div>
@@ -171,6 +171,10 @@
 				    	dataType:"json",
 				    	success:function(data){
 				    		console.log(data)
+				    		if(data.state!==5){
+			    				alert("订单状态已改变");
+			    				window.location.href="../../my-order-list.html"
+			    			}
 				    		if(data.msg=="成功"){
 								$("#driverImgUrl").attr("src",data.driverImgUrl);
 								$("#driverNickname").html(data.driverNickname);

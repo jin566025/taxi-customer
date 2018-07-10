@@ -75,7 +75,7 @@
 		<script type="text/javascript" src="../../js2/secondCheck-7087bbaa70.js" ></script>
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
 		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
-		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
+		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
 		<script type="text/javascript" src="../../js2/swiper-1d74106378.jquery.min.js" ></script>
 		<script>
 			var map = new AMap.Map("container", {
@@ -129,19 +129,19 @@
 							var valuation = Regulation2.valuation;
 							var distance2 = parseFloat(distance)
 							var price;
-//							if(distance2>initialMileage){
-//								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
-//								$("#advice-price").html(price3)
-//							}else{
-//								$("#advice-price").html(initialMoney)
-//							}
-							if(distance2<=2){
-					    		price = 5
-					    	}else if(distance2>2 && distance2<5){
-					    		price = 5+(distance2-2)*1.5
-					    	}else if(distance2>=5){
-					    		price = 5+(distance2-2)*1.5+(distance2-5)*2.25
-					    	}
+							if(distance2>initialMileage){
+								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
+								$("#advice-price").html(price3)
+							}else{
+								$("#advice-price").html(initialMoney)
+							}
+//							if(distance2<=2){
+//					    		price = 5
+//					    	}else if(distance2>2 && distance2<5){
+//					    		price = 5+(distance2-2)*1.5
+//					    	}else if(distance2>=5){
+//					    		price = 5+(distance2-2)*1.5+(distance2-5)*2.25
+//					    	}
 					    	$("#advice-price").html(price.toFixed(2))
 						}
 						$("#distance").html(distance);

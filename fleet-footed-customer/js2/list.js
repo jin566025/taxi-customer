@@ -78,7 +78,7 @@ function showList(userId,pageNo,pageSize){
 						deliveryAddress="未填写，由司机决定"
 					}
 					var typeId = list[i].typeId
-					var html =  '<div class="list-main  list-main1 typeId'+typeId+'" data-listid='+list[i].id+' id=order'+list[i].id+'>'+
+					var html =  '<div class="list-main  list-main1 typeId'+typeId+'" data-listid='+list[i].id+' data-state='+list[i].state+' id=order'+list[i].id+'>'+
 									'<div class="order-list-time">下单时间：'+dateTime+'</div>'+
 									'<div class="list-main-container">'+
 										'<div class="status clearfix">'+

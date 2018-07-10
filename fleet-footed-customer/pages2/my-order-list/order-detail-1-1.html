@@ -131,9 +131,9 @@
 				    	success:function(data){
 				    		console.log(data)
 				    		if(data.msg=="成功"){
-				    			if(data.state!==1 && data.state!==0){
+				    			if(data.state!==1){
 				    				alert("订单状态已改变");
-				    				history.go(-1)
+				    				window.location.href="../../my-order-list.html"
 				    			}
 								var userId = localStorage.getItem("userId");
 								var beifen = {};

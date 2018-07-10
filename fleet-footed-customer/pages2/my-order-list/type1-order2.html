@@ -129,19 +129,19 @@
 							var valuation = Regulation2.valuation;
 							var distance2 = parseFloat(distance)
 							var price;
-//							if(distance2>initialMileage){
-//								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
-//								$("#advice-price").html(price3)
-//							}else{
-//								$("#advice-price").html(initialMoney)
-//							}
-							if(distance2<=2){
-					    		price = 5
-					    	}else if(distance2>2 && distance2<5){
-					    		price = 5+(distance2-2)*1.5
-					    	}else if(distance2>=5){
-					    		price = 5+(distance2-2)*1.5+(distance2-5)*2.25
-					    	}
+							if(distance2>initialMileage){
+								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
+								$("#advice-price").html(price3)
+							}else{
+								$("#advice-price").html(initialMoney)
+							}
+//							if(distance2<=2){
+//					    		price = 5
+//					    	}else if(distance2>2 && distance2<5){
+//					    		price = 5+(distance2-2)*1.5
+//					    	}else if(distance2>=5){
+//					    		price = 5+(distance2-2)*1.5+(distance2-5)*2.25
+//					    	}
 					    	$("#advice-price").html(price.toFixed(2))
 						}
 						$("#distance").html(distance);

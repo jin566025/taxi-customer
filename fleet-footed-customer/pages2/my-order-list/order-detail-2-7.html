@@ -110,6 +110,9 @@
 				    		if(data.msg=="成功"){
 				    			if(data.state==7){
 				    				$("#order2-submit,#cancle-btn").attr("disabled",true).css("pointer-events","none")
+				    			}else{
+				    				alert("订单状态已改变");
+				    				window.location.href="../../my-order-list.html"
 				    			}
 
 				    			$("#award").html(data.award);

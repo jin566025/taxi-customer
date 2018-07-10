@@ -151,6 +151,10 @@
 				    	success:function(data){
 				    		console.log(data)
 				    		if(data.msg=="成功"){
+				    			if(data.state!==3){
+				    				alert("订单状态已改变");
+				    				window.location.href="../../my-order-list.html"
+				    			}
 								$("#driverImgUrl").attr("src",data.driverImgUrl);
 								$("#driverNickname").html(data.driverNickname);
 								$("#driverGrade").html(data.driverGrade)

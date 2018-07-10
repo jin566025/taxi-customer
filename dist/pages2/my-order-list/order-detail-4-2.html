@@ -75,7 +75,7 @@
 		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
 		<script type="text/javascript" src="../../js2/swiper-1d74106378.jquery.min.js" ></script>
 		<script type="text/javascript" src="../../js2/order-detail-43ccbaacc4.js" ></script>
-		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
+		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
 		<script>
 			function ContentUp(){
 				$(".section3").css("bottom","19rem");
@@ -103,8 +103,9 @@
 				    	success:function(data){
 				    		console.log(data)
 				    		if(data.msg=="成功"){
-				    			if(data.state==7){
-				    				$("#order2-submit,#cancle-btn").attr("disabled",true).css("pointer-events","none")
+				    			if(data.state!==2){
+				    				alert("订单状态已改变");
+				    				window.location.href="../../my-order-list.html"
 				    			}
 				    			$("#driverImgUrl").attr("src",data.driverImgUrl);
 				    			$("#driverNickname").html(data.driverNickname)
