@@ -26,7 +26,7 @@ $(function(){
 		dataType:"json",
 		success:function(data){
 			if(data.stateCode==0){
-				var Regulation1 = data
+				var Regulation1 = JSON.stringify(data);
 //				Regulation1.initialMileage=.initialMileage;
 //				Regulation1.initialMoney = data.initialMoney;
 //				Regulation1.valuation = data.valuation;
@@ -46,7 +46,7 @@ $(function(){
 		success:function(data){
 			console.log(data)
 			if(data.stateCode==0){
-				var Regulation2 = data;
+				var Regulation2 = JSON.stringify(data);
 //				Regulation2.initialMileage=data.initialMileage;
 //				Regulation2.initialMoney = data.initialMoney;
 //				Regulation2.valuation = data.valuation;

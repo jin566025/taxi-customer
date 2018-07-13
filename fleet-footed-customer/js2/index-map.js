@@ -93,7 +93,7 @@ function loadmap() {
 		    	var distance2 = parseFloat(distance);
 		    	$("#distance").html(distance2);
 		    	
-		    	var Regulation1 = sessionStorage.getItem("Regulation1");
+		    	var Regulation1 =JSON.parse(sessionStorage.getItem("Regulation1")) ;
 		    	//Regulation1 = JSON.parse(Regulation1);
 		    	var start_p1 = parseFloat(Regulation1.initialMoney);
 		    	var start_d1 = parseFloat(Regulation1.kmRange.split("-")[0]);
@@ -116,7 +116,7 @@ function loadmap() {
 		    	}else if(distance2>=start_d2){
 		    		price = start_p1+(start_d2-start_d1)*start_p2+(distance2-start_d2)*start_p3
 		    	}
-	
+				console.log(price)
 		    	$("#finish-price2").html(price.toFixed(2))
 		    	var award = parseFloat($("#award3").text());
 		    	var	main = price+award
@@ -137,7 +137,7 @@ function loadmap() {
 		    	var distance = (time.match(/\(([^)]*)\)/))[1];
 		    	var distance2 = parseFloat(distance);
 		    	var price;
-		    	var Regulation2 = sessionStorage.getItem("Regulation2");
+		    	var Regulation2 = JSON.parse(sessionStorage.getItem("Regulation2")) ;
 		    	var start_p1 = parseFloat(Regulation1.initialMoney);
 		    	var start_d1 = parseFloat(Regulation1.kmRange.split("-")[0]);
 		    	var start_d2 = parseFloat(Regulation1.kmRange.split("-")[1]);

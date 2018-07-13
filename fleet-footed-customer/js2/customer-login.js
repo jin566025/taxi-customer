@@ -7,9 +7,11 @@ $(function(){
 			dataType:"json",
 			success:function(data){
 				if(data.msg=="成功"){
+					sessionStorage.setItem("datas",data)
 					var appId = data.appId;
 					var appSecret = data.appSecret;
 					//sessionStorage.setItem("appSecret",appSecret);
+					
 					localStorage.setItem("appId",appId);
 					var code = sessionStorage.getItem("code");
 					var hrefs = window.location.href.split("userOpenid=")[1]
@@ -37,7 +39,7 @@ $(function(){
 		
 		sessionStorage.setItem("code",code);
 		if(code){
-			
+			alert("code:"+code)
 			$.ajax({
 				type:"post",
 				url:url_path+"/getAccessToken.json",
@@ -47,7 +49,7 @@ $(function(){
 				dataType:"json",
 				async:false,
 				success:function(data){
-					console.log(data)
+					
 					var openid = data.openid;
 					sessionStorage.setItem("openid",openid);
 					localStorage.setItem("openid",openid);
@@ -101,6 +103,7 @@ $(function(){
 	
 	
 	var userId = localStorage.getItem("userId");
+
 	if(!userId){
 		getCodeReturn();
 		getCode();
@@ -108,7 +111,8 @@ $(function(){
 	
 	var hasLogin = localStorage.getItem("hasLogin");
 	var openid = localStorage.getItem("openid");
-	if(hasLogin && openid){
+
+	if(hasLogin && openid && userId){
 		window.location.href="index2.html"
 	}
 	

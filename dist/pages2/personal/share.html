@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 		<title>Taxi跑腿</title>
 		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="../../css2/common-a96583650f.css" />
+		<link rel="stylesheet" href="../../css2/common-63919b76db.css" />
 		<link rel="stylesheet" href="../../css2/list-faecbafaaa.css" />
 		<link rel="stylesheet" href="../../css2/personal-5c4e52c2fc.css" />
 		<style>
@@ -45,7 +45,7 @@
 		<div id="nonceStr" style="display: none;"></div>
 		<div id="signature" style="display: none;"></div>
 		<script type="text/javascript" src="../../js2/jquery-3-b36670e5ea.0.0.js" ></script>
-		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
+		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
 		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script>
 			$(function(){
@@ -73,7 +73,6 @@
 				var token = localStorage.getItem("token");
 				var urls = location.href.split("#")[0];
 				urls = encodeURIComponent(urls);
-				console.log(urls);
 				$.ajax({
 					type:"post",
 					url:url_path+"/createCodeImg.json",
@@ -93,12 +92,7 @@
 							$("#timestamp").html(data.resInfo.timeStamp);
 							$("#nonceStr").html(data.resInfo.nonceStr);
 							$("#signature").html(data.resInfo.signature);
-							var dataArray = {};
-							dataArray.appid = localStorage.getItem("appId");
-							dataArray.timeStamp = data.resInfo.timestamp;
-							dataArray.nonceStr = data.resInfo.nonceStr;
-							dataArray.signature = data.resInfo.signature;
-							dataArray.url = data.resInfo.url;
+						
 							
 							var appid2 = localStorage.getItem("appId");
 							var timestamp2 = data.resInfo.timestamp;
@@ -116,8 +110,8 @@
 						    wx.ready(function(){
 						        var imgurl = $("#erweima").attr("src");
 						        var title = 'taxi跑腿平台';
-						        var desc = 'taxi跑腿平台';
-						        var url2 = "http://taxicustomer.nbzhidun.com/index.html";
+						        var desc = 'taxi跑腿平台,取送件、代购、打车、代驾';
+						        var url2 = "http://taxicustomer.nbzhidun.com/index.html?userOpenid="+openid+"?type=1";
 						        wx.onMenuShareTimeline({
 						            title: title, // 分享标题
 						            desc: desc, // 分享描述
@@ -152,55 +146,7 @@
 				
 			})
 			//function wxstart(data, url)
-			function wxstart(data){
-			    var url2 = data.url;  //分享的文章地址
-			    var appId = data.appid;
-			    var timestamp = data.timeStamp;
-			    var nonceStr = data.nonceStr;
-			    var signature = data.signature;
-			   // var signature = "c340b859a0a11f7d6e91f60dab55fb8015601f0c";
-			    wx.config({
-			        debug: true,
-			        appId: appId, // 必填，公众号的唯一标识
-			        timestamp: timestamp, // 必填，生成签名的时间戳
-			        nonceStr: nonceStr, // 必填，生成签名的随机串
-			        signature: signature,// 必填，签名，见附录1
-			        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-			    });
-			     
-			    wx.ready(function(){
-			        var imgurl = $("#erweima").attr("src");
-			        var title = 'taxi跑腿平台';
-			        var desc = 'taxi跑腿平台';
-			        wx.onMenuShareTimeline({
-			            title: title, // 分享标题
-			            desc: desc, // 分享描述
-			            link: url2, // 分享链接
-			            imgUrl: imgurl, // 分享图标
-			            success: function () { 
-			                alert("分享成功")
-			            },
-			            cancel: function () { 
-			                alert("分享失败")
-			            }
-			        });
-			         
-			        wx.onMenuShareAppMessage({
-			            title: title, // 分享标题
-			            desc: desc, // 分享描述
-			            link: url2, // 分享链接
-			            imgUrl: imgurl, // 分享图标
-			            type: '', // 分享类型,music、video或link，不填默认为link
-			            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-			            success: function () { 
-			                alert("分享成功")
-			            },
-			            cancel: function () { 
-			                alert("分享失败")
-			            }
-			        });
-			    });
-			}
+
 		</script>
 	</body>
 </html>
