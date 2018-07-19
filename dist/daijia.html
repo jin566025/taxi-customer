@@ -199,7 +199,7 @@
 									success:function(data){
 										
 										if(data.msg=="成功"){
-											window.location.href="my-order-list.html?typeId="+typeId
+											window.location.href="http://taxicustomer.nbzhidun.com/my-order-list.html?typeId="+4
 										}else if(data.stateCode==300){
 											alert("余额不足，使用微信支付")
 											var openid = localStorage.getItem("openid");
@@ -251,7 +251,7 @@
 																		dataType:"json",
 																		success:function(data){
 																			if(data.msg=="成功"){
-																				window.location.href="http://taxicustomer.nbzhidun.com/my-order-list.html"
+																				window.location.href="http://taxicustomer.nbzhidun.com/my-order-list.html?typeId="+4
 																			}
 																		}
 																	});

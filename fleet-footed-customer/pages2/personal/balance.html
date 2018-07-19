@@ -34,7 +34,7 @@
 		<div class="shadow"></div>
 		<div class="dialog absolute-center">
 			<p class="dialog-title">提现金额</p>
-			<input class="dialog-input" id="tixian-price" type="text" placeholder="请输入金额"/>
+			<input class="dialog-input" id="tixian-price" type="number" placeholder="请输入金额"/>
 			<div class="dialog-btn clearfix">
 				<div class="dialog-btns dialog-btns1 fl box-sizing">取消</div>
 				<div class="dialog-btns dialog-btns2 fl" id="tixian">确认</div>
@@ -89,7 +89,7 @@
 				};
 				function tixian(userId,useraccountOperationType,useraccountMode){
 					var Amount = $("#tixian-price").val();
-					var openid = sessionStorage.getItem("openid");
+					var openid = localStorage.getItem("openid");
 					var dataArray = {};
 					dataArray.userId = parseInt(userId);
 					dataArray.money = parseFloat(Amount);

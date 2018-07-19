@@ -55,7 +55,7 @@
 		
 		<div class="dialog2 absolute-center">
 			<p class="dialog-p">垫资与实际商品金额发生误差，请当面结清</p>
-			<input class="dialog-input2" type="text" placeholder="请输入垫资资金" />
+			<input class="dialog-input2" type="number" min="0" max="100" step="0.01" placeholder="请输入垫资资金" />
 			<div class="dialog-btn clearfix">
 				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
 				<div class="dialog-btns dialog-btns2 dialog-sure1 fl">确认</div>
@@ -63,7 +63,7 @@
 		</div>
 		<div class="dialog3 absolute-center">
 			<p class="dialog-p dialog-p2">跑腿赏金</p>
-			<input class="dialog-input2" type="text" placeholder="请输入金额" />
+			<input class="dialog-input2" type="number" min="0" max="100" step="0.01" placeholder="请输入金额" />
 			<div class="dialog-btn clearfix">
 				<div class="dialog-btns dialog-btns1 box-sizing fl">取消</div>
 				<div class="dialog-btns dialog-btns2 dialog-sure2 fl">确认</div>
@@ -117,31 +117,28 @@
 					driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude),function(){
 						var distance = $(".planTitle p").text();
 						var pattern =new RegExp("\\((.| )+?\\)","igm");
+						console.log(distance)
 						distance = distance.match(pattern)[0];
+						
 						var reg = /[^\d\.]/g;
 						distance = distance.replace( reg, '' );
 						
 						if(deliveryAddressName){
-							var Regulation2 = sessionStorage.getItem("Regulation1");
-							Regulation2 = JSON.parse(Regulation2);
-							var initialMileage = Regulation2.initialMileage;
-							var initialMoney = Regulation2.initialMoney;
-							var valuation = Regulation2.valuation;
-							var distance2 = parseFloat(distance)
-							var price;
-							if(distance2>initialMileage){
-								var price3 = ((distance2-initialMileage)*valuation+initialMoney).toFixed(2);
-								$("#advice-price").html(price3)
-							}else{
-								$("#advice-price").html(initialMoney)
-							}
-//							if(distance2<=2){
-//					    		price = 5
-//					    	}else if(distance2>2 && distance2<5){
-//					    		price = 5+(distance2-2)*1.5
-//					    	}else if(distance2>=5){
-//					    		price = 5+(distance2-2)*1.5+(distance2-5)*2.25
-//					    	}
+							var Regulation1 =JSON.parse(sessionStorage.getItem("Regulation1")) ;
+					    	//Regulation1 = JSON.parse(Regulation1);
+					    	var start_p1 = parseFloat(Regulation1.initialMoney);
+					    	var start_d1 = parseFloat(Regulation1.kmRange.split("-")[0]);
+					    	var start_d2 = parseFloat(Regulation1.kmRange.split("-")[1]);
+					    	var start_p2 = parseFloat(Regulation1.kmValuation);
+					    	var start_p3 = parseFloat(Regulation1.valuation);
+			
+					    	if(distance<=start_d1){
+					    		price = start_p1
+					    	}else if(distance>start_d1 && distance<start_d2){
+					    		price = start_p1+(distance-start_d1)*start_p2
+					    	}else if(distance>=start_d2){
+					    		price = start_p1+(start_d2-start_d1)*start_p2+(distance-start_d2)*start_p3
+					    	}
 					    	$("#advice-price").html(price.toFixed(2))
 						}
 						$("#distance").html(distance);
@@ -164,6 +161,7 @@
 		    	$(".amap-copyright,.amap-controls").css("visibility","hidden")
 		    },500)
 			$(function(){
+
 				var daigoumsg = sessionStorage.getItem("daigoumsg",daigoumsg);
 				$(".daigou-text").html(daigoumsg)
 				$("#main7-edit1").click(function(){
@@ -175,7 +173,7 @@
 					$(".dialog3").show();
 				})
 				$(".dialog-sure1").click(function(){
-					var dialog_price1 = $(this).parent().siblings(".dialog-input2").val();
+					var dialog_price1 = $(this).parent().siblings(".dialog-input2").val()
 					$(".main-content7-section2-price1").html(dialog_price1);
 					$(this).parent().parent().hide();
 					$("#shadow").hide();
@@ -185,12 +183,22 @@
 					$(".dialog2,.dialog3").hide()
 				})
 				$(".dialog-sure2").click(function(){
-					var dialog_price2 = $(this).parent().siblings(".dialog-input2").val();
+					var dialog_price2 = $(this).parent().siblings(".dialog-input2").val()
 					$(".main-content7-section2-price2").html(dialog_price2);
 					$(this).parent().parent().hide();
 					$("#shadow").hide();
 				})
 				
+				
+				$('.dialog-input2').bind('input propertychange', function() {
+					 	var value = $(this).val();
+				        var array = value.split(".");
+				        if((array.length >1 && array[1].length > 2) || array.length >2){
+				            value = array[0] + "." +array[1].substr(0,2);
+				            $(this).val(value);
+				        }
+				}); 
+	
 				$(".main-content7-btn").click(function(){
 					daigou();
 					$(this).css("pointer-events","none")
@@ -298,7 +306,7 @@
 						success:function(data){
 							console.log(data)
 							if(data.msg=="成功"){
-								window.location.href="my-order-list.html?typeId="+typeId
+								window.location.href="my-order-list.html"
 							}else if(data.stateCode==300){
 								alert("余额不足，使用微信支付");
 								$("#type1-dialog").fadeOut();
@@ -339,6 +347,7 @@
 										       function(res){
 												
 										            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+										            	window.location.href="../../my-order-list.htmltypeId="+2
 										            	$.ajax({
 															type:"post",
 															url:url_path+"/user/saveAccountstream.json",

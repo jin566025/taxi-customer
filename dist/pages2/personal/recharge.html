@@ -37,40 +37,46 @@
 		</div>
 		
 		<div class="shadow"></div>
-		<div class="dialog absolute-center">
-			<p class="dialog-title">提现金额</p>
-			<input class="dialog-input" type="number" placeholder="请输入金额"/>
-			<div class="dialog-btn clearfix">
-				<div class="dialog-btns dialog-btns1 fl box-sizing">取消</div>
-				<div class="dialog-btns dialog-btns2 fl">确认</div>
-			</div>
-		</div>
+
 		<div class="footer-zanwei"></div>
 		<div class="footer" id="chongzhi">立即充值</div>
 		<img src="../../img2/loading.gif" id="loading" class="absolute-center" style="height: 4rem;display: none;" />
 		<script type="text/javascript" src="../../js2/jquery-3-b36670e5ea.0.0.js" ></script>
 		<script type="text/javascript" src="../../js2/secondCheck-7087bbaa70.js" ></script>
 		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
-<!--		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
 		<script>
 			$(function(){
 				var usernickname = localStorage.getItem("usernickname");
 				$("#username").html(usernickname);
-				var balance = sessionStorage.getItem("balance");
+				var balance = parseFloat(sessionStorage.getItem("balance"));
+				balance = balance.toFixed(2);
 				$("#money").html(balance);
+				
+				$('#business').bind('input propertychange', function() {
+					var value = $(this).val();
+			        var array = value.split(".");
+			        if((array.length >1 && array[1].length > 2) || array.length >2){
+			            value = array[0] + "." +array[1].substr(0,2);
+			            $(this).val(value);
+			        }
+				}); 
+	
 				$("#chongzhi").click(function(){
-					
 					var userId = localStorage.getItem("userId");
 					var money = parseFloat($("#business").val());
+					if(!money){
+						alert("充值金额不能为0")
+						return false;
+					}
 					userId = parseInt(userId);
 					var dataArray = {};
 					dataArray.paywaterUserId = userId;
 					dataArray.paywaterUserType = 0;
-					dataArray.paywaterUserName = "nickname";
+					dataArray.paywaterUserName = usernickname;
 					dataArray.paywaterMoney = money;
 					$(this).css("pointer-events","none");
 					$(".shadow,#loading").fadeIn();
-					
+					console.log(dataArray)
 					//生成充值流水id
 					$.ajax({
 						type:"post",
@@ -79,8 +85,8 @@
 						dataType:"json",
 						async:false,
 						success:function(data){
+							console.log(data)
 							if(data.msg=="成功"){
-								console.log(data)
 								var tradeType = "JSAPI";
 								var goods_body = "taxi跑腿-充值";
 								var businessType = 2;
@@ -121,8 +127,9 @@
 										           "paySign":sign               //微信签名 
 										       },
 										       function(res){
-													console.log(res);
+													
 										            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+										            	window.location.href="http://taxicustomer.nbzhidun.com/pages2/personal/balance.html"
 										            	$.ajax({
 															type:"post",
 															url:url_path+"/user/saveAccountstream.json",
@@ -134,11 +141,7 @@
 																"useraccountMode":0
 															},
 															dataType:"json",
-															success:function(data){
-																if(data.msg=="成功"){
-																	window.location.href="http://taxicustomer.nbzhidun.com/pages2/personal/balance.html"
-																}
-															}
+															success:function(data){}
 														});
 										           		
 										            }else{

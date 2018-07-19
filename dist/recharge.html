@@ -65,7 +65,7 @@
 						});
 					}else{
 						var usernickname = localStorage.getItem("usernickname");
-						var openid = sessionStorage.getItem("openid")
+						var openid = localStorage.getItem("openid")
 						$.ajax({
 							type:"post",
 							url:url_path+"/Paywater/sava.json",

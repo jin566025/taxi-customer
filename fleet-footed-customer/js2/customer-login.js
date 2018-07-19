@@ -1,17 +1,26 @@
 $(function(){
+	var userId = localStorage.getItem("userId");
+	if(!userId){
+		getCodeReturn();
+		getCode();
+	}
+	var hasLogin = localStorage.getItem("hasLogin");
+	var openid = localStorage.getItem("openid");
+	if(hasLogin && openid && userId){
+		window.location.href="index2.html"
+	}
 	
 	function getCodeReturn(){
+		
 		$.ajax({
 			type:"post",
 			url:url_path+"/wx/queryAppId.json",
 			dataType:"json",
 			success:function(data){
 				if(data.msg=="成功"){
-					sessionStorage.setItem("datas",data)
 					var appId = data.appId;
 					var appSecret = data.appSecret;
-					//sessionStorage.setItem("appSecret",appSecret);
-					
+					sessionStorage.setItem("appSecret",appSecret);
 					localStorage.setItem("appId",appId);
 					var code = sessionStorage.getItem("code");
 					var hrefs = window.location.href.split("userOpenid=")[1]
@@ -21,8 +30,8 @@ $(function(){
 						sessionStorage.setItem("userOpneid",userOpneid);
 						sessionStorage.setItem("userType",userType);
 					}
-					
-					if(code=="undefined" || code=="null"){
+
+					if(!code){
 						window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri=http%3a%2f%2ftaxicustomer.nbzhidun.com%2findex.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
 					}	
 				}
@@ -35,85 +44,8 @@ $(function(){
 		var codeStr = window.location.href.split("code=")[1];
 		if(codeStr){
 			var code = codeStr.split("&")[0];
+			sessionStorage.setItem("code",code);
 		}
-		
-		sessionStorage.setItem("code",code);
-		if(code){
-			alert("code:"+code)
-			$.ajax({
-				type:"post",
-				url:url_path+"/getAccessToken.json",
-				data:{
-					"code":code
-				},
-				dataType:"json",
-				async:false,
-				success:function(data){
-					
-					var openid = data.openid;
-					sessionStorage.setItem("openid",openid);
-					localStorage.setItem("openid",openid);
-					localStorage.setItem("token",data.token);
-					var userOpneid = sessionStorage.getItem("userOpneid");
-					var userType = sessionStorage.getItem("userType");
-					if(userOpneid){
-						$.ajax({
-							type:"post",
-							url:url_path+"/saveSubordinate.json",
-							async:false,
-							data:{
-								"userOpneid":userOpneid,
-								"type":userType,
-								"openid":openid
-							},
-							dataType:"json",
-							success:function(data){
-								alert(data);
-							}
-						});
-					}
-					
-					$.ajax({
-						type:"post",
-						url:url_path+"/user/loginOauth.json",
-						async:false,
-						data:{
-							"userOpenid":openid
-						},
-						dataType:"json",
-						success:function(data){
-							if(data.msg=="成功"){
-								var nickname = data.nickname;
-								var score = data.score;
-								var userId = data.userId;
-								var userImg = data.userImg;
-								
-								localStorage.setItem("usernickname",nickname);
-								localStorage.setItem("userscore",score);
-								localStorage.setItem("userId",userId);
-								localStorage.setItem("userImg",userImg);
-							}
-						}
-					});
-				}
-			});
-		}
-		
-	}
-	
-	
-	var userId = localStorage.getItem("userId");
-
-	if(!userId){
-		getCodeReturn();
-		getCode();
-	}
-	
-	var hasLogin = localStorage.getItem("hasLogin");
-	var openid = localStorage.getItem("openid");
-
-	if(hasLogin && openid && userId){
-		window.location.href="index2.html"
 	}
 	
 	$(".login-btn").click(function(){
@@ -124,9 +56,9 @@ $(function(){
 	})
 
 	function login(url){
-		
 		var username = $("#username").val();
 		var validateCode = $("#ymz").val();
+		var code = sessionStorage.getItem("code");
 		if(!isPhoneNo(username)){
 			$("#tips1").css("visibility","visible").html("请输入正确的手机号码")
 		}else if(validateCode==""){
@@ -137,15 +69,23 @@ $(function(){
 				url:url+"/user/login.json",
 				data:{
 					"username":username,
-					"validateCode":validateCode
+					"validateCode":validateCode,
+					"code":code
 				},
 				dataType:"json",
 				success:function(data){
+					console.log(data)
 					if(data.msg=="用户不存在"){
 						$("#tips1").css("visibility","visible").html(data.msg)
 						$("#tips2").css("visibility","hidden").html("")
 					}else if(data.msg=="成功"){
 						localStorage.setItem("hasLogin",true);
+						localStorage.setItem("usernickname",data.nickname);
+						localStorage.setItem("userscore",data.score);
+						localStorage.setItem("userId",data.userId);
+						localStorage.setItem("userImg",data.userImg);
+						localStorage.setItem("openid",data.userOpenid);
+						localStorage.setItem("token",data.token);
 						window.location.href="index2.html";
 						
 					}else{
@@ -159,7 +99,6 @@ $(function(){
 	}
 	function getLoginSMS(url){
 		var phoneNumber = $("#username").val();
-		console.log(phoneNumber)
 		if(isPhoneNo(phoneNumber)){
 			$("#tips1").css("visibility","hidden");
 			var time = 60;
@@ -181,7 +120,6 @@ $(function(){
 				},
 				success:function(data){
 					console.log(data)
-					console.log(phoneNumber)
 					if(data.msg=="成功"){
 						
 					}

@@ -74,20 +74,35 @@ $(function(){
 	})
 	//监听送取件红包输入
 	$('#award').bind('input propertychange', function() {
-		calAward();
+		var value = $(this).val();
+        var array = value.split(".");
+        if((array.length >1 && array[1].length > 2) || array.length >2){
+            value = array[0] + "." +array[1].substr(0,2);
+            $(this).val(value);
+        }
+		calAward(this);
 	});  
 	//监听日常代驾红包输入
 	$('#award4').bind('input propertychange', function() {
-		calAward2();
+		var value = $(this).val();
+        var array = value.split(".");
+        if((array.length >1 && array[1].length > 2) || array.length >2){
+            value = array[0] + "." +array[1].substr(0,2);
+            $(this).val(value);
+        }
+		calAward2(this);
 	});  
 	function calAward2(){
+		
 		var award = parseFloat($("#award4").val());
 		if(award<0){
 			alert("不能小于0");
 			$("#award").val(0)
 			return false;
 		}
+	
 		var finish_price = parseFloat($("#main4-reward").text());
+		finish_price = finish_price.toFixed(2)
 		var main = (award+finish_price).toFixed(2);
 		if(award){
 			$("#main4-finish").html(main);
@@ -99,12 +114,14 @@ $(function(){
 		}
 	}
 	function calAward(){
+		
 		var award = parseFloat($("#award").val());
 		if(award<0){
 			alert("不能小于0");
 			$("#award").val(0)
 			return false;
 		}
+		
 		var finish_price = parseFloat($("#finish-price2").text());
 		var main = (award+finish_price).toFixed(2);
 		if(award){
@@ -154,6 +171,8 @@ $(function(){
 		dataArray = JSON.stringify(dataArray);
 		sessionStorage.setItem("djType",1)
 		sessionStorage.setItem("meal",dataArray);
+		sessionStorage.setItem("addressType",6);
+		sessionStorage.setItem("returnIndex",4);
 		setTimeout(function(){
 			window.location.href="daijia.html?type="+index
 		},500)

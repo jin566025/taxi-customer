@@ -27,10 +27,6 @@ $(function(){
 		success:function(data){
 			if(data.stateCode==0){
 				var Regulation1 = JSON.stringify(data);
-//				Regulation1.initialMileage=.initialMileage;
-//				Regulation1.initialMoney = data.initialMoney;
-//				Regulation1.valuation = data.valuation;
-//				Regulation1 = JSON.stringify(Regulation1)
 				sessionStorage.setItem("Regulation1",Regulation1)
 			}
 			
@@ -47,10 +43,6 @@ $(function(){
 			console.log(data)
 			if(data.stateCode==0){
 				var Regulation2 = JSON.stringify(data);
-//				Regulation2.initialMileage=data.initialMileage;
-//				Regulation2.initialMoney = data.initialMoney;
-//				Regulation2.valuation = data.valuation;
-//				Regulation2 = JSON.stringify(Regulation2)
 				sessionStorage.setItem("Regulation2",Regulation2)
 			}
 		}
@@ -66,6 +58,10 @@ $(function(){
 		},2000)
 	})
 	//代购
+	$(".main2-textarea").change(function(){
+		var daigoumsg = $(".main2-textarea").val();
+		sessionStorage.setItem("daigoumsg",daigoumsg);
+	})
 	$(".main2-btn").click(function(){
 		var daigoumsg = $(".main2-textarea").val();
 		sessionStorage.setItem("daigoumsg",daigoumsg);
@@ -212,6 +208,9 @@ $(function(){
 		}
 		if(award){
 			dataArray.award = award;
+		}else{
+			alert("请输入红包金额")
+			return false;
 		}
 		if(reward){
 			dataArray.reward = reward;
@@ -236,6 +235,7 @@ $(function(){
 			}
 		});
 	}
+	//日常代驾
 	$(".main4-footer-submit").click(function(){
 		daijia();
 		$(this).css("pointer-events","none");
@@ -244,6 +244,7 @@ $(function(){
 			$(that).css("pointer-events","visible");
 		},2000)
 	})
+	//这个才是打车
 	function typeId33(){
 		var districtId = localStorage.getItem("districtId");
 		var cityId = localStorage.getItem("cityId");
@@ -279,7 +280,7 @@ $(function(){
 			dataType:"json",
 			success:function(data){
 				if(data.msg=="成功"){
-					window.location.href = "my-order-list.html"
+					window.location.href = "my-order-list.html?typeId="+3
 					//payWallt(id,userId,money,typeId);
 				}
 			},
@@ -304,16 +305,15 @@ $(function(){
 			return false;
 		}
 		$("#shadow,#getAddress").fadeIn(500)
-		driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
-		setTimeout(function(){
+		driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude),function(){
 			var distance = $(".planTitle p").text();
 			var pattern =new RegExp("\\((.| )+?\\)","igm");
 			distance = distance.match(pattern)[0];
 			var reg = /[^\d\.]/g;
 			distance = distance.replace( reg, '' );
 			$(".main3-distance").html(distance);
-		},500)
-		
+		});
+
 	}
 	function getDayString(time){
 		var times = time.split("/");
@@ -422,7 +422,7 @@ $(function(){
 			}
 		});
 	}
-	function save(url_path,userId,money){
+	function save(url_path,userId,money,typeId){
 		$.ajax({
 			type:"post",
 			url:url_path+"/user/saveAccountstream.json",
@@ -436,7 +436,7 @@ $(function(){
 			dataType:"json",
 			success:function(data){
 				if(data.msg=="成功"){
-					window.location.href="http://taxicustomer.nbzhidun.com/my-order-list.html"
+					window.location.href="http://taxicustomer.nbzhidun.com/my-order-list.html?typeId="+typeId
 				}
 			}
 		});
@@ -499,7 +499,7 @@ $(function(){
 							       },
 							       function(res){
 							            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-							            	save(url_path,userId,money)
+							            	save(url_path,userId,money,typeId)
 							            }
 							       }
 							    );   

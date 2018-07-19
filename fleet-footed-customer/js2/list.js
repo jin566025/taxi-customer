@@ -65,8 +65,9 @@ function showList(userId,pageNo,pageSize){
 				var list = data.listDTO;
 				var list2 = JSON.stringify(list);
 				sessionStorage.setItem("mylist",list2);
-
-				$(".addmore").html("---加载完毕---").removeClass("hasmore")
+				$(".list1,.list2,.list3,.list4").html("")
+				$("#shadow").fadeOut(500);
+				$("#getAddress").fadeOut(500)
 				var state,dateTime;
 				for(var i=0;i<list.length;i++){
 					state = returnState(list[i].state,list[i].commentstate,list[i].typeId)
