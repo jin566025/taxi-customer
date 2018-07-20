@@ -238,6 +238,7 @@
 													       function(res){
 																console.log(res);
 													            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+													            	
 													            	$.ajax({
 																		type:"post",
 																		url:url_path+"/user/saveAccountstream.json",
@@ -251,10 +252,11 @@
 																		dataType:"json",
 																		success:function(data){
 																			if(data.msg=="成功"){
-																				window.location.href="http://taxicustomer.nbzhidun.com/my-order-list.html?typeId="+4
+																			
 																			}
 																		}
 																	});
+																	window.location.href="http://taxicustomer.nbzhidun.com/my-order-list.html?typeId="+4
 													            }
 													       }
 													    );   

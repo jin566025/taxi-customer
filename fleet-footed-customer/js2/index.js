@@ -51,6 +51,9 @@ $(function(){
 	$("#footer-content-toTop").click(function(){
 		toTop();
 	})
+	$(".section4-guize").click(function(){
+		window.location.href="protocol.html"
+	})
 	function toTop(){
 		if($("#footer-content-toTop").hasClass("top")){
 			$(".footer").css("bottom","4.6rem")
@@ -74,8 +77,10 @@ $(function(){
 	})
 	//监听送取件红包输入
 	$('#award').bind('input propertychange', function() {
-		var value = $(this).val();
+		$(this).val($(this).val().replace(/[^\-?\d.]/g,''));
+	 	var value = $(this).val();
         var array = value.split(".");
+        console.log(array)
         if((array.length >1 && array[1].length > 2) || array.length >2){
             value = array[0] + "." +array[1].substr(0,2);
             $(this).val(value);
@@ -84,7 +89,8 @@ $(function(){
 	});  
 	//监听日常代驾红包输入
 	$('#award4').bind('input propertychange', function() {
-		var value = $(this).val();
+		$(this).val($(this).val().replace(/[^\-?\d.]/g,''));
+	 	var value = $(this).val();
         var array = value.split(".");
         if((array.length >1 && array[1].length > 2) || array.length >2){
             value = array[0] + "." +array[1].substr(0,2);

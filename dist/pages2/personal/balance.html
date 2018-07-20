@@ -45,7 +45,7 @@
 		
 		<script type="text/javascript" src="../../js2/jquery-3-b36670e5ea.0.0.js" ></script>
 		<script type="text/javascript" src="../../js2/secondCheck-7087bbaa70.js" ></script>
-		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
+		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
 		<script>
 			$(function(){
 				$(".balance-submit").click(function(){
@@ -56,7 +56,7 @@
 				})
 				
 				var pageNo = 1;
-				var pageSize = 10;
+				var pageSize =5;
 				loadAccountStream(userId,pageNo,pageSize);
 				
 				$(window).scroll(function(){
@@ -67,6 +67,47 @@
 						}
 					}
 				})
+				function loadAccountStream(driverId,pageNo,pageSize){
+					$.ajax({
+						type:"post",
+						url:url_path+"/user/accountstream.json",
+						data:{
+							"userId":userId,
+							"pageNo":pageNo,
+							"pageSize":pageSize
+						},
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							
+							if(data.msg=="成功"){
+								$(".balance-p4").html(data.balance);
+								sessionStorage.setItem("balance",data.balance);
+								var totalCount = data.totalCount;
+								var _pageNo = Math.ceil(totalCount/pageSize);
+								console.log("_pageNo:"+_pageNo)
+								if(pageNo>_pageNo || totalCount<=pageSize){
+									$(".nomore").html("---加载完毕---").removeClass("hasmore")
+								}else{
+									var listDTO = data.listDTO;
+									for(var i=0;i<listDTO.length;i++){
+										var createtime = timeFormatter(listDTO[i].createtime);
+										var html = '<div class="detail-content flex-box">'+
+														'<div class="detail-content-left">'+
+															'<p class="cash">'+listDTO[i].typeName+'</p>'+
+															'<p class="cash-time">'+createtime+'</p>'+
+														'</div>'+
+														'<div class="detail-content-mid">'+listDTO[i].typeName+'</div>'+
+														'<div class="detail-content-right">'+listDTO[i].money+'</div>'+
+													'</div>';
+										$(".balance-detail").append(html);
+									}
+								}
+							}
+						},
+						error:function(){}
+					});
+				}
 				$("#tixian").click(function(){
 					tixian(userId,2,2)
 					
@@ -158,44 +199,7 @@
 				    }
 				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
 				}
-				function loadAccountStream(driverId,pageNo,pageSize){
-					$.ajax({
-						type:"post",
-						url:url_path+"/user/accountstream.json",
-						async:true,
-						data:{
-							"userId":userId,
-							"pageNo":pageNo,
-							"pageSize":pageSize
-						},
-						dataType:"json",
-						success:function(data){
-							console.log(data)
-							if(data.msg=="成功"){
-								$(".balance-p4").html(data.balance);
-								sessionStorage.setItem("balance",data.balance);
-								var listDTO = data.listDTO;
-								if(listDTO.length!==10){
-									$(".nomore").html("---加载完毕---").removeClass("hasmore")
-								}
-								
-								for(var i=0;i<listDTO.length;i++){
-									var createtime = timeFormatter(listDTO[i].createtime);
-									var html = '<div class="detail-content flex-box">'+
-													'<div class="detail-content-left">'+
-														'<p class="cash">'+listDTO[i].typeName+'</p>'+
-														'<p class="cash-time">'+createtime+'</p>'+
-													'</div>'+
-													'<div class="detail-content-mid">'+listDTO[i].typeName+'</div>'+
-													'<div class="detail-content-right">'+listDTO[i].money+'</div>'+
-												'</div>';
-									$(".balance-detail").append(html);
-								}
-							}
-						},
-						error:function(){}
-					});
-				}
+				
 				
 			})
 		</script>

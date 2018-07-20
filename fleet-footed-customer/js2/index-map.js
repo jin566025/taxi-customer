@@ -2,40 +2,40 @@ var map = new AMap.Map("container", {
     resizeEnable: true,
     zoom: 13
 });
-AMapUI.loadUI(['misc/PoiPicker'], function(PoiPicker) {
-    var poiPicker = new PoiPicker({
-        input: 'pickerInput'
-    });
-
-    //初始化poiPicker
-    poiPickerReady(poiPicker);
-});
-function poiPickerReady(poiPicker) {
-    window.poiPicker = poiPicker;
-    var marker = new AMap.Marker();
-    var infoWindow = new AMap.InfoWindow({
-        offset: new AMap.Pixel(0, -20)
-    });
-    //选取了某个POI
-    poiPicker.on('poiPicked', function(poiResult) {
-        var name = poiResult.item.name
-        var lng = poiResult.item.location.lng;
-        var lat = poiResult.item.location.lat;
-		$("#pickerInput").val(name);
-		var toaddress4_str = {};
-		var toaddress4;
-
-		toaddress4_str.name = name;
-		toaddress4_str.lng = lng;
-		toaddress4_str.lat = lat;
-		toaddress4 = JSON.stringify(toaddress4_str)
-		sessionStorage.setItem("toaddress4",toaddress4);
-
-    });
-    poiPicker.onCityReady(function() {
-//        poiPicker.suggest('美食');
-    });
-}
+//AMapUI.loadUI(['misc/PoiPicker'], function(PoiPicker) {
+//  var poiPicker = new PoiPicker({
+//      input: 'pickerInput'
+//  });
+//
+//  //初始化poiPicker
+//  poiPickerReady(poiPicker);
+//});
+//function poiPickerReady(poiPicker) {
+//  window.poiPicker = poiPicker;
+//  var marker = new AMap.Marker();
+//  var infoWindow = new AMap.InfoWindow({
+//      offset: new AMap.Pixel(0, -20)
+//  });
+//  //选取了某个POI
+//  poiPicker.on('poiPicked', function(poiResult) {
+//      var name = poiResult.item.name
+//      var lng = poiResult.item.location.lng;
+//      var lat = poiResult.item.location.lat;
+//		$("#pickerInput").val(name);
+//		var toaddress4_str = {};
+//		var toaddress4;
+//
+//		toaddress4_str.name = name;
+//		toaddress4_str.lng = lng;
+//		toaddress4_str.lat = lat;
+//		toaddress4 = JSON.stringify(toaddress4_str)
+//		sessionStorage.setItem("toaddress4",toaddress4);
+//
+//  });
+//  poiPicker.onCityReady(function() {
+////        poiPicker.suggest('美食');
+//  });
+//}
 //获取用户所在城市信息
 //function showCityInfo() {
 //  //实例化城市查询类
