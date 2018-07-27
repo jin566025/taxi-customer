@@ -67,13 +67,15 @@
 			
 			<div class="complaining">
 				<p>
-					<a>申诉类型：</a>
-					<a class="complaining-type">申诉车主</a>
+					<a>投诉类型：</a>
+					<a class="complaining-type">投诉车主</a>
 				</p>
-				<p>辱骂驾驶司机，且态度恶劣</p>
+				<p id="complaining-content"></p>
 				
 				<div class="complain-img-container clearfix">
-					<div class="complain-img fl"></div>
+					<div id="complain-img" class="complain-img fl">
+						
+					</div>
 
 				</div>
 			</div>
@@ -142,6 +144,28 @@
 				    	second = "0"+second
 				    }
 				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
+				}
+				getComplaint(id)
+				function getComplaint(id){
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/getComplaint.json",
+						data:{
+							"missionId":id,
+							"type":1
+						},
+						dataType:'json',
+						success:function(data){
+							if(data.stateCode==0){
+								$("#complaining-content").html(data.content);
+								var complain_img = data.img[0];
+								if(complain_img){
+									$("#complain-img").attr("src",complain_img)
+								}
+								
+							}
+						}
+					});
 				}
 				//加载数据
 				loadOrderDetail(id)

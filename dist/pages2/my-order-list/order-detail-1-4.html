@@ -6,7 +6,7 @@
 		<title>Taxi跑腿</title>
 		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="../../css2/common-63919b76db.css" />
-		<link rel="stylesheet" href="../../css2/order-detail-5af68f98a6.css" />
+		<link rel="stylesheet" href="../../css2/order-detail-585f7b7b9a.css" />
 		<link rel="stylesheet" href="../../css2/map-10ec3d7dc5.css" />
 		<link rel="stylesheet" href="../../css2/type2-order-d6d2d7946d.css" />
 	</head>
@@ -76,13 +76,13 @@
 			
 			<div class="complaining">
 				<p>
-					<a>申诉类型：</a>
-					<a class="complaining-type">申诉车主</a>
+					<a>投诉类型：</a>
+					<a class="complaining-type">投诉司机</a>
 				</p>
-				<p>辱骂驾驶司机，且态度恶劣</p>
+				<p id="complaining-content"></p>
 				
 				<div class="complain-img-container clearfix">
-					<div class="complain-img fl"></div>
+					<img id="complain-img" class="complain-img fl" />
 
 				</div>
 			</div>
@@ -109,8 +109,8 @@
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
 		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
 		<script type="text/javascript" src="../../js2/swiper-1d74106378.jquery.min.js" ></script>
-		<script type="text/javascript" src="../../js2/order-detail-43ccbaacc4.js" ></script>
-		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
+		<script type="text/javascript" src="../../js2/order-detail-ee4ba25341.js" ></script>
+		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
 		<script>
 			function ContentUp(){
 				$(".section3").css("bottom","25rem");
@@ -152,6 +152,28 @@
 				    }
 				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
 				}
+				getComplaint(id)
+				function getComplaint(id){
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/getComplaint.json",
+						data:{
+							"missionId":id,
+							"type":1
+						},
+						dataType:'json',
+						success:function(data){
+							if(data.stateCode==0){
+								$("#complaining-content").html(data.content);
+								var complain_img = data.img[0];
+								if(complain_img){
+									$("#complain-img").attr("src",complain_img)
+								}
+								
+							}
+						}
+					});
+				}
 				//加载数据
 				loadOrderDetail(id)
 			    function loadOrderDetail(id){
@@ -163,7 +185,7 @@
 				    	},
 				    	dataType:"json",
 				    	success:function(data){
-				    		console.log(data)
+				    		
 				    		if(data.msg=="成功"){
 				    			if(data.state!==4){
 				    				alert("订单状态已改变");

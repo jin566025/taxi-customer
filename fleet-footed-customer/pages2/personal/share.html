@@ -70,7 +70,6 @@
 //				var path = hrefs.split("?path=")[1];
 				var openid = localStorage.getItem("openid");
 				var path = localStorage.getItem("userImg");
-				var token = localStorage.getItem("token");
 				var urls = location.href.split("#")[0];
 				urls = encodeURIComponent(urls);
 				$.ajax({
@@ -80,7 +79,6 @@
 						"userOpenid":openid,
 						"type":1,
 						"logoPicPath":path,
-						"accessToken":token,
 						"url":urls
 					},
 					dataType:"json",

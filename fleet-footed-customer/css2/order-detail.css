@@ -42,7 +42,7 @@
 .complaining{width: 92%;left: 2%;position: fixed;top: 1rem;padding: 1rem 2%;background-color: #FFFFFF;z-index: 5;border: 1px solid gainsboro;border-radius: 5px;}
 .complaining p{height:2.4rem;line-height:2.4rem;color: rgba(50, 50, 50, 1);font-size: 1.4rem;text-align: left;font-family: Arial;}
 .complaining-type{color: #FF9800;}
-.complain-img{width:8rem;height: 8rem;background-color: gainsboro;margin-top: 1rem;}
+.complain-img{width:auto;height: 8rem;margin-top: 1rem;}
 
 
 .cancle-reason{position: fixed;top: 1rem;width: 96%;left: 2%;background-color: #FFFFFF;padding: 10px 2%;border-radius: 5px;border: 1px solid gainsboro;}

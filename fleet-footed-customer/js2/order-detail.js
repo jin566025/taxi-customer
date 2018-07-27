@@ -312,39 +312,23 @@ $(function(){
 		dataArray.businessType = 1;
 		dataArray.money = money;
 		$.ajax({
-			type:"post",
-			url:url_path+"/user/saveAccountstream.json",
-			async:false,
-			data:{
-				"userId":userId,
-				"money":money,
-				"useraccountOperationType":1,
-				"useraccountMode":1
-			},
-			dataType:"json",
-			success:function(data){
-				if(data.msg=="成功"){
-					$.ajax({
-			    		type:"post",
-			    		url:url_path+"/mission/ok.json",
-			    		async:false,
-			    		data:{
-							"id":id,
-							"userId":userId
-			    		},
-			    		dataType:"json",
-			    		success:function(data){
-			    			if(data.msg=="成功"){
-								window.location.href="../../my-order-list.html"
-			    			}
-			    		},
-			    		error:function(){}
-			    	});
-				}else{
-					alert(data.msg)
-				}
-			}
-		});
+    		type:"post",
+    		url:url_path+"/mission/ok.json",
+    		async:false,
+    		data:{
+				"id":id,
+				"userId":userId
+    		},
+    		dataType:"json",
+    		success:function(data){
+    			console.log(data)
+    			if(data.msg=="成功"){
+					window.location.href="../../my-order-list.html"
+    			}
+    		},
+    		error:function(){}
+    	});
+
     	
     }
 	

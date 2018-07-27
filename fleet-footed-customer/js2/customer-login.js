@@ -10,6 +10,23 @@ $(function(){
 		window.location.href="index2.html"
 	}
 	
+	function setCookie(c_name,value,expiredays){
+		var exdate = new Date();
+		exdate.setDate(exdate.getDate()+expiredays);
+		document.cookie = c_name+ "=" +escape(value)+((expiredays==null)?"":";expires="+exdate.toGMTString())
+	}
+	function getCookie(c_name){
+		if(document.cookie.length>0){
+			var c_start = document.cookie.indexOf(c_name + "=");
+			if(c_start!==-1){
+				c_start = c_start+c_name.length+1;
+				c_end = document.cookie.indexOf(";",c_start);
+				if(c_end==-1) c_end=document.cookie.length;
+				return unescape(document.cookie.substring(c_start,c_end))
+			}
+		}
+		return ""
+	}
 	function getCodeReturn(){
 		
 		$.ajax({
@@ -72,6 +89,7 @@ $(function(){
 					"validateCode":validateCode,
 					"code":code
 				},
+				async:false,
 				dataType:"json",
 				success:function(data){
 					console.log(data)
@@ -86,7 +104,27 @@ $(function(){
 						localStorage.setItem("userImg",data.userImg);
 						localStorage.setItem("openid",data.userOpenid);
 						localStorage.setItem("token",data.token);
-						window.location.href="index2.html";
+						var userOpneid = sessionStorage.getItem("userOpneid");
+						if(userOpneid){
+							$.ajax({
+								type:"post",
+								url:url_path+"/saveSubordinate.json",
+								async:false,
+								data:{
+									"userOpenid":userOpenid,
+									"type":1
+								},
+								dataType:"json",
+								success:function(data){
+									if(data.msg=="成功"){
+										window.location.href="index2.html";
+									}
+								}
+							});
+						}else{
+							window.location.href="index2.html";
+						}
+						
 						
 					}else{
 						$("#tips1").css("visibility","visible").html(data.msg)

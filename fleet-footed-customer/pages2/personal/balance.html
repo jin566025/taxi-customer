@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<header>
-			<img onclick="history.go(-1)" src="../../img2/return.png" class="return-icon" />
+			<img onclick="window.location.href='../../personal.html'" src="../../img2/return.png" class="return-icon" />
 			<p>我的余额</p>
 		</header>
 		<div class="balance-content">
@@ -57,8 +57,10 @@
 				
 				var pageNo = 1;
 				var pageSize =5;
-				loadAccountStream(userId,pageNo,pageSize);
 				
+				setTimeout(function(){
+					loadAccountStream(userId,pageNo,pageSize);
+				},500)
 				$(window).scroll(function(){
 					if($(window).scrollTop() + $(window).height() >= $(document).height() ){
 						if($(".nomore").hasClass("hasmore")){

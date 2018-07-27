@@ -457,7 +457,7 @@ $(function(){
 			dataType:"json",
 			success:function(data){
 				if(data.msg=="成功"){
-					save(url_path,userId,money);
+					
 					window.location.href="my-order-list.html?typeId="+typeId
 				}else if(data.stateCode==300){
 					alert("余额不足，使用微信支付");
@@ -499,7 +499,7 @@ $(function(){
 							       },
 							       function(res){
 							            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-							            	save(url_path,userId,money,typeId)
+							            	window.location.href="my-order-list.html?typeId="+typeId
 							            }
 							       }
 							    );   

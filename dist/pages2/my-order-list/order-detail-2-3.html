@@ -6,7 +6,7 @@
 		<title>Taxi跑腿</title>
 		<link rel="icon" href="../../favicon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="../../css2/common-63919b76db.css" />
-		<link rel="stylesheet" href="../../css2/order-detail-5af68f98a6.css" />
+		<link rel="stylesheet" href="../../css2/order-detail-585f7b7b9a.css" />
 		<link rel="stylesheet" href="../../css2/map-10ec3d7dc5.css" />
 		<link rel="stylesheet" href="../../css2/type2-order-d6d2d7946d.css" />
 	</head>
@@ -24,7 +24,7 @@
 					<img class="star-assess star-assess2" src="../../img2/star-assess2.png" />
 				</a>
 			</p>
-			<p>老司机带飞真的很舒服啊</p>
+			<p id="pj-content"></p>
 
 		</div>
 		<div class="complaining hide"  id="complaining">
@@ -109,8 +109,8 @@
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=92f74f742ad7c49509ed2f32b516743d&plugin=AMap.Driving"></script>
 		<script type="text/javascript" src="../../js2/map-c35636d2be.js" ></script>
 		<script type="text/javascript" src="../../js2/swiper-1d74106378.jquery.min.js" ></script>
-		<script type="text/javascript" src="../../js2/order-detail-43ccbaacc4.js" ></script>
-		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
+		<script type="text/javascript" src="../../js2/order-detail-ee4ba25341.js" ></script>
+		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
 		<script>
 			function ContentUp(){
 				$(".section3").css("bottom","20rem");
@@ -152,6 +152,30 @@
 				    }
 				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
 				}
+				getCommentary(id,1)
+				function getCommentary(id,type){
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/getCommentary.json",
+						data:{
+							"missionId":id,
+							"type":type
+						},
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.stateCode==0){
+								$("#access").html("已评价").css("pointer-events","none");
+								var star = data.star;
+								var star_assess = $(".star-assess");
+								for(var i=0;i<star;i++){
+									$(star_assess[i]).attr("src","../../img2/star-assess.png")
+									$("#pj-content").html(data.content)
+								}
+							}
+						}
+					});
+				}
 				//加载数据
 				loadOrderDetail(id)
 			    function loadOrderDetail(id){
@@ -192,9 +216,9 @@
 				    			if(commentstate==0){
 				    				
 				    			}else if(commentstate==1){
+				    				//$("#accessed").removeClass("hide")
+				    			}else if(commentstate==2 || commentstate==3){
 				    				$("#accessed").removeClass("hide")
-				    			}else if(commentstate==2){
-				    				
 				    			}
 				    			var goodsType = data.goodsType;
 				    			var award = data.award;

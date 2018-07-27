@@ -19,11 +19,13 @@ function returnState(s,c,t){
 		if(c==0){
 			state[1] = "未评价，请前去评价";
 		}else if(c==1){
-			state[1] = "已评价";
+			state[1] = "用户已评价";
+		}else if(c==2 || c==3){
+			state[1] = "司机已评价";
 		}
 	}else if(s==4){
-		state[0] = "申诉中";
-		state[1] = "等待平台审核申诉";
+		state[0] = "投诉中";
+		state[1] = "等待平台审核投诉";
 	}else if(s==5){
 		state[0] = "结算中";
 		state[1] = "正在结算";
@@ -63,8 +65,6 @@ function showList(userId,pageNo,pageSize){
 			console.log(data)
 			if(data.msg=="成功"){
 				var list = data.listDTO;
-				var list2 = JSON.stringify(list);
-				sessionStorage.setItem("mylist",list2);
 				$(".list1,.list2,.list3,.list4").html("")
 				$("#shadow").fadeOut(500);
 				$("#getAddress").fadeOut(500)

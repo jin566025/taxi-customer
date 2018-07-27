@@ -17,7 +17,6 @@
 		<input type="text" name="userId" class="datas" id="data2" />
 		<input type="text" name="usertype" class="datas" id="data3" />
 		<input type="text" name="content" class="datas" id="data4" />
-		
 		<input type="text" name="comlaintType" class="datas" id="data6" />
 		<div class="complain-content">
 			<div class="complain-type clearfix">
@@ -57,16 +56,14 @@
 					var img_url = this.files[0];
 					var reader = new FileReader();
 					reader.onload = function(e){
-						$(".complain-pics").append('<img class="up-img" <img src="'+e.target.result+'" />')
+						$(".complain-pics").append('<img class="up-img" src="'+e.target.result+'" />')
 					}
 					reader.readAsDataURL(img_url);
 				})
 				$(".complain").click(function(){
 					var typeName = $(".complain-types2-active").text();
 					var content = $("#complain-content").val();
-					
 					var id = window.location.href.split("=")[1];
-					
 					$("#data1").val(id);
 					$("#data2").val(userId);
 					$("#data3").val(0);

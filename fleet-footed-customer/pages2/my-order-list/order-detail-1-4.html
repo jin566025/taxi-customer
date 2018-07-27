@@ -76,13 +76,13 @@
 			
 			<div class="complaining">
 				<p>
-					<a>申诉类型：</a>
-					<a class="complaining-type">申诉车主</a>
+					<a>投诉类型：</a>
+					<a class="complaining-type">投诉司机</a>
 				</p>
-				<p>辱骂驾驶司机，且态度恶劣</p>
+				<p id="complaining-content"></p>
 				
 				<div class="complain-img-container clearfix">
-					<div class="complain-img fl"></div>
+					<img id="complain-img" class="complain-img fl" />
 
 				</div>
 			</div>
@@ -152,6 +152,28 @@
 				    }
 				    return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
 				}
+				getComplaint(id)
+				function getComplaint(id){
+					$.ajax({
+						type:"post",
+						url:url_path+"/mission/getComplaint.json",
+						data:{
+							"missionId":id,
+							"type":1
+						},
+						dataType:'json',
+						success:function(data){
+							if(data.stateCode==0){
+								$("#complaining-content").html(data.content);
+								var complain_img = data.img[0];
+								if(complain_img){
+									$("#complain-img").attr("src",complain_img)
+								}
+								
+							}
+						}
+					});
+				}
 				//加载数据
 				loadOrderDetail(id)
 			    function loadOrderDetail(id){
@@ -163,7 +185,7 @@
 				    	},
 				    	dataType:"json",
 				    	success:function(data){
-				    		console.log(data)
+				    		
 				    		if(data.msg=="成功"){
 				    			if(data.state!==4){
 				    				alert("订单状态已改变");

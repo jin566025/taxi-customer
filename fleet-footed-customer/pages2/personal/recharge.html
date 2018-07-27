@@ -53,8 +53,10 @@
 				$("#money").html(balance);
 				
 				$('#business').bind('input propertychange', function() {
-					var value = $(this).val();
+					$(this).val($(this).val().replace(/[^\-?\d.]/g,''));
+				 	var value = $(this).val();
 			        var array = value.split(".");
+			        console.log(array)
 			        if((array.length >1 && array[1].length > 2) || array.length >2){
 			            value = array[0] + "." +array[1].substr(0,2);
 			            $(this).val(value);
@@ -76,6 +78,7 @@
 					dataArray.paywaterMoney = money;
 					$(this).css("pointer-events","none");
 					$(".shadow,#loading").fadeIn();
+					
 					//生成充值流水id
 					$.ajax({
 						type:"post",
@@ -129,20 +132,6 @@
 													
 										            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
 										            	window.location.href="http://taxicustomer.nbzhidun.com/pages2/personal/balance.html"
-										            	$.ajax({
-															type:"post",
-															url:url_path+"/user/saveAccountstream.json",
-															async:false,
-															data:{
-																"userId":userId,
-																"money":money,
-																"useraccountOperationType":0,
-																"useraccountMode":0
-															},
-															dataType:"json",
-															success:function(data){}
-														});
-										           		
 										            }else{
 										           		$("#chongzhi").css("pointer-events","visible")
 										            }

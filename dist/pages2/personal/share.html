@@ -45,7 +45,7 @@
 		<div id="nonceStr" style="display: none;"></div>
 		<div id="signature" style="display: none;"></div>
 		<script type="text/javascript" src="../../js2/jquery-3-b36670e5ea.0.0.js" ></script>
-		<script type="text/javascript" src="../../js2/url-190d123d5f.js" ></script>
+		<script type="text/javascript" src="../../js2/url-04f2d3931f.js" ></script>
 		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script>
 			$(function(){
@@ -70,7 +70,6 @@
 //				var path = hrefs.split("?path=")[1];
 				var openid = localStorage.getItem("openid");
 				var path = localStorage.getItem("userImg");
-				var token = localStorage.getItem("token");
 				var urls = location.href.split("#")[0];
 				urls = encodeURIComponent(urls);
 				$.ajax({
@@ -80,7 +79,6 @@
 						"userOpenid":openid,
 						"type":1,
 						"logoPicPath":path,
-						"accessToken":token,
 						"url":urls
 					},
 					dataType:"json",
