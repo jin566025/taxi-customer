@@ -175,7 +175,7 @@ function payWallt(id,userId,money,typeId){
 //										
 //						            	
 //})
-var id = window.location.href.split("listid=")[1];
+
 //function changeReward(){
 //	changeOrders("#shadow,.dialog5");
 //}
@@ -205,6 +205,7 @@ var id = window.location.href.split("listid=")[1];
 //		}
 //	});
 //}
+
 function timeFormatter(value) {
     var da = new Date(parseInt(value));
     var month = da.getMonth()+1;
@@ -233,25 +234,25 @@ function timeFormatter(value) {
     }
     return da.getFullYear() + "-" + month + "-" + dates + " " + hour + ":" + minute + ":" + second;
 }
-
-function updateOrder(beifen){
-	$.ajax({
-		type:"post",
-		url:url_path+"/mission/update.json",
-		data:beifen,
-		dataType:"json",
-		async:false,
-		success:function(data){
-		},
-		error:function(xml){
-			
-		}
-	})
-}
-
+//
+//function updateOrder(beifen){
+//	$.ajax({
+//		type:"post",
+//		url:url_path+"/mission/update.json",
+//		data:beifen,
+//		dataType:"json",
+//		async:false,
+//		success:function(data){
+//		},
+//		error:function(xml){
+//			
+//		}
+//	})
+//}
+var hrefs = window.location.href.split("?listid=")[1];
+var id = hrefs.split("&state=")[0];
+var state = hrefs.split("&state=")[1];
 $(function(){
-	
-
     setTimeout(function(){
     	$(".amap-logo,.amap-controls").hide();
     	$(".amap-copyright,.amap-controls").css("visibility","hidden")
@@ -282,7 +283,7 @@ $(function(){
 	})
 	//我要投诉
 	$("#complain").click(function(){
-		window.location.href="complain.html?taslId="+id
+		window.location.href="complain.html?taslId="+id+"&state="+state
 	})
 	function shadowFadeIn(){
 		$("#shadow,.cancle-dialog").fadeIn();
@@ -331,15 +332,10 @@ $(function(){
 
     	
     }
-	
 	//确认取消订单
 	$("#dialog-sure").click(function(){
 		cancleOrder(id,userId);
 	})
-	
-	
-	
-	
 	//取消订单
 	function cancleOrder(id,userId){
     	var cancelTrue=false;

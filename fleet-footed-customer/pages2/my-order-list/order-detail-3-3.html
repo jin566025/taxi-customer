@@ -130,7 +130,7 @@
 						success:function(data){
 							console.log(data)
 							if(data.stateCode==0){
-								$("#access").html("已评价").css("pointer-events","none");
+							//	$("#access").html("已评价").css("pointer-events","none");
 								var star = data.star;
 								var star_assess = $(".star-assess");
 								for(var i=0;i<star;i++){
@@ -175,7 +175,7 @@
 				    			
 				    			var state = data.state;
 				    			if(state==4){
-				    				$("#complaining").removeClass("hide")
+				    				$("#access").html("已评价").css("pointer-events","none");
 				    			}else{
 				    				$("#order2-submit").css("pointer-events","none").html("已完成")
 				    			}

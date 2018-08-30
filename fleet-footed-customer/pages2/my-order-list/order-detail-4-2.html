@@ -118,7 +118,7 @@
 				    			$("#finish").html(data.finish);
 				    			var taskAddressLatitude = data.taskAddressLatitude;
 				    			var taskAddressLongitude = data.taskAddressLongitude;
-				    			
+				    			$("#complain").html("我要申诉")
 				    			driving.search(new AMap.LngLat(deliveryAddressLongitude, deliveryAddressLatitude), new AMap.LngLat(taskAddressLongitude, taskAddressLatitude));
 				    		}
 				    	}

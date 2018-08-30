@@ -157,7 +157,7 @@
 						success:function(data){
 							console.log(data)
 							if(data.stateCode==0){
-								$("#access").html("已评价").css("pointer-events","none");
+								//$("#access").html("已评价").css("pointer-events","none");
 								var star = data.star;
 								var star_assess = $(".star-assess");
 								for(var i=0;i<star;i++){
@@ -207,7 +207,7 @@
 				    			if(commentstate==0){
 				    				
 				    			}else if(commentstate==1){
-				    				//$("#accessed").removeClass("hide")
+				    				$("#access").html("已评价").css("pointer-events","none");
 				    			}else if(commentstate==2 || commentstate==3){
 				    				$("#accessed").removeClass("hide")
 				    			}

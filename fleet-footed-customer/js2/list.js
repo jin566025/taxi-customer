@@ -70,6 +70,11 @@ function showList(userId,pageNo,pageSize){
 				$("#getAddress").fadeOut(500)
 				var state,dateTime;
 				for(var i=0;i<list.length;i++){
+					if(list.length==0){
+						$(".addmore").html("暂无数据")
+					}else{
+						$(".addmore").html("加载完毕")
+					}
 					state = returnState(list[i].state,list[i].commentstate,list[i].typeId)
 					dateTime = timeFormatter(list[i].startTime)
 					var deliveryAddress = list[i].deliveryAddress;

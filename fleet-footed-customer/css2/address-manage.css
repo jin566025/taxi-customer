@@ -4,7 +4,7 @@ header{height: 4rem;line-height: 4rem;position: relative;border-bottom: 1px soli
 .history-address{color: rgba(50, 50, 50, 1);font-size:1.2rem;right: 1rem;font-family: Arial;position: absolute;height: 2rem;top: 1rem;line-height: 2rem;}
 .main{width: 96%;margin: 0 auto;position: relative;}
 .main-left{width: 30%;height: 5rem;line-height:5rem;color: rgba(50, 50, 50, 1);font-size: 1.4rem;font-family: Microsoft Yahei;}
-.main-right{width: 70%;border: none;line-height: 5rem;color: rgba(100, 100, 100, 1);font-size: 1.4rem;font-family: Arial;}
+.main-right{width: 70%;border: none;line-height: 5rem;color: rgba(100, 100, 100, 1);font-size: 1.4rem;font-family: Arial;background-color: #FFFFFF;}
 .main2{height: 4rem;line-height:4rem;border-radius: 5px;background-color: rgba(255, 152, 0, 1);color: rgba(255, 255, 255, 1);font-size: 1.4rem;font-family: Arial;text-align: center;width: 96%;margin: 0 auto;margin-top: 1rem;}
 
 #pickerInput2{width: 70%;border: none;height: 5rem;line-height:5rem;color: rgba(100, 100, 100, 1);font-size: 1.4rem;font-family: Arial;position: absolute;right: 0;top: 0;z-index: -1;}

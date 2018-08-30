@@ -20,23 +20,22 @@
 		<input type="text" name="comlaintType" class="datas" id="data6" />
 		<div class="complain-content">
 			<div class="complain-type clearfix">
-				<div class="complain-types1">投诉类型</div>
-				<div class="complain-types2 complain-types2-active">投诉用户</div>
-				<div class="complain-types2">投诉平台</div>
+				<div class="complain-types1" id="ss-type1">申诉类型</div>
+				<div class="complain-types2 complain-types2-active" id="ss-type2">申诉用户</div>
+				<div class="complain-types2" id="ss-type3">申诉平台</div>
 			</div>
 			<div class="complain-main">
-				<div class="complain-main-top">投诉内容</div>
-				<textarea id="complain-content" class="complain-main-bottom" placeholder="请输入要投诉的内容......"></textarea>
+				<div class="complain-main-top" id="ss-type4">申诉内容</div>
+				<textarea id="complain-content" class="complain-main-bottom" placeholder="请输入内容......"></textarea>
 			</div>
 			<div class="complain-pic clearfix">
 				<div class="complain-pics box-sizing">
 					<a>+</a>
 					<input name="img" id="upimg" type="file" />
 				</div>
-				<!--<div class="complain-pics box-sizing">+</div>
-				<div class="complain-pics box-sizing">+</div>-->
+
 			</div>
-			<!--<p class="complain-tips">图片最多上传3张</p>-->
+
 		</div>
 		<div class="complain">确定投诉</div>
 		</form>
@@ -46,6 +45,15 @@
 		<script>
 			$(function(){
 				var complainWidth = $(".complain-pics").width();
+				var href = window.location.href.split("?taslId=")[1];
+				var id = href.split("&state=")[0];
+				var state = href.split("&state=")[1];
+				if(state==3){
+					$("#ss-type1").html("投诉类型")
+					$("#ss-type2").html("投诉用户")
+					$("#ss-type3").html("投诉平台")
+					$("#ss-type4").html("投诉内容")
+				}
 				$(".complain-pics").css({"height":complainWidth+"px","line-height":complainWidth+"px"})
 				$(".complain-types2").click(function(){
 					$(".complain-types2").removeClass("complain-types2-active");
@@ -60,16 +68,22 @@
 					}
 					reader.readAsDataURL(img_url);
 				})
-				$(".complain").click(function(){
+				function complaint(){
 					var typeName = $(".complain-types2-active").text();
 					var content = $("#complain-content").val();
-					var id = window.location.href.split("=")[1];
+					var href = window.location.href.split("?taslId=")[1];
+					var id = href.split("&state=")[0];
+					var state = href.split("&state=")[1];
+					var comlaintType = 0;
+					if(state==3){
+						comlaintType=1
+					}
+
 					$("#data1").val(id);
 					$("#data2").val(userId);
 					$("#data3").val(0);
 					$("#data4").val(content);
-					$("#data6").val(1);
-//					var driverId = window.location.href.split("=")[2];
+					$("#data6").val(comlaintType);
 					var formData  = new FormData();
 					formData.append("id", $('input[name="id"]').val());
 					formData.append("userId", $('input[name="userId"]').val());
@@ -95,6 +109,9 @@
 							console.log(xhr)
 						}
 					});
+				}
+				$(".complain").click(function(){
+					complaint()
 				})
 			})
 		</script>
